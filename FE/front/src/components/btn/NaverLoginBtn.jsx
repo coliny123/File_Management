@@ -1,6 +1,6 @@
 import React from 'react'
 
-function NaverLoginBtn() {
+export default function NaverLoginBtn() {
 
     const Naver_Client_ID = process.env.REACT_APP_Naver_Client_ID;
     const redirect_uri = 'http://localhost:3001/naver/oauth'
@@ -16,5 +16,3 @@ function NaverLoginBtn() {
         </div>
     )
 }
-
-export default NaverLoginBtn

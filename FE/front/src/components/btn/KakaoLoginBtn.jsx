@@ -1,6 +1,6 @@
 import React from 'react'
 
-function KakaoLoginBtn() {
+export default function KakaoLoginBtn() {
   
   const Kakao_Client_ID = process.env.REACT_APP_Kakao_Client_ID;
   const redirect_uri = 'http://localhost:3001/kakao/oauth';
@@ -15,5 +15,3 @@ function KakaoLoginBtn() {
     </div>
   )
 }
-
-export default KakaoLoginBtn
