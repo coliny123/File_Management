@@ -7,6 +7,7 @@ function App() {
   return (
     <div className="App">
       <LandingPage></LandingPage>
+      배포 완료
     </div>
   );
 }
