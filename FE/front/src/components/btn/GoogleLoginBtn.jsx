@@ -2,7 +2,7 @@ import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
-export default function GoogleLoginBtn() {
+function GoogleLoginBtn() {
 
     const onSuccess = (response) => {
         const code = response.code;
@@ -40,3 +40,4 @@ export default function GoogleLoginBtn() {
     );
 }
 
+export default GoogleLoginBtn

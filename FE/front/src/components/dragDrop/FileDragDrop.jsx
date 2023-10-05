@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
+import { sendFiles } from '../../services/sendFiles';
 
 const fileInventory = (files, deleteFilesById) => {
     return (
@@ -120,7 +121,7 @@ function FileDragDrop() {
                 </label>
             </div>
             <div className='btns border-4 w-80'>
-                <button>전송 버튼</button>
+                <button onClick={() => sendFiles(files)}>전송 버튼</button>
                 <label
                     className='DragDrop-File'
                     htmlFor="fileUpload"
