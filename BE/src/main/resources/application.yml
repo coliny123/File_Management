@@ -10,5 +10,10 @@ spring:
       naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
 
+google:
+  clientId: 736947599096-mtl5f0tn2kc2arrv3o15k23fd1ticrl7.apps.googleusercontent.com
+  clientSecret: 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
+  tokenUrl: https://oauth2.googleapis.com/token
+
 
 
