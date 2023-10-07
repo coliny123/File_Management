@@ -9,7 +9,9 @@ name: file_manager_springboot_webservice
 
 on:
   push:
-    branches: [ "releaseBE" ]
+    branches:
+    - main
+    - releaseBE
   pull_request:
     branches: [ "main" ]
 
