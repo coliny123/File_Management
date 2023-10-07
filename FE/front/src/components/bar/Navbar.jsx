@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Navbar() {
 
-    const [isToggled, setIsToggled] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div className='w-full h-12 bg-white'>
@@ -11,12 +12,8 @@ function Navbar() {
                 <li>2</li>
                 <li>3</li>
                 <li>4</li>
-                <button onClick={() => setIsToggled(!isToggled)}>로그인</button>
+                <button onClick={() => navigate("/login")}>로그인</button>
                 <div className="mt-4">
-                    {isToggled && (
-                        <div className="bg-gray-200 p-4 rounded absolute top-14 right-16 z-50">
-                        </div>
-                    )}
                 </div>
             </ul>
         </div>
