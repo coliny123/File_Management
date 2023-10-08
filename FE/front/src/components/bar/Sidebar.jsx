@@ -3,8 +3,7 @@ import React from 'react'
 
 function Sidebar() {
     return (
-        <div className='fixed left-0 top-0 h-full w-56 flex flex-column bg-white'>
-            {/* // <div> */}
+        <div className='fixed left-0 top-0 h-full w-24 flex flex-column bg-white'>
             <div className='title'>
                 title
             </div>

@@ -4,6 +4,7 @@ import NaverLoginBtn from '../components/btn/NaverLoginBtn'
 import KakaoLoginBtn from '../components/btn/KakaoLoginBtn'
 import FileDragDrop from '../components/dragDrop/FileDragDrop'
 import FileStatusbar from '../components/bar/FileStatusbar'
+import QrCode from '../components/qrCode/QrCode'
 
 function LandingPage() {
   return (
@@ -13,6 +14,8 @@ function LandingPage() {
         <NaverLoginBtn></NaverLoginBtn>
         <KakaoLoginBtn></KakaoLoginBtn>
         <FileDragDrop></FileDragDrop>
+        <QrCode url='http://192.168.0.8:3000/download/1'></QrCode>
+        {/* <QrCode url='http://www.naver.com'></QrCode> */}
     </div>
   )
 }

@@ -6,13 +6,11 @@ export const sendFiles = (files) => {
 
     // files에서 forData에 파일 추가
     files.map((file) => {
-        console.log(file)
-        formData.append(file.object.name, file.object)
+        formData.append('file', file.object)
     })
-    axios.post('https://1c48efd1-2f26-4d83-8447-35b841d6d0d4.mock.pstmn.io/localhost:8080/fileSend', formData, {
+    axios.post('http://192.168.0.10:8080/upload', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            // "Authorization": `Bearer ${Cookies.get("accessToken")}`
         }
     }).then((res) => {
         console.log('complete');
