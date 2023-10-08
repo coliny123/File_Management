@@ -8,9 +8,10 @@ import Sidebar from '../components/bar/Sidebar'
 
 function LandingPage() {
 
+  const arr = [];
+
   return (
     <div>
-
         <GoogleLoginBtn></GoogleLoginBtn>
         <NaverLoginBtn></NaverLoginBtn>
         <KakaoLoginBtn></KakaoLoginBtn>

@@ -9,20 +9,33 @@ import LoginPage from './pages/LoginPage';
 function App() {
   return (
     <div className="App">
-      <Router>
         <Sidebar></Sidebar>
           <div className='ml-56 h-screen'>
             <Navbar></Navbar>
             <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
-              <Routes>
-                <Route path="/" element={<LandingPage />}></Route>
-                <Route path="/login" element={<LoginPage />}></Route>
-              </Routes>
+                <LandingPage></LandingPage>
             </div>
           </div>
-      </Router>
     </div>
   );
 }
+// function App() {
+//   return (
+//     <div className="App">
+//       <Router>
+//         <Sidebar></Sidebar>
+//           <div className='ml-56 h-screen'>
+//             <Navbar></Navbar>
+//             <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
+//               <Routes>
+//                 <Route path="/" element={<LandingPage />}></Route>
+//                 <Route path="/login" element={<LoginPage />}></Route>
+//               </Routes>
+//             </div>
+//           </div>
+//       </Router>
+//     </div>
+//   );
+// }
 
 export default App;

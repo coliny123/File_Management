@@ -1,39 +1,50 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
+const redirectUri = "http://localhost:3001/auth/google/callback";
+const Server_IP = process.env.REACT_APP_Server_IP;
+const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
+
 function GoogleLoginBtn() {
 
-    const onSuccess = (response) => {
-        const code = response.code;
-        console.log(code)
-        axios.post('http://172.30.1.58:8080/auth', { authCode: code }, {
-        // axios.post('', { authCode: code }, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((res) => {
-                if (res.status === 200) {
-                    console.log('로그인 완료');
-                    console.log(res?.data);
-                } else {
-                    console.error('서버로부터 오류 응답을 받았습니다.');
-                }
-            })
-            .catch((error) => {
-                console.error('서버로 요청을 보내는 중 오류 발생:', error);
-            });
+    const [loginSuccess, setLoginSuccess] = useState(false);
+
+    const handleGoogleLogin = () => {
+        window.location.href =
+            `https://accounts.google.com/o/oauth2/v2/auth?client_id=${Google_Client_ID}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile`;
     };
 
-    const loginGoogle = useGoogleLogin({
-        onSuccess: (res) => onSuccess(res),
-        flow: 'auth-code'
-    });
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            // auth code가 있으면 백엔드 서버로 전송
+            axios.post(`${Server_IP}/auth`, { authCode: code })
+                .then(res => {
+                    const { token, email, name } = res.data;
+
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('name', name);
+
+                    setLoginSuccess(true);
+                    window.location.href = 'http://localhost:3001'
+                })
+                .catch(err => {
+                    console.error("authCode err : ", err);
+                    if (err.response) {
+                        console.error('Error response data:', err.response.data);
+                    }
+                });
+        }
+    }, []);
 
     return (
         <div>
-            <button onClick={() => loginGoogle()}>
+            <button onClick={handleGoogleLogin}>
                 <img src="/assets/images/btn_google_login.png" alt="google log" />
             </button>
         </div>
