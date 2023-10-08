@@ -1,27 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import LandingPage from './pages/LandingPage';
-import Navbar from './components/bar/Navbar';
-import Sidebar from './components/bar/Sidebar';
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-
-const MainLayout = () => {
-  return (
-    <>
-      <Sidebar></Sidebar>
-        <div className='ml-56 h-screen'>
-          <Navbar></Navbar>
-          <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
-          </div>
-        </div>
-    </>
-  )
-}
-
-const LoginLayout = () => {
-  return(<>A</>)
-}
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import LoginLayout from './layout/LoginLayout';
+import MainLayout from './layout/MainLayout';
 
 function App() {
   return (
