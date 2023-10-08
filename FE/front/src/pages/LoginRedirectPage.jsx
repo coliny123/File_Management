@@ -1,22 +1,21 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const redirectUri = "http://localhost:3000/auth/google/callback";
 const Server_IP = process.env.REACT_APP_Server_IP;
-const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
 
 function LoginRedirectPage() {
 
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const { provider } = useParams();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
 
         if (code) {
-            // auth code가 있으면 백엔드 서버로 전송
-            axios.post(`${Server_IP}/auth/google`, { authCode: code })
+            axios.post(`${Server_IP}/auth/${provider}`, { authCode: code })
                 .then(res => {
                     const { token, email, name } = res.data;
 
