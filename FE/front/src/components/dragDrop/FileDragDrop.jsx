@@ -120,7 +120,7 @@ function FileDragDrop() {
                     </div>
                 </label>
             </div>
-            <div className='btns border-4 w-80'>
+            <div className='btns border-4 border- w-80'>
                 <button onClick={() => sendFiles(files)}>전송 버튼</button>
                 <label
                     className='DragDrop-File'

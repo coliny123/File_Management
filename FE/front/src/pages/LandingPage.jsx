@@ -5,7 +5,6 @@ import KakaoLoginBtn from '../components/btn/KakaoLoginBtn'
 import FileDragDrop from '../components/dragDrop/FileDragDrop'
 
 function LandingPage() {
-
   return (
     <div>
         <GoogleLoginBtn></GoogleLoginBtn>

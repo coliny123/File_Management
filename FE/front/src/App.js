@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginLayout from './layout/LoginLayout';
 import MainLayout from './layout/MainLayout';
+import LoginRedirectPage from './pages/LoginRedirectPage';
+import NaverLoginRedirectPage from './pages/NaverRedirectPage';
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
           </Route>
           <Route element={<LoginLayout/>}>
             <Route path='/login' element={<LoginPage/>} />
+            <Route path='/auth/google/callback' element={<LoginRedirectPage/>}></Route>
+            <Route path='/auth/naver/callback' element={<NaverLoginRedirectPage/>}></Route>
+            {/* <Route path='/auth/google/callback' element={<LoginRedirectPage/>}></Route> */}
           </Route>
         </Routes>
       </Router>
