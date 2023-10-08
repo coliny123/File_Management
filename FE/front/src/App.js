@@ -6,7 +6,6 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginLayout from './layout/LoginLayout';
 import MainLayout from './layout/MainLayout';
 import LoginRedirectPage from './pages/LoginRedirectPage';
-import NaverLoginRedirectPage from './pages/NaverRedirectPage';
 
 function App() {
   return (
