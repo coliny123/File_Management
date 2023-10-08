@@ -1,7 +1,7 @@
-package com.example.file_management.google.repository;
+package com.example.file_management.repository;
 
+import com.example.file_management.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.file_management.google.model.entity.User;
 
 import java.util.Optional;
 

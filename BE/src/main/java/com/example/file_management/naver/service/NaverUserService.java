@@ -1,8 +1,8 @@
 package com.example.file_management.naver.service;
 
-import com.example.file_management.google.model.entity.User;
-import com.example.file_management.google.repository.UserRepository;
+import com.example.file_management.naver.repository.NaverUserRepository;
 import com.example.file_management.naver.model.dto.response.NaverUserResponse;
+import com.example.file_management.naver.model.entity.NaverUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,11 +18,11 @@ import java.util.Optional;
 @Service
 public class NaverUserService {
 
-    private final UserRepository userRepository;
+    private final NaverUserRepository naverUserRepository;
 
     @Autowired
-    public NaverUserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public NaverUserService(NaverUserRepository naverUserRepository) {
+        this.naverUserRepository = naverUserRepository;
     }
 
     public void updateUserInfo(String accessToken) {
@@ -30,17 +30,17 @@ public class NaverUserService {
 
         if (userInfo != null) {
             // 네이버 API로부터 받은 사용자 ID나 이메일 등을 통해 기존 사용자인지 판별
-            Optional<User> optionalUser = userRepository.findByEmail(userInfo.getResponse().getEmail());
+            Optional<NaverUser> optionalUser = naverUserRepository.findByEmail(userInfo.getResponse().getEmail());
 
-            User user;
+            NaverUser naverUser;
             // 새로운 사용자면 새 User 객체를 생성
-            user = optionalUser.orElseGet(User::new);
+            naverUser = optionalUser.orElseGet(NaverUser::new);
 
             // User 객체의 필드들을 업데이트
-            user.setEmail(userInfo.getResponse().getEmail());
-            user.setNickname(userInfo.getResponse().getNickname());
+            naverUser.setEmail(userInfo.getResponse().getEmail());
+            naverUser.setNickname(userInfo.getResponse().getNickname());
 
-            userRepository.save(user);  // DB에 사용자 정보 저장
+            naverUserRepository.save(naverUser);  // DB에 사용자 정보 저장
         }
     }
 

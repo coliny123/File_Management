@@ -1,5 +1,6 @@
 package com.example.file_management.google.service;
 
+import com.example.file_management.google.model.entity.GoogleUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import com.example.file_management.google.model.dto.response.UserResponse;
-import com.example.file_management.google.model.entity.User;
-import com.example.file_management.google.repository.UserRepository;
+import com.example.file_management.google.repository.GoogleUserRepository;
 import java.util.Optional;
 
 import com.example.file_management.google.security.JwtUtil;
@@ -17,7 +17,7 @@ public class UserService {
     private final WebClient webClient;
 
     @Autowired
-    private UserRepository userRepository;
+    private GoogleUserRepository googleUserRepository;
 
     public UserService(WebClient webClient) {
         this.webClient = webClient;
@@ -40,31 +40,31 @@ public class UserService {
         try {
             JSONObject jsonObject = new JSONObject(userInfoResponse);
             String email = jsonObject.getString("email");
-            Optional<User> existingUserOptional = userRepository.findByEmail(email);
+            Optional<GoogleUser> existingUserOptional = googleUserRepository.findByEmail(email);
 
-            User user;
+            GoogleUser googleUser;
             if (existingUserOptional.isPresent()) {
                 // 이미 존재하는 사용자라면 가져옴
-                user = existingUserOptional.get();
+                googleUser = existingUserOptional.get();
                 System.out.println("Existing user found. Updating info.");
             } else {
                 // 새로운 사용자라면 새 User 객체를 생성
-                user = new User();
+                googleUser = new GoogleUser();
                 System.out.println("Creating new user.");
             }
 
             // 사용자 정보 설정
-            user.setEmail(email);
+            googleUser.setEmail(email);
             String name = jsonObject.getString("name");
-            user.setName(name);
+            googleUser.setName(name);
 //            user.setName(jsonObject.getString("name"));
 
             try {
                 // DB에 사용자 정보 저장 (새로운 사용자면 생성, 기존 생성자면 업데이트)
-                userRepository.save(user);
+                googleUserRepository.save(googleUser);
                 System.out.println("User saved successfully.");
 
-                String jwtToken = JwtUtil.generateToken(user.getEmail(), user.getName());
+                String jwtToken = JwtUtil.generateToken(googleUser.getEmail(), googleUser.getName());
                 return new UserResponse(jwtToken, email, name);
             } catch (Exception e) {
                 System.out.println("Error saving user: " + e.getMessage());
