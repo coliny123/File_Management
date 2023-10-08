@@ -1,6 +1,7 @@
 package com.example.file_management.naver.service;
 
 import com.example.file_management.naver.model.dto.auth.NaverAuthCodeDto;
+import com.example.file_management.naver.model.dto.response.NaverUserResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,5 +37,7 @@ public class NaverOAuth2Service {
 
         return response.getBody();
     }
+
+
 }
 

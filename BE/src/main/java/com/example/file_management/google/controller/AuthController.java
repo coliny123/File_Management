@@ -23,16 +23,16 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/auth")
+    @PostMapping("/auth/google")
     public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest) {
-        String redirectUri = "http://localhost:3001/auth/google/callback";
+        String redirectUri = "http://localhost:3000/auth/google/callback";
 
-        System.out.println("Received auth code: " + authRequest.getAuthCode());
+        System.out.println("Received auth code(google): " + authRequest.getAuthCode());
 
         String accessToken = googleOAuth2Service.getAccessToken(authRequest, redirectUri);
 
         //인증 코드를 바탕으로 Google OAuth2 서버로부터 받은 액세스 토큰
-        System.out.println("Received access token: " + accessToken);
+        System.out.println("Received access token(google): " + accessToken);
 
         //사용자 정보 얻고, 데이터베이스에 저장 및 JWT 토큰 생성 후 반환
         UserResponse userResponse = userService.getUserInfoAndSave(accessToken);

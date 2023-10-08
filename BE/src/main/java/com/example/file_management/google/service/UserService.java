@@ -12,7 +12,6 @@ import com.example.file_management.google.repository.UserRepository;
 import java.util.Optional;
 
 import com.example.file_management.google.security.JwtUtil;
-
 @Service
 public class UserService {
     private final WebClient webClient;
@@ -40,11 +39,8 @@ public class UserService {
 
         try {
             JSONObject jsonObject = new JSONObject(userInfoResponse);
-
-//            User user = new User();
-
-            String sub = jsonObject.getString("sub");
-            Optional<User> existingUserOptional = userRepository.findById(sub);
+            String email = jsonObject.getString("email");
+            Optional<User> existingUserOptional = userRepository.findByEmail(email);
 
             User user;
             if (existingUserOptional.isPresent()) {
@@ -58,22 +54,21 @@ public class UserService {
             }
 
             // 사용자 정보 설정
-            user.setSub(sub);
-            user.setEmail(jsonObject.getString("email"));
-            user.setName(jsonObject.getString("name"));
+            user.setEmail(email);
+            String name = jsonObject.getString("name");
+            user.setName(name);
+//            user.setName(jsonObject.getString("name"));
 
             try {
                 // DB에 사용자 정보 저장 (새로운 사용자면 생성, 기존 생성자면 업데이트)
                 userRepository.save(user);
-                //user 정보와 함께 JWT token도 반환
-                String jwtToken = JwtUtil.generateToken(user.getEmail(), user.getName());
                 System.out.println("User saved successfully.");
 
-                return new UserResponse(jwtToken, user.getEmail(), user.getName());
+                String jwtToken = JwtUtil.generateToken(user.getEmail(), user.getName());
+                return new UserResponse(jwtToken, email, name);
             } catch (Exception e) {
                 System.out.println("Error saving user: " + e.getMessage());
             }
-
         } catch (JSONException e) {
             System.out.println("JSON parsing error: " + e.getMessage());
         } catch (Exception e) {
@@ -82,5 +77,5 @@ public class UserService {
 
         return null;  // 에러 발생 시 null 반환.
     }
-
 }
+
