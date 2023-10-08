@@ -11,7 +11,8 @@ export default function KakaoLoginBtn() {
   }
   return (
     <div>
-      <button onClick={loginKakao}>카카오 로그인</button>
+      <button className="bg-blue-500 text-white px-10 py-5 text-2xl rounded-2xl" onClick={loginKakao}>
+        카카오 로그인</button>
     </div>
   )
 }
