@@ -11,5 +11,6 @@ import lombok.EqualsAndHashCode;
 @DiscriminatorValue("Naver")
 public class NaverUser extends User {
     private String Nickname;
+    private String name;
 }
 

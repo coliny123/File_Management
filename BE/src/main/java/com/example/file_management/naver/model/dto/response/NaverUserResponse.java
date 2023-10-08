@@ -15,5 +15,6 @@ public class NaverUserResponse {
     public static class Response {
         private String email;
         private String nickname;
+        private String name;
     }
 }

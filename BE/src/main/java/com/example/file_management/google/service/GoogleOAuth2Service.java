@@ -23,6 +23,9 @@ public class GoogleOAuth2Service {
     private String clientSecret;
     @Value("${oauth.google.tokenUrl}")
     private String tokenUrl;
+
+    @Value("${oauth.google.redirect_uri}")
+    private String redirectUri;
     WebClient webClient = WebClient.create();
 
     public String getAccessToken(AuthCodeDto authCodeDto, String redirectUri) {
