@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 function Navbar() {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
         <div className='w-full h-12 bg-white'>
@@ -12,7 +12,8 @@ function Navbar() {
                 <li>2</li>
                 <li>3</li>
                 <li>4</li>
-                {/* <button onClick={() => navigate("/login")}>로그인</button> */}
+                <button onClick={() => navigate("/login")}>로그인</button>
+                {/* <button onClick={() => window.location.href("/login")}>로그인</button> */}
                 <div className="mt-4">
                 </div>
             </ul>

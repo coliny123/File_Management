@@ -6,36 +6,38 @@ import Sidebar from './components/bar/Sidebar';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 
+const MainLayout = () => {
+  return (
+    <>
+      <Sidebar></Sidebar>
+        <div className='ml-56 h-screen'>
+          <Navbar></Navbar>
+          <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
+          </div>
+        </div>
+    </>
+  )
+}
+
+const LoginLayout = () => {
+  return(<>A</>)
+}
+
 function App() {
   return (
     <div className="App">
-        <Sidebar></Sidebar>
-          <div className='ml-56 h-screen'>
-            <Navbar></Navbar>
-            <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
-                <LandingPage></LandingPage>
-            </div>
-          </div>
+      <Router>
+        <Routes>
+          <Route element={<MainLayout/>}>
+            <Route path='/' element={<LandingPage/>}/>
+          </Route>
+          <Route element={<LoginLayout/>}>
+            <Route path='/login' element={<LoginPage/>} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
-// function App() {
-//   return (
-//     <div className="App">
-//       <Router>
-//         <Sidebar></Sidebar>
-//           <div className='ml-56 h-screen'>
-//             <Navbar></Navbar>
-//             <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
-//               <Routes>
-//                 <Route path="/" element={<LandingPage />}></Route>
-//                 <Route path="/login" element={<LoginPage />}></Route>
-//               </Routes>
-//             </div>
-//           </div>
-//       </Router>
-//     </div>
-//   );
-// }
 
 export default App;
