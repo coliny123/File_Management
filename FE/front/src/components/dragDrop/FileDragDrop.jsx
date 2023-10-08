@@ -103,7 +103,7 @@ function FileDragDrop() {
 
     return (
         <div className="DragDrop flex flex-col justify-center items-center">
-            <div className='dropBox w-80 h-40 border-4'>
+            <div className='dropBox w-80 h-40 border-4 border-dashed rounded-2xl'>
                 <input
                     type="file"
                     id="fileUpload"
@@ -120,7 +120,7 @@ function FileDragDrop() {
                     </div>
                 </label>
             </div>
-            <div className='btns border-4 border- w-80'>
+            <div className='btns border-4 border-dashed w-80'>
                 <button onClick={() => sendFiles(files)}>전송 버튼</button>
                 <label
                     className='DragDrop-File'
