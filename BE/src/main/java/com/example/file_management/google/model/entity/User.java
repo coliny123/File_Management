@@ -1,5 +1,4 @@
 package com.example.file_management.google.model.entity;
-
 //import javax.persistence.Entity;
 //import javax.persistence.Id;
 

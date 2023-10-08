@@ -12,7 +12,7 @@ import com.example.file_management.google.service.UserService;
 import com.example.file_management.google.model.dto.response.UserResponse;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3001")
+@CrossOrigin(origins="http://localhost:3000")
 public class AuthController {
     private final GoogleOAuth2Service googleOAuth2Service;
     private final UserService userService;

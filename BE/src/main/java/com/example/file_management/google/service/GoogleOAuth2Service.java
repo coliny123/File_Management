@@ -17,11 +17,11 @@ public class GoogleOAuth2Service {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleOAuth2Service.class);
 
-    @Value("${google.clientId}")
+    @Value("${oauth.google.clientId}")
     private String clientId;
-    @Value("${google.clientSecret}")
+    @Value("${oauth.google.clientSecret}")
     private String clientSecret;
-    @Value("${google.tokenUrl}")
+    @Value("${oauth.google.tokenUrl}")
     private String tokenUrl;
     WebClient webClient = WebClient.create();
 
