@@ -1,5 +1,6 @@
 import Navbar from '../components/bar/Navbar';
 import Sidebar from '../components/bar/Sidebar';
+import { Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
     return (
@@ -8,6 +9,7 @@ const MainLayout = () => {
             <div className='ml-56 h-screen'>
                 <Navbar></Navbar>
                 <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
+                    <Outlet></Outlet>
                 </div>
             </div>
         </>
