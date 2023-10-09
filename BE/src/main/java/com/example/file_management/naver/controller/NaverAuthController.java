@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.file_management.naver.service.NaverOAuth2Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -32,18 +33,21 @@ public class NaverAuthController {
 
         System.out.println("Received auth code(naver): " + naverAuthCode);
 
-//        String accessToken = naverOAuth2Service.getAccessToken(authRequest);
-
-        String accessToken = null;
+        String accessToken;
         try {
             accessToken = naverOAuth2Service.getAccessToken(authRequest);
             System.out.println("Received access token(naver): " + accessToken);
         } catch (Exception e) {
             System.out.println("Error while getting access token: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while getting access token.");
         }
 
         //사용자 정보 얻기
         NaverUserResponse naverUserResponse = naverUserService.updateUserInfo(accessToken);
+
+        if (naverUserResponse == null || naverUserResponse.getResponse() == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while updating user info.");
+        }
 
         return ResponseEntity.ok(naverUserResponse);
     }

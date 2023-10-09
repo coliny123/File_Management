@@ -13,8 +13,8 @@ public class NaverUserResponse {
 
     @Data
     public static class Response {
+        private String token;
         private String email;
-        private String nickname;
         private String name;
     }
 }
