@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
 import { sendFiles } from '../../services/sendFiles';
+import { useUploadProgress } from '../../context/UploadProgressContext';
+
 
 const fileInventory = (files, deleteFilesById) => {
     return (
@@ -25,6 +27,8 @@ const fileInventory = (files, deleteFilesById) => {
 }
 
 function FileDragDrop() {
+
+    const { setUploadProgress } = useUploadProgress();
 
     const [isDragging, setIsDragging] = useState(false);
     const [files, setFiles] = useState([]);
@@ -121,7 +125,7 @@ function FileDragDrop() {
                 </label>
             </div>
             <div className='btns border-4 border-dashed w-80'>
-                <button onClick={() => sendFiles(files)}>전송 버튼</button>
+                <button onClick={() => sendFiles(files, setUploadProgress)}>전송 버튼</button>
                 <label
                     className='DragDrop-File'
                     htmlFor="fileUpload"

@@ -5,19 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { UploadProgressProvider } from './context/UploadProgressContext';
 
 const queryClient = new QueryClient();
 const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <GoogleOAuthProvider clientId={Google_Client_ID}>
-      <React.StrictMode>
-          <App />
-        </React.StrictMode>
-    </GoogleOAuthProvider>
-  </QueryClientProvider>
+  <UploadProgressProvider>
+    <QueryClientProvider client={queryClient}>
+      <GoogleOAuthProvider clientId={Google_Client_ID}>
+        <React.StrictMode>
+            <App />
+          </React.StrictMode>
+      </GoogleOAuthProvider>
+    </QueryClientProvider>
+  </UploadProgressProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

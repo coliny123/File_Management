@@ -3,6 +3,7 @@ import FileDragDrop from '../components/dragDrop/FileDragDrop'
 import FileStatusbar from '../components/bar/FileStatusbar'
 import QrCode from '../components/qrCode/QrCode'
 import useUser from '../hooks/query/useUser'
+import Progressbar from '../components/bar/Progressbar'
 
 function LandingPage() {
 
@@ -13,7 +14,7 @@ function LandingPage() {
         <FileStatusbar></FileStatusbar>
         <FileDragDrop></FileDragDrop>
         <QrCode url='http://192.168.0.8:3000/download/1'></QrCode>
-        {/* <QrCode url='http://www.naver.com'></QrCode> */}
+        <Progressbar></Progressbar>
     </div>
   )
 }
