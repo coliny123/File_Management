@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState } from 'react'
+import { UploadProgressProvider } from './UploadProgressContext';
 
 const UploadStatusContext = createContext();
 
-export function UploadStatusContext() {
+export function UploadStatusProvider({ children }) {
 
     const [uploadStatus, setUploadStatus] = useState(0);
 
@@ -13,4 +14,6 @@ export function UploadStatusContext() {
     )
 }
 
-export default UploadStatusContext
+export function useUploadStatus() {
+    return useContext(UploadStatusContext)
+}
