@@ -4,11 +4,20 @@ import FileStatusbar from '../components/bar/FileStatusbar'
 import QrCode from '../components/qrCode/QrCode'
 import useUser from '../hooks/query/useUser'
 import Progressbar from '../components/bar/Progressbar'
+import { loginApi } from '../api/loginApi'
+import { useQuery, QueryClient } from '@tanstack/react-query'
+
 
 function LandingPage() {
 
-  // const user = useUser();
-  // console.log(user)
+  // const queryClient = new QueryClient();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ['userData'],
+    queryFn: () =>loginApi(),
+  })
+
+  console.log(data);
   return (
     <div>
       배포테스트
