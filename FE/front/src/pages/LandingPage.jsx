@@ -11,6 +11,7 @@ function LandingPage() {
   // console.log(user)
   return (
     <div>
+      배포
         <FileStatusbar></FileStatusbar>
         <FileDragDrop></FileDragDrop>
         <QrCode url='http://192.168.0.8:3000/download/1'></QrCode>
