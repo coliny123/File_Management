@@ -12,12 +12,12 @@ function LandingPage() {
 
   // const queryClient = new QueryClient();
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ['userData'],
-    queryFn: () =>loginApi(),
-  })
+  // const { isPending, error, data } = useQuery({
+  //   queryKey: ['userData'],
+  //   queryFn: () =>loginApi(),
+  // })
 
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       배포테스트

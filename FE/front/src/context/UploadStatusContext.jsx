@@ -3,6 +3,7 @@ import { UploadProgressProvider } from './UploadProgressContext';
 
 const UploadStatusContext = createContext();
 
+// 0: 파일 업로드 전, 1: 파일 업로드 중, 2: 파일 업로드 완료
 export function UploadStatusProvider({ children }) {
 
     const [uploadStatus, setUploadStatus] = useState(0);

@@ -119,8 +119,11 @@ function FileDragDrop() {
                     className='DragDrop-File w-40 h-40'
                     ref={dragRef}
                 >
-                    <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
+                    {/* <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
                         {files.length > 0 ? fileInventory(files, deleteFilesById) : '파일 첨부 전입니다.'}
+                    </div> */}
+                    <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
+                        {isDragging ? '파일을 놓아주세요' : files.length > 0 ? fileInventory(files, deleteFilesById) : '파일 첨부 전입니다.'}
                     </div>
                 </label>
             </div>
