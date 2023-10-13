@@ -22,11 +22,6 @@ public class KakaoMemberClient implements OauthMemberClient {
     private final KakaoApiClient kakaoApiClient;
     private final KakaoOauthConfig kakaoOauthConfig;
 
-//    @Autowired
-//    public KakaoMemberClient(KakaoApiClient kakaoApiClient, KakaoOauthConfig kakaoOauthConfig) {
-//        this.kakaoApiClient = kakaoApiClient;
-//        this.kakaoOauthConfig = kakaoOauthConfig;
-//    }
 
 
     @Override
@@ -34,12 +29,14 @@ public class KakaoMemberClient implements OauthMemberClient {
         OauthServerType serverType = OauthServerType.KAKAO;
         System.out.println("Supporting Server Type: " + serverType);
         return serverType;
-//        return OauthServerType.KAKAO;
+
     }
 
     @Override
     public OauthMember fetch(String authCode) {
         KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(authCode)); // (1)
+
+        System.out.println("Kakao Access Token: " + tokenInfo.accessToken());
         KakaoMemberResponse kakaoMemberResponse =
                 kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());  // (2)
         return kakaoMemberResponse.toDomain();  // (3)
@@ -53,6 +50,8 @@ public class KakaoMemberClient implements OauthMemberClient {
         params.add("redirect_uri", kakaoOauthConfig.redirectUri());
         params.add("code", authCode);
         params.add("client_secret", kakaoOauthConfig.clientSecret());
+
+//        System.out.println("params : " + params);
         return params;
     }
 }

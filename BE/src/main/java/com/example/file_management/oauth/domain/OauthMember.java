@@ -32,7 +32,7 @@ public class OauthMember {
     @Embedded
     private OauthId oauthId;
     private String nickname;
-    private String profileImageUrl;
+//    private String profileImageUrl;
 
     public Long id() {
         return id;
@@ -46,8 +46,8 @@ public class OauthMember {
         return nickname;
     }
 
-    public String profileImageUrl() {
-        return profileImageUrl;
-    }
+//    public String profileImageUrl() {
+//        return profileImageUrl;
+//    }
 }
 

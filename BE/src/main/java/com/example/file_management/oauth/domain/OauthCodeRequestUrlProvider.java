@@ -8,7 +8,6 @@ public interface OauthCodeRequestUrlProvider {
      * 어떤 Type의 Oauth 서비스를 사용할 것인지 설정
      */
 
-
     OauthServerType supportServer();
     String provide();
 }
