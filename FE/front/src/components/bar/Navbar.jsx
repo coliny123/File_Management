@@ -7,8 +7,15 @@ function Navbar() {
 
     const navigate = useNavigate();
     const {isLogin, setIsLogin} = useIsLogin();
-    
-    console.log(isLogin);
+
+    const logout = () => {
+        window.localStorage.removeItem('refreshToken');
+        setIsLogin(false);
+    }
+
+    console.log(isLogin)
+
+    console.log(isLogin ? 'login' : 'logout');
 
     return (
         <div className='w-full h-12 bg-white'>
@@ -17,8 +24,8 @@ function Navbar() {
                 <button className='bg-[#F7F6FB] text-[#96959A] w-20 h-8 rounded-full' onClick={() => navigate("/login")}>로그인</button>
                 <div className="mt-4">
                 </div>
+                {isLogin ? <button onClick={logout}>로그아웃</button> : <p>'로그아웃 상태'</p>}
             </ul>
-            {isLogin ? <p>'로그인 상태'</p> : <p>'로그아웃 상태'</p>}
         </div>
     )
 }

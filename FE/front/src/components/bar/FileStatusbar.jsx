@@ -5,9 +5,11 @@ function FileStatusbar() {
 
     const handleState = () => {
         setNowState((pre) => pre === 2 ? 0 : pre + 1)
+        console.log(nowState)
     }
-    
+
     const [nowState, setNowState] = useState(0)
+
     return (
         <div>
             <div className='wrapper flex justify-between'>
