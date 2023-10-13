@@ -7,19 +7,34 @@ import com.example.file_management.oauth.domain.OauthMemberClient;
 import com.example.file_management.oauth.kakao.KakaoOauthConfig;
 import com.example.file_management.oauth.kakao.dto.KakaoMemberResponse;
 import com.example.file_management.oauth.kakao.dto.KakaoToken;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+@Component
+@RequiredArgsConstructor
 public class KakaoMemberClient implements OauthMemberClient {
-    private KakaoApiClient kakaoApiClient;
-    private KakaoOauthConfig kakaoOauthConfig;
+//    private KakaoApiClient kakaoApiClient;
+//    private KakaoOauthConfig kakaoOauthConfig;
 
-    public KakaoMemberClient() {
-    }
+    private final KakaoApiClient kakaoApiClient;
+    private final KakaoOauthConfig kakaoOauthConfig;
+
+//    @Autowired
+//    public KakaoMemberClient(KakaoApiClient kakaoApiClient, KakaoOauthConfig kakaoOauthConfig) {
+//        this.kakaoApiClient = kakaoApiClient;
+//        this.kakaoOauthConfig = kakaoOauthConfig;
+//    }
+
 
     @Override
     public OauthServerType supportServer() {
-        return OauthServerType.KAKAO;
+        OauthServerType serverType = OauthServerType.KAKAO;
+        System.out.println("Supporting Server Type: " + serverType);
+        return serverType;
+//        return OauthServerType.KAKAO;
     }
 
     @Override
@@ -29,6 +44,7 @@ public class KakaoMemberClient implements OauthMemberClient {
                 kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());  // (2)
         return kakaoMemberResponse.toDomain();  // (3)
     }
+
 
     private MultiValueMap<String, String> tokenRequestParams(String authCode) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

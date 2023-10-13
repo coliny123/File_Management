@@ -34,7 +34,9 @@ public class OauthController {
             @PathVariable(name = "oauthServerType") String oauthServerTypeName,
             @RequestParam("code") String code
     ) {
-        OauthServerType oauthServerType = OauthServerType.fromName(oauthServerTypeName);
+//        OauthServerType oauthServerType = OauthServerType.fromName(oauthServerTypeName);
+        OauthServerType oauthServerType = OauthServerType.fromName(oauthServerTypeName.toLowerCase());
+
         Long login = oauthService.login(oauthServerType, code);
         return ResponseEntity.ok(login);
     }

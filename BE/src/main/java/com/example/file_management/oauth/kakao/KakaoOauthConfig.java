@@ -3,6 +3,7 @@ package com.example.file_management.oauth.kakao;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+
 @ConfigurationProperties(prefix = "oauth.kakao")
 public record KakaoOauthConfig(
         String redirectUri,

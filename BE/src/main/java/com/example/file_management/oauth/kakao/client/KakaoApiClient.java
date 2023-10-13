@@ -3,7 +3,10 @@ package com.example.file_management.oauth.kakao.client;
 
 import com.example.file_management.oauth.kakao.dto.KakaoMemberResponse;
 import com.example.file_management.oauth.kakao.dto.KakaoToken;
+import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
@@ -21,4 +24,6 @@ public interface KakaoApiClient {
     // 사용자 정보 API를 가져옴
     @GetExchange("https://kapi.kakao.com/v2/user/me")
     KakaoMemberResponse fetchMember(@RequestHeader(name = AUTHORIZATION) String bearerToken);
+
+
 }
