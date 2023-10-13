@@ -50,6 +50,7 @@ import axios from 'axios';
 import { loginApi } from '../api/loginApi';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useUserDataQuery } from '../hooks/query/useUserDataQuery';
+import { useIsLogin } from '../context/IsLoginContext';
 
 const Server_IP = process.env.REACT_APP_Server_IP;
 
@@ -58,12 +59,14 @@ function LoginRedirectPage() {
     const { provider } = useParams();
 
     const code = new URLSearchParams(window.location.search).get('code');
+    const [isLogin, setIsLogin] = useIsLogin();
 
     // const queryClient = useQueryClient()
     // const { isPending, error, data } = useUserDataQuery(provider, code);
 
     useEffect(async () => {
       await loginApi(provider, code);
+      setIsLogin(true);
       window.location.href = 'http://localhost:3000/'
     })
 
