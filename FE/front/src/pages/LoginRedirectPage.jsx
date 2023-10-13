@@ -62,30 +62,14 @@ function LoginRedirectPage() {
     // const queryClient = useQueryClient()
     // const { isPending, error, data } = useUserDataQuery(provider, code);
 
-    useEffect(() => {
-      loginApi(provider, code);
-      // getUserData 처리
+    useEffect(async () => {
+      await loginApi(provider, code);
+      window.location.href = 'http://localhost:3000/'
     })
-
-
-    // useEffect(() => {
-    //     if (data) {
-    //         setLoginSuccess(true);
-    //         console.log(data);
-    //     }
-    // }, [data]);
 
     return (
         <div>
-            {/* {isLoading ? (
-                <p>Loading...</p>
-            ) : isError ? (
-                <p>Error occurred while fetching data</p>
-            ) : loginSuccess ? (
-                <p>Login successful</p>
-            ) : (
-                <p>Login failed</p>
-            )} */}
+            로그인 중
         </div>
     );
 }

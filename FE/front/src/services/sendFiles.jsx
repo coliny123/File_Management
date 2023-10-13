@@ -9,7 +9,7 @@ export const sendFiles = (files, setUploadProgress) => {
     files.map((file) => {
         formData.append('file', file.object)
     })
-    axios.post('http://165.246.116.3:8080/upload', formData, {
+    axios.post('http://192.168.1.154:8080/upload', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
