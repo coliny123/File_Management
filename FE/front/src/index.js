@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-// import { QueryClient, QueryClientProvider } from 'react-query';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UploadProgressProvider } from './context/UploadProgressContext';
 
@@ -16,9 +15,9 @@ root.render(
   <UploadProgressProvider>
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider clientId={Google_Client_ID}>
-        <React.StrictMode>
+        {/* <React.StrictMode> */}
             <App />
-          </React.StrictMode>
+          {/* </React.StrictMode> */}
       </GoogleOAuthProvider>
     </QueryClientProvider>
   </UploadProgressProvider>

@@ -8,7 +8,7 @@ function Progressbar({ progress }) {
     return (
         <div>
             <CircularProgressbarWithChildren
-                value={10} // 수정할 값
+                value={30} // 수정할 값
                 strokeWidth={20}
                 className={"mg mt-10"}
                 styles={{
@@ -30,7 +30,7 @@ function Progressbar({ progress }) {
                     },
                 }}
             >
-                <div>10</div>
+                <p>10</p>
             </CircularProgressbarWithChildren>
             <div className="progress" style={{ width: `${uploadProgress}%` }}></div>
             <div className="progress-text">{`${uploadProgress}%`}</div>

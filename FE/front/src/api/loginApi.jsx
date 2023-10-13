@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
+const Server_IP = process.env.REACT_APP_Server_IP;
 
-export const loginApi = async ({ code, provider }) => {
-    const Server_IP = '';
-    // const { provider } = useParams();
+export const loginApi = async (provider, code) => {
 
-    axios.post(`${Server_IP}/auth/${provider}`, { authCode: code })
-        .then(res => {
-            // 저장하는 로직이나 아니면 따로 빼도 됨
-            localStorage.setItem('token', res.data.token);
-            window.location.href = 'http://localhost:3000'
-
-            return res.data
+    await axios.post(`${Server_IP}/auth/${provider}`, { authCode: code }).then((res) => {
+        // 토큰 저장하는 로직
+        console.log(res.data)
+        return res.data;
+    }).catch((err) => {
+        // 오류 처리하는 로직
+        console.log('로그인 중 오류 발생', err)
     })
-}
+};
+
+export default loginApi;
+
