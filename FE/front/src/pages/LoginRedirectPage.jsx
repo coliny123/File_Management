@@ -55,7 +55,6 @@ import { useIsLogin } from '../context/IsLoginContext';
 const Server_IP = process.env.REACT_APP_Server_IP;
 
 function LoginRedirectPage() {
-    const [loginSuccess, setLoginSuccess] = useState(false);
     const { provider } = useParams();
 
     const code = new URLSearchParams(window.location.search).get('code');

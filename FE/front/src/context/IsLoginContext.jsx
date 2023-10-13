@@ -2,11 +2,36 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 
 const IsLoginContext = createContext();
 
-function IsLoginProvider({ children }) {
+// function IsLoginProvider({ children }) {
   
+//     const [isLogin, setIsLogin] = useState(false);
+
+//     useEffect(() => {
+//         if (window.localStorage.getItem('refreshToken')) {
+//             setIsLogin(true)
+//         } else {
+//             setIsLogin(false)
+//         }
+//     }, [isLogin])
+
+//     return (
+//       <IsLoginContext.Provider value={{ isLogin, setIsLogin }}>
+//         {children}
+//       </IsLoginContext.Provider>
+//   )
+// }
+
+// export function useIsLogin() {
+//     return useContext(IsLoginContext)
+// }
+
+
+
+export function IsLoginProvider({ children }) {
+
     const [isLogin, setIsLogin] = useState(false);
 
-    useEffect(() => { 
+    useEffect(() => {
         if (window.localStorage.getItem('refreshToken')) {
             setIsLogin(true)
         } else {
@@ -15,10 +40,10 @@ function IsLoginProvider({ children }) {
     }, [isLogin])
 
     return (
-      <IsLoginContext.Provider value={{ isLogin, setIsLogin }}>
-        {children}
-      </IsLoginContext.Provider>
-  )
+        <IsLoginContext.Provider value={{ isLogin, setIsLogin }}>
+            {children}
+        </IsLoginContext.Provider>
+    )
 }
 
 export function useIsLogin() {

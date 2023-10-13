@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useIsLogin } from '../../context/IsLoginContext';
+
 
 function Navbar() {
 
     const navigate = useNavigate();
+    const {isLogin, setIsLogin} = useIsLogin();
+    
+    console.log(isLogin);
 
     return (
         <div className='w-full h-12 bg-white'>
@@ -13,6 +18,7 @@ function Navbar() {
                 <div className="mt-4">
                 </div>
             </ul>
+            {isLogin ? <p>'로그인 상태'</p> : <p>'로그아웃 상태'</p>}
         </div>
     )
 }
