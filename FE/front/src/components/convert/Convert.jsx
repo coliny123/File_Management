@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useIsLogin } from '../../context/IsLoginContext'
+import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 function IsNotLoginConvert() {
 
@@ -13,12 +14,20 @@ function IsNotLoginConvert() {
     )
 }
 
-function IsLoginConvert() {
+function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
     return (
         <div className='flex flex-col justify-center items-center'>
             <div className='w-[161px]'>
                 <div className='text-2xl font-bold mt-5'>파일 변환</div>
                 <div className='border-2 w-full'>올린 파일</div>
+                <FormControl fullWidth>
+                    <InputLabel id='select-label'>형식</InputLabel>
+                    <Select className='w-full' labelId='select-label' value={transferredFileFormat} label='format' onChange={(e) => setTransferredFileFormat(e.target.value)}>
+                        <MenuItem value='text'>text</MenuItem>
+                        <MenuItem value='pdf'>pdf</MenuItem>
+                        <MenuItem value='hwp'>hwp</MenuItem>
+                    </Select>
+                </FormControl>
                 <div>원래 형식 - 나중 형식</div>
                 <div>변환 후 보내는 버튼</div>
             </div>
@@ -27,13 +36,15 @@ function IsLoginConvert() {
 }
 
 function Convert() {
+
+    const [transferredFileFormat, setTransferredFileFormat] = useState('')
     const { isLogin, setIsLogin } = useIsLogin();
 
     return (
         <div className='w-full h-full flex flex-col justify-center items-center'>
             <div className='w-full h-full border-2'>
                 {/* {isLogin ? <IsLoginConvert></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>} */}
-                {!isLogin ? <IsLoginConvert></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>}
+                {!isLogin ? <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>}
             </div>
             <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
                 <button>Next</button>
