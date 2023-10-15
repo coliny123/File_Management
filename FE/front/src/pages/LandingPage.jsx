@@ -6,6 +6,8 @@ import useUser from '../hooks/query/useUserDataQuery'
 import Progressbar from '../components/bar/Progressbar'
 import { loginApi } from '../api/loginApi'
 import { useQuery, QueryClient } from '@tanstack/react-query'
+import { useUploadStatus } from '../context/UploadStatusContext'
+import Convert from '../components/convert/Convert'
 
 function LandingPage() {
 
@@ -17,6 +19,8 @@ function LandingPage() {
   // })
 
   // console.log(data);
+
+  const {uploadStatus} = useUploadStatus();
   return (
     <div>
         <div className='content-wrapper w-full h-full flex flex-col justify-center items-center '>
@@ -24,10 +28,9 @@ function LandingPage() {
             <FileStatusbar></FileStatusbar>
           </div>
           <div className='w-[640px] h-[400px]'>
-            <FileDragDrop></FileDragDrop>
+          { uploadStatus === 0 ? <FileDragDrop/> : <Convert/>}
           </div>
         </div>
-
         <QrCode url='http://192.168.0.8:3000/download/1'></QrCode>
         <Progressbar></Progressbar>
     </div>
