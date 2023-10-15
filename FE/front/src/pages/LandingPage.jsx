@@ -28,10 +28,9 @@ function LandingPage() {
             <FileStatusbar></FileStatusbar>
           </div>
           <div className='w-[640px] h-[400px]'>
-          { uploadStatus === 0 ? <FileDragDrop/> : <Convert/>}
+          { uploadStatus === 0 ? <FileDragDrop/> : uploadStatus === 1 ? <Convert/> : <QrCode/>}
           </div>
         </div>
-        <QrCode url='http://192.168.0.8:3000/download/1'></QrCode>
         <Progressbar></Progressbar>
     </div>
   )
