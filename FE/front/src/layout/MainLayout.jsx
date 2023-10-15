@@ -6,7 +6,7 @@ const MainLayout = () => {
     return (
         <> 
             <Sidebar></Sidebar>
-            <div className='ml-24 h-screen'>
+            <div className='h-screen'>
                 <Navbar></Navbar>
                 <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'>
                     <Outlet></Outlet>

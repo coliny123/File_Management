@@ -4,6 +4,20 @@ import { sendFiles } from '../../services/sendFiles';
 import { useUploadProgress } from '../../context/UploadProgressContext';
 
 
+const BeforeDrop = () => {
+    return (
+        <div>
+            <div className='mt-20 text-2xl font-bold'>파일 업로드</div>
+            <div className='mt-20 text-lg'>drag and drop</div>
+            <div>or</div>
+            <label
+                className='DragDrop-File'
+                htmlFor="fileUpload"
+            >파일 올리기 버튼</label>
+        </div>
+    )
+}
+
 const fileInventory = (files, deleteFilesById) => {
     return (
         <div className="DragDrop-Files">
@@ -106,8 +120,8 @@ function FileDragDrop() {
     }, []);
 
     return (
-        <div className="DragDrop flex flex-col justify-center items-center">
-            <div className='dropBox w-80 h-40 border-4 border-dashed rounded-2xl'>
+        <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
+            <div className='dropBox w-full h-full border-4 border-dashed rounded-3xl'>
                 <input
                     type="file"
                     id="fileUpload"
@@ -119,20 +133,13 @@ function FileDragDrop() {
                     className='DragDrop-File w-40 h-40'
                     ref={dragRef}
                 >
-                    {/* <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
-                        {files.length > 0 ? fileInventory(files, deleteFilesById) : '파일 첨부 전입니다.'}
-                    </div> */}
-                    <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
-                        {isDragging ? '파일을 놓아주세요' : files.length > 0 ? fileInventory(files, deleteFilesById) : '파일 첨부 전입니다.'}
+                    <div className={`w-full h-full flex justify-center ${isDragging ? "bg-sky-500" : ""}`}>
+                        {isDragging ? '파일을 놓아주세요' : files.length > 0 ? fileInventory(files, deleteFilesById) : BeforeDrop()}
                     </div>
                 </label>
             </div>
-            <div className='btns border-4 border-dashed w-80'>
-                <button onClick={() => sendFiles(files, setUploadProgress)}>전송 버튼</button>
-                <label
-                    className='DragDrop-File'
-                    htmlFor="fileUpload"
-                >업로드 버튼</label>
+            <div className='btns bg-blue-500 text-white w-[160px] mt-10'>
+                <button onClick={() => sendFiles(files, setUploadProgress)}>Upload</button>
             </div>
         </div>
     )

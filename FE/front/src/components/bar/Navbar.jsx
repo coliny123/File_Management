@@ -1,31 +1,40 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useIsLogin } from '../../context/IsLoginContext';
+import { BsCloudArrowDown } from 'react-icons/bs'
 
-
-function Navbar() {
+const LoginBtn = () => {
 
     const navigate = useNavigate();
-    const {isLogin, setIsLogin} = useIsLogin();
+    return (
+        <button className='bg-[#F7F6FB] w-20 h-8 rounded-full' onClick={() => navigate("/login")}>로그인</button>
+    )
+}
+
+const LogoutBtn = () => {
+
+    const { isLogin, setIsLogin } = useIsLogin();
 
     const logout = () => {
         window.localStorage.removeItem('refreshToken');
         setIsLogin(false);
     }
 
-    console.log(isLogin)
+    return (
+        <button className='bg-[#F7F6FB] w-[120px] h-[40px] rounded-full' onClick={logout}>로그아웃</button>
+    )
+}
 
-    console.log(isLogin ? 'login' : 'logout');
+
+function Navbar() {
+
+    const {isLogin, setIsLogin} = useIsLogin();
 
     return (
-        <div className='w-full h-12 bg-white'>
-            <ul className='h-full flex space-x-10 justify-end mr-10 items-center'>
-                <li>1</li>
-                <button className='bg-[#F7F6FB] text-[#96959A] w-20 h-8 rounded-full' onClick={() => navigate("/login")}>로그인</button>
-                <div className="mt-4">
-                </div>
-                {isLogin ? <button onClick={logout}>로그아웃</button> : <p>'로그아웃 상태'</p>}
-            </ul>
+        <div className='relative z-30 w-full h-20 bg-white flex items-center'>
+            <input className='absolute left-[80px] bg-[#F7F6FB] text-center w-[160px] h-[40px] rounded-full' placeholder='코드 입력'></input>
+            <div className='absolute left-1/2 -translate-x-1/2 text-center bg-[#F7F6FB] w-[160px] h-[40px] flex items-center justify-center'><BsCloudArrowDown className='text-black' /><p>ICloduU</p></div>
+            <div className='absolute right-10'>{isLogin ? <LoginBtn /> : <LogoutBtn />}</div>
         </div>
     )
 }

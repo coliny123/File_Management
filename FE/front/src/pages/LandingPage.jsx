@@ -7,7 +7,6 @@ import Progressbar from '../components/bar/Progressbar'
 import { loginApi } from '../api/loginApi'
 import { useQuery, QueryClient } from '@tanstack/react-query'
 
-
 function LandingPage() {
 
   // const queryClient = new QueryClient();
@@ -20,9 +19,15 @@ function LandingPage() {
   // console.log(data);
   return (
     <div>
-      배포테스트
-        <FileStatusbar></FileStatusbar>
-        <FileDragDrop></FileDragDrop>
+        <div className='content-wrapper w-full h-full flex flex-col justify-center items-center '>
+          <div className='mt-[40px] w-[490px]'>
+            <FileStatusbar></FileStatusbar>
+          </div>
+          <div className='w-[640px] h-[400px]'>
+            <FileDragDrop></FileDragDrop>
+          </div>
+        </div>
+
         <QrCode url='http://192.168.0.8:3000/download/1'></QrCode>
         <Progressbar></Progressbar>
     </div>
