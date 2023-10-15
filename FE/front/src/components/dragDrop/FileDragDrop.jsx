@@ -138,7 +138,7 @@ function FileDragDrop() {
                     </div>
                 </label>
             </div>
-            <div className='btns bg-blue-500 text-white w-[160px] mt-10'>
+            <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
                 <button onClick={() => sendFiles(files, setUploadProgress)}>Upload</button>
             </div>
         </div>

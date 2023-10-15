@@ -9,8 +9,6 @@ function FileStatusbar() {
     const handleState = () => {
         setUploadStatus((pre) => pre === 2 ? 0 : pre + 1)
         console.log(uploadStatus)
-        // setNowState((pre) => pre === 2 ? 0 : pre + 1)
-        // console.log(nowState)
     }
     const [nowState, setNowState] = useState(0)
 
