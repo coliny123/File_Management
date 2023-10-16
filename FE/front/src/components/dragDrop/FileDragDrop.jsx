@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
-import { sendFiles } from '../../services/sendFiles';
 import { useUpload } from '../../context/UploadContext';
 
 const BeforeDrop = () => {
@@ -45,7 +44,7 @@ function FileDragDrop() {
     const fileId = useRef(0);
     const dragRef = useRef(null);
 
-    const {uploadedFile, setUploadedFile, setUploadProgress, setUploadStatus} = useUpload();
+    const {uploadedFile, setUploadedFile, setUploadStatus} = useUpload();
 
     const onChangeFiles = (e) => {
         const newFiles = e.type === "drop" ? e.dataTransfer.files : e.target.files;

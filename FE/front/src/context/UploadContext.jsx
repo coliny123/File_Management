@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react'
-import { UploadProgressProvider } from './UploadProgressContext';
 
 const UploadContext = createContext();
 
@@ -7,7 +6,7 @@ const UploadContext = createContext();
 export function UploadProvider({ children }) {
 
     const [uploadStatus, setUploadStatus] = useState(0);
-    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploadProgress, setUploadProgress] = useState(10);
     const [uploadedFile, setUploadedFile] = useState([]);
     
     return (

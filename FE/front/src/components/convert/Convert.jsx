@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useIsLogin } from '../../context/IsLoginContext'
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { useUpload } from '../../context/UploadContext';
+import { sendFiles } from '../../services/sendFiles';
 
 function IsNotLoginConvert() {
 
@@ -39,15 +41,22 @@ function Convert() {
 
     const [transferredFileFormat, setTransferredFileFormat] = useState('')
     const { isLogin, setIsLogin } = useIsLogin();
+    const { setUploadStatus, uploadedFile, setUploadProgress } = useUpload();
+
+    const handleNextBtn = () => {
+        console.log(uploadedFile)
+        sendFiles(uploadedFile, setUploadProgress)
+        setUploadStatus(2)
+        console.log(uploadedFile)
+    }
 
     return (
         <div className='w-full h-full flex flex-col justify-center items-center'>
             <div className='w-full h-full border-2'>
-                {/* {isLogin ? <IsLoginConvert></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>} */}
                 {!isLogin ? <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>}
             </div>
             <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
-                <button>Next</button>
+                <button onClick={handleNextBtn}>Next</button>
             </div>
         </div>
   )
