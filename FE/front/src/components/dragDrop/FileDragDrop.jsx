@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
 import { sendFiles } from '../../services/sendFiles';
-import { useUploadProgress } from '../../context/UploadProgressContext';
-
+import { useUpload } from '../../context/UploadContext';
 
 const BeforeDrop = () => {
     return (
@@ -42,17 +41,16 @@ const fileInventory = (files, deleteFilesById) => {
 
 function FileDragDrop() {
 
-    const { setUploadProgress } = useUploadProgress();
-
     const [isDragging, setIsDragging] = useState(false);
-    const [files, setFiles] = useState([]);
     const fileId = useRef(0);
     const dragRef = useRef(null);
 
+    const {uploadedFile, setUploadedFile, setUploadProgress, setUploadStatus} = useUpload();
+
     const onChangeFiles = (e) => {
         const newFiles = e.type === "drop" ? e.dataTransfer.files : e.target.files;
-        setFiles((prevFiles) => [
-            ...prevFiles,
+        setUploadedFile((prevFile) => [
+            ...prevFile,
             ...Array.from(newFiles).map((file) => ({
                 id: fileId.current++,
                 type: file.type,
@@ -62,7 +60,7 @@ function FileDragDrop() {
     };
 
     const deleteFilesById = (id) => {
-        setFiles(files.filter((file) => file.id !== id));
+        setUploadedFile(uploadedFile.filter((file) => file.id !== id));
     };
 
     const handleDragIn = (e) => {
@@ -134,12 +132,12 @@ function FileDragDrop() {
                     ref={dragRef}
                 >
                     <div className={`w-full h-full flex justify-center ${isDragging ? "bg-sky-500" : ""}`}>
-                        {isDragging ? '파일을 놓아주세요' : files.length > 0 ? fileInventory(files, deleteFilesById) : BeforeDrop()}
+                        {isDragging ? '파일을 놓아주세요' : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
                     </div>
                 </label>
             </div>
             <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
-                <button onClick={() => sendFiles(files, setUploadProgress)}>Upload</button>
+                <button onClick={() => setUploadStatus(1)}>Upload</button>
             </div>
         </div>
     )

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
-import { useUploadStatus } from '../../context/UploadStatusContext'
+import { useUpload } from '../../context/UploadContext'
 
 function FileStatusbar() {
     
-    const {uploadStatus, setUploadStatus} = useUploadStatus();
+    const {uploadStatus, setUploadStatus} = useUpload();
     
     const handleState = () => {
         setUploadStatus((pre) => pre === 2 ? 0 : pre + 1)

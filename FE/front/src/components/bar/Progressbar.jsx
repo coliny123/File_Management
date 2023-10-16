@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { useUploadProgress } from '../../context/UploadProgressContext';
+import { useUpload } from '../../context/UploadContext';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
 function Progressbar({ progress }) {
-    const { uploadProgress } = useUploadProgress();
+    const { uploadProgress } = useUpload();
 
     return (
         <div>
