@@ -1,7 +1,8 @@
 import React from 'react'
 
 export function checkFileExtension(fileList) {
-    fileList.map((file) => {
-        return file.type
-    })
+    return fileList[0].type
+    // fileList.map((file) => {
+    //     return file.type
+    // })
 }

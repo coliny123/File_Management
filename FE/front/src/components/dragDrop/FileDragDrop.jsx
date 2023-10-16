@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
 import { useUpload } from '../../context/UploadContext';
+import { checkFileExtension } from '../../services/checkFileExtension';
 
 const BeforeDrop = () => {
     return (
@@ -44,7 +45,12 @@ function FileDragDrop() {
     const fileId = useRef(0);
     const dragRef = useRef(null);
 
-    const {uploadedFile, setUploadedFile, setUploadStatus} = useUpload();
+    const {uploadedFile, setUploadedFile, setUploadStatus, setUploadedFileType} = useUpload();
+
+    const handleUploadBtn = () => {
+        setUploadedFileType(checkFileExtension(uploadedFile))
+        setUploadStatus(1)
+    }
 
     const onChangeFiles = (e) => {
         const newFiles = e.type === "drop" ? e.dataTransfer.files : e.target.files;
@@ -112,9 +118,27 @@ function FileDragDrop() {
     };
 
     useEffect(() => {
-        initDragEvents();
-        return () => resetDragEvents();
-    }, []);
+        if (uploadedFile.length === 0) {
+            initDragEvents();
+        } 
+        return () => {
+            resetDragEvents();
+        };
+    }, [uploadedFile]);
+
+    // useEffect(() => {
+    //     if (uploadedFile.length === 0) {
+    //         initDragEvents();
+    //     } else {
+    //         resetDragEvents();
+    //     }
+
+    //     return () => {
+    //         resetDragEvents();
+    //     };
+    // }, [uploadedFile]);
+
+
 
     return (
         <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
@@ -136,7 +160,7 @@ function FileDragDrop() {
                 </label>
             </div>
             <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
-                <button onClick={() => setUploadStatus(1)}>Upload</button>
+                <button onClick={handleUploadBtn}>Upload</button>
             </div>
         </div>
     )

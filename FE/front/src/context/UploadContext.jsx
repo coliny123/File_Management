@@ -8,9 +8,10 @@ export function UploadProvider({ children }) {
     const [uploadStatus, setUploadStatus] = useState(0);
     const [uploadProgress, setUploadProgress] = useState(10);
     const [uploadedFile, setUploadedFile] = useState([]);
-    
+    const [uploadedFileType, setUploadedFileType] = useState('');
+
     return (
-        <UploadContext.Provider value={{ uploadStatus, setUploadStatus, uploadProgress, setUploadProgress, uploadedFile, setUploadedFile }}>
+        <UploadContext.Provider value={{ uploadStatus, setUploadStatus, uploadProgress, setUploadProgress, uploadedFile, setUploadedFile, uploadedFileType, setUploadedFileType }}>
             {children}
         </UploadContext.Provider>
     )

@@ -5,6 +5,7 @@ import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useUpload } from '../../context/UploadContext';
 import { sendFiles } from '../../api/sendFiles';
 
+
 function IsNotLoginConvert() {
 
     const navigate = useNavigate();
@@ -17,11 +18,13 @@ function IsNotLoginConvert() {
 }
 
 function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
+
+    const {uploadedFileType} = useUpload();
     return (
         <div className='flex flex-col justify-center items-center'>
             <div className='w-[161px]'>
                 <div className='text-2xl font-bold mt-5'>파일 변환</div>
-                <div className='border-2 w-full'>올린 파일</div>
+                <div className='border-2 w-full'>올린 파일형식 {uploadedFileType}</div>
                 <FormControl fullWidth>
                     <InputLabel id='select-label'>형식</InputLabel>
                     <Select className='w-full' labelId='select-label' value={transferredFileFormat} label='format' onChange={(e) => setTransferredFileFormat(e.target.value)}>
