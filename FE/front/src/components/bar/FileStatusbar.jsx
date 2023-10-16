@@ -30,7 +30,7 @@ function FileStatusbar() {
                     <div>Share</div>
                 </div>
             </div>
-            <button className='bg-red-500' onClick={handleState}>상태 바꾸기 / 테스트</button>
+            {/* <button className='bg-red-500' onClick={handleState}>상태 바꾸기 / 테스트</button> */}
         </div>
     )
 }
