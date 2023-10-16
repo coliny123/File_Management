@@ -3,11 +3,13 @@ import { useUpload } from '../../context/UploadContext';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
 function Progressbar({ progress }) {
-    const { uploadProgress } = useUpload();
+    const { uploadProgress, setUploadStatus } = useUpload();
 
     return (
-        <div>
-            <CircularProgressbarWithChildren
+
+      <div className='w-full h-full flex flex-col justify-center items-center'>
+          <div className='w-full h-full border-2 flex justify-center items-center'>
+              <CircularProgressbarWithChildren
                 value={uploadProgress} // 수정할 값
                 strokeWidth={20}
                 className={"mg mt-10"}
@@ -30,12 +32,13 @@ function Progressbar({ progress }) {
                     },
                 }}
             >
-                <p>10</p>
             </CircularProgressbarWithChildren>
-            <div className="progress" style={{ width: `${uploadProgress}%` }}></div>
-            <div className="progress-text">{`${uploadProgress}%`}</div>
-        </div>
-    );
+          </div>
+          <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-around items-center'>
+                <button onClick={() => setUploadStatus(3)}>Upload끝</button>
+          </div>
+      </div>
+    )
 }
 
 export default Progressbar

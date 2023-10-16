@@ -28,10 +28,9 @@ function LandingPage() {
             <FileStatusbar></FileStatusbar>
           </div>
           <div className='w-[640px] h-[400px]'>
-          { uploadStatus === 0 ? <FileDragDrop/> : uploadStatus === 1 ? <Convert/> : <QrCode/>}
+          { uploadStatus === 0 ? <FileDragDrop/> : uploadStatus === 1 ? <Convert/> : uploadStatus === 2 ? <Progressbar/> : <QrCode/>}
           </div>
         </div>
-        <Progressbar></Progressbar>
     </div>
   )
 }
