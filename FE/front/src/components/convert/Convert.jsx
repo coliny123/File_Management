@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useIsLogin } from '../../context/IsLoginContext'
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useUpload } from '../../context/UploadContext';
-import { sendFiles } from '../../services/sendFiles';
+import { sendFiles } from '../../api/sendFiles';
 
 function IsNotLoginConvert() {
 
