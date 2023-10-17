@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import axios from 'axios';
 
+// 여기서 파일 id 가져와야 함
 export const sendFiles = async (files, setUploadProgress) => {
     const formData = new FormData();
 
@@ -16,7 +17,6 @@ export const sendFiles = async (files, setUploadProgress) => {
             const percentCompleted = Math.round(
                 (progressEvent.loaded * 100) / progressEvent.total
             );
-
             setUploadProgress(percentCompleted);
         },
     }).then((res) => {
