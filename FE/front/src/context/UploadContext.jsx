@@ -6,7 +6,7 @@ const UploadContext = createContext();
 export function UploadProvider({ children }) {
 
     const [uploadStatus, setUploadStatus] = useState(0);
-    const [uploadProgress, setUploadProgress] = useState(10);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadedFile, setUploadedFile] = useState([]);
     const [uploadedFileType, setUploadedFileType] = useState('');
 

@@ -7,7 +7,7 @@ const LoginBtn = () => {
 
     const navigate = useNavigate();
     return (
-        <button className='bg-[#F7F6FB] w-20 h-8 rounded-full' onClick={() => navigate("/login")}>로그인</button>
+        <button className='bg-[#F7F6FB] w-[120px] h-[40px] rounded-full' onClick={() => navigate("/login")}>로그인</button>
     )
 }
 
