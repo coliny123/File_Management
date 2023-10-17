@@ -12,9 +12,9 @@ function FileDownloadPage() {
     // const getFileDown
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [])
+    // }, [])
 
 
     return (

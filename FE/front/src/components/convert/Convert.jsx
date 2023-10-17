@@ -4,6 +4,7 @@ import { useIsLogin } from '../../context/IsLoginContext'
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useUpload } from '../../context/UploadContext';
 import { sendFiles } from '../../api/sendFiles';
+import { useFileInfo } from '../../context/FileInfoContext';
 
 function IsNotLoginConvert() {
 
@@ -58,12 +59,12 @@ function Convert() {
     const [transferredFileFormat, setTransferredFileFormat] = useState('')
     const { isLogin, setIsLogin } = useIsLogin();
     const { setUploadStatus, uploadedFile, setUploadProgress } = useUpload();
+    const { fileId, setFileId } = useFileInfo();
 
     const handleNextBtn = () => {
-        console.log(uploadedFile)
+        // setFileId(sendFiles(uploadedFile, setUploadProgress))
         sendFiles(uploadedFile, setUploadProgress)
         setUploadStatus(2)
-        console.log(uploadedFile)
     }
 
     return (
