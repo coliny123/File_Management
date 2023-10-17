@@ -3,10 +3,19 @@ import { useState, useRef, useEffect } from 'react';
 import { useUpload } from '../../context/UploadContext';
 import { checkFileExtension } from '../../services/checkFileExtension';
 
+const Dragging = () => {
+    return (
+        <>
+            <div>파일을 놓아주세요!!</div>
+        </>
+    )
+}
+
 const BeforeDrop = () => {
     return (
         <div>
-            <div className='mt-20 text-2xl font-bold'>파일 업로드</div>
+            <div className='mt-10 text-2xl font-bold'>파일 업로드</div>
+            <div className='mt-10 text-lg'>한글, 워드, PPT, PDF만 업로드 가능합니다</div>
             <div className='mt-20 text-lg'>drag and drop</div>
             <div>or</div>
             <label
@@ -117,6 +126,16 @@ function FileDragDrop() {
         }
     };
 
+    const possibleFileTypeList = ['application/haansofthwp', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-powerpoint']
+
+    useEffect(() => {
+        if (uploadedFile.length > 0) {
+            if (possibleFileTypeList.includes(uploadedFile[0]?.type) === false) {
+                alert('지원 가능한 파일만 업로드해주세요')
+            }
+        }
+    }, [uploadedFile])
+
     useEffect(() => {
         if (uploadedFile.length === 0) {
             initDragEvents();
@@ -125,20 +144,6 @@ function FileDragDrop() {
             resetDragEvents();
         };
     }, [uploadedFile]);
-
-    // useEffect(() => {
-    //     if (uploadedFile.length === 0) {
-    //         initDragEvents();
-    //     } else {
-    //         resetDragEvents();
-    //     }
-
-    //     return () => {
-    //         resetDragEvents();
-    //     };
-    // }, [uploadedFile]);
-
-
 
     return (
         <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
@@ -151,15 +156,15 @@ function FileDragDrop() {
                     onChange={onChangeFiles}
                 />
                 <label
-                    className='DragDrop-File w-40 h-40'
+                    className='DragDrop-File w-full h-full'
                     ref={dragRef}
                 >
-                    <div className={`w-full h-full flex justify-center ${isDragging ? "bg-sky-500" : ""}`}>
-                        {isDragging ? '파일을 놓아주세요' : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
+                    <div className={`w-full h-full flex justify-center`}>
+                        {isDragging ? <Dragging/> : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
                     </div>
                 </label>
             </div>
-            <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
+            <div className={`btns ${uploadedFile.length > 0 ? 'bg-blue-500' : 'bg-blue-200'} text-white w-[160px] h-[56px] mt-10 flex justify-center items-center`}>
                 <button onClick={handleUploadBtn} disabled={uploadedFile.length > 0 ? false : true}>Upload</button>
             </div>
         </div>
