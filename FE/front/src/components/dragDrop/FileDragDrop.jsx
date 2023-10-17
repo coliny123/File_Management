@@ -126,11 +126,12 @@ function FileDragDrop() {
         }
     };
 
-    const possibleFileTypeList = ['application/haansofthwp', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-powerpoint']
+    const possibleFileTypeList = ['hwp', 'pdf', 'word', 'ppt']
 
     useEffect(() => {
         if (uploadedFile.length > 0) {
-            if (possibleFileTypeList.includes(uploadedFile[0]?.type) === false) {
+            if (possibleFileTypeList.includes(checkFileExtension(uploadedFile)) === false) {
+                setUploadedFile([])
                 alert('지원 가능한 파일만 업로드해주세요')
             }
         }
