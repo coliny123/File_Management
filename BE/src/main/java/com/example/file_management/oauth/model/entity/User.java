@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "`user`")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type")
 public abstract class User {
@@ -13,7 +14,6 @@ public abstract class User {
     private Long id;
     private String email;
     private String name;
-
 
 }
 

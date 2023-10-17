@@ -1,6 +1,6 @@
 package com.example.file_management.oauth.google.service;
 
-import com.example.file_management.oauth.google.model.dto.auth.AuthCodeDto;
+import com.example.file_management.oauth.AuthCodeDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.http.MediaType;
@@ -28,14 +28,14 @@ public class GoogleOAuth2Service {
     private String redirectUri;
     WebClient webClient = WebClient.create();
 
-    public String getAccessToken(AuthCodeDto authCodeDto, String redirectUri) {
+    public String getAccessToken(AuthCodeDto authCodeDto) {
         Mono<String> responseMono = webClient.post()
                 .uri(tokenUrl)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromFormData("code", authCodeDto.getAuthCode())
                         .with("client_id", clientId)
                         .with("client_secret", clientSecret)
-                        .with("redirect_uri", redirectUri)
+                        .with("redirect_uri",  this.redirectUri)
                         .with("grant_type", "authorization_code"))
                 .retrieve()
 
@@ -55,4 +55,3 @@ public class GoogleOAuth2Service {
 
     }
 }
-

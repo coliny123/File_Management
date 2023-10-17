@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import com.example.file_management.oauth.google.model.dto.response.UserResponse;
@@ -12,6 +13,9 @@ import com.example.file_management.oauth.google.repository.GoogleUserRepository;
 import java.util.Optional;
 
 import com.example.file_management.security.JwtUtil;
+
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+
 @Service
 public class UserService {
     private final WebClient webClient;
@@ -19,20 +23,38 @@ public class UserService {
     @Autowired
     private GoogleUserRepository googleUserRepository;
 
-    public UserService(WebClient webClient) {
-        this.webClient = webClient;
+
+
+    public UserService(GoogleUserRepository googleUserRepository) {
+        this.googleUserRepository = googleUserRepository;
+        this.webClient = WebClient.builder()
+                .filter(logRequest())
+                .build();
+    }
+
+    // 로그 출력용 ExchangeFilterFunction
+    private ExchangeFilterFunction logRequest() {
+        return (clientRequest, next) -> {
+            System.out.println("Request: " + clientRequest.method() + " " + clientRequest.url());
+            clientRequest.headers().forEach((name, values) -> values.forEach(value -> System.out.println(name + ":" + value)));
+            return next.exchange(clientRequest);
+        };
     }
 
     public UserResponse getUserInfoAndSave(String accessToken) {
         String userEndpointUrl="https://www.googleapis.com/oauth2/v3/userinfo";
 
-        Mono<String> userInfoResponseMono = webClient.get()
+        String userInfoResponse = webClient.get()
                 .uri(userEndpointUrl)
                 .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .onErrorResume(e -> {  // 에러 발생 시 로그 출력 및 빈 Mono 반환
+                    System.out.println("WebClient request error: " + e.getMessage());
+                    return Mono.empty();
+                })
+                .block();
 
-        String userInfoResponse = userInfoResponseMono.block();
 
         // 구글 서버에서 받아온 JSON 문자열 출력
         System.out.println(userInfoResponse);
@@ -57,7 +79,6 @@ public class UserService {
             googleUser.setEmail(email);
             String name = jsonObject.getString("name");
             googleUser.setName(name);
-//            user.setName(jsonObject.getString("name"));
 
             try {
                 // DB에 사용자 정보 저장 (새로운 사용자면 생성, 기존 생성자면 업데이트)
@@ -78,4 +99,3 @@ public class UserService {
         return null;  // 에러 발생 시 null 반환.
     }
 }
-
