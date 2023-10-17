@@ -29,12 +29,12 @@ const LogoutBtn = () => {
 function Navbar() {
 
     const {isLogin, setIsLogin} = useIsLogin();
-
+    console.log(isLogin)
     return (
         <div className='relative z-30 w-full h-20 bg-white flex items-center'>
             <input className='absolute left-[80px] bg-[#F7F6FB] text-center w-[160px] h-[40px] rounded-full' placeholder='코드 입력'></input>
             <div className='absolute left-1/2 -translate-x-1/2 text-center bg-[#F7F6FB] w-[160px] h-[40px] flex items-center justify-center'><BsCloudArrowDown className='text-black' /><p>ICloduU</p></div>
-            <div className='absolute right-10'>{isLogin ? <LoginBtn /> : <LogoutBtn />}</div>
+            <div className='absolute right-10'>{isLogin ? <LogoutBtn /> : <LoginBtn />}</div>
         </div>
     )
 }
