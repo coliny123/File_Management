@@ -13,7 +13,7 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
     formData.append('originFormat', uploadedFileType)
     formData.append('transferredFormat', transferredFileFormat)
 
-    await axios.post('http://165.246.116.128:8080/upload', formData, {
+    await axios.post('http://172.20.10.2:8080/upload', formData, {
     // await axios.post('https://1c48efd1-2f26-4d83-8447-35b841d6d0d4.mock.pstmn.io/localhost:8080/fileSend', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',

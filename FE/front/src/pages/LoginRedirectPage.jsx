@@ -20,7 +20,7 @@ function LoginRedirectPage() {
     async function fetchData() {
         try {
             const isSuccess = await loginApi(provider, code);
-            window.location.href = 'http://localhost:3000/';
+            // window.location.href = 'http://localhost:3000/';
         } catch (error) {
             console.error(error);
         }
@@ -28,8 +28,6 @@ function LoginRedirectPage() {
 
     useEffect(() => {
         fetchData(); // fetchData 함수를 호출
-
-        // 여기에는 clean-up 코드를 작성할 수 있습니다 (예: 이펙트 해제, 구독 취소 등)
     }, []);
 
 

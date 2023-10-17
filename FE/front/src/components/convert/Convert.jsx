@@ -72,8 +72,8 @@ function Convert() {
             <div className='w-full h-full border-2'>
                 {!isLogin ? <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>}
             </div>
-            <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-center items-center'>
-                <button onClick={handleNextBtn}>Next</button>
+            <div className={`btns text-white w-[160px] h-[56px] mt-10 flex justify-center items-center ${transferredFileFormat === '' ? 'bg-blue-200' : 'bg-blue-500'}`}>
+                <button onClick={handleNextBtn} disabled={transferredFileFormat === '' ? 'true' : 'false'}>Next</button>
             </div>
         </div>
   )

@@ -1,12 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useUpload } from '../../context/UploadContext';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
-function Progressbar({ progress }) {
+// function Progressbar({ progress }) {
+function Progressbar() {
     const { uploadProgress, setUploadStatus } = useUpload();
 
-    return (
+    useEffect(() => {
+        console.log(uploadProgress)
+        if (uploadProgress === 100) {
+            setUploadStatus(3);
+        }
+    }, [uploadProgress])
 
+    return (
       <div className='w-full h-full flex flex-col justify-center items-center'>
           <div className='w-full h-full border-2 flex justify-center items-center'>
               <CircularProgressbarWithChildren

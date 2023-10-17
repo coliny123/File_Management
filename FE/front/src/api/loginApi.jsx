@@ -6,7 +6,9 @@ export const loginApi = async (provider, code) => {
     await axios.post(`${Server_IP}/auth/${provider}`, { authCode: code })
     .then((res) => {
         console.log(res.data)
-        window.localStorage.setItem('refreshToken', res.data.token);
+        if (res.data.token !== undefined) {
+            window.localStorage.setItem('refreshToken', res.data.token);
+        }
     })
     .catch((err) => {
         alert(err)
