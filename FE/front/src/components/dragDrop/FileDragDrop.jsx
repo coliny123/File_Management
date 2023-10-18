@@ -165,8 +165,8 @@ function FileDragDrop() {
                     </div>
                 </label>
             </div>
-            <div className={`btns ${uploadedFile.length > 0 ? 'bg-blue-500' : 'bg-blue-200'} text-white w-[160px] h-[56px] mt-10 flex justify-center items-center`}>
-                <button onClick={handleUploadBtn} disabled={uploadedFile.length > 0 ? false : true}>Upload</button>
+            <div className={`btns relative ${uploadedFile.length > 0 ? 'bg-blue-500' : 'bg-blue-200'} text-white w-[160px] h-[56px] mt-10 flex justify-center items-center`}>
+                <button onClick={handleUploadBtn} disabled={uploadedFile.length > 0 ? false : true} className='w-full h-full'>Upload</button>
             </div>
         </div>
     )
