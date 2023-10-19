@@ -12,4 +12,3 @@ public interface OauthCodeRequestUrlProvider {
     OauthServerType supportServer();
     String provide();
 }
-

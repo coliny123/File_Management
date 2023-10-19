@@ -8,10 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import com.example.file_management.oauth.google.model.dto.response.UserResponse;
+<<<<<<< HEAD
 import com.example.file_management.oauth.google.repository.GoogleUserRepository;
 import java.util.Optional;
 
 import com.example.file_management.security.JwtUtil;
+=======
+import com.example.file_management.oauth.google.model.entity.User;
+import com.example.file_management.oauth.google.repository.UserRepository;
+import java.util.Optional;
+
+import com.example.file_management.oauth.google.security.JwtUtil;
+
+>>>>>>> featureBE-hw
 @Service
 public class UserService {
     private final WebClient webClient;

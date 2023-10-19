@@ -1,6 +1,5 @@
 package com.example.file_management.oauth.kakao.client;
 
-
 import com.example.file_management.oauth.OauthServerType;
 import com.example.file_management.oauth.domain.OauthMember;
 import com.example.file_management.oauth.domain.OauthMemberClient;

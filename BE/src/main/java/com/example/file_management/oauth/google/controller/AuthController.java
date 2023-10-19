@@ -1,7 +1,10 @@
 package com.example.file_management.oauth.google.controller;
+<<<<<<< HEAD
 
 import com.example.file_management.oauth.google.model.dto.auth.AuthCodeDto;
 import com.example.file_management.oauth.google.model.dto.response.UserResponse;
+=======
+>>>>>>> featureBE-hw
 import com.example.file_management.oauth.google.service.GoogleOAuth2Service;
 import com.example.file_management.oauth.google.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
+=======
+import com.example.file_management.oauth.google.model.dto.auth.AuthCodeDto;
+import com.example.file_management.oauth.google.model.dto.response.UserResponse;
+
+>>>>>>> featureBE-hw
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
 public class AuthController {

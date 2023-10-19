@@ -16,7 +16,10 @@ public class KaKaoOauthCodeRequestUrlProvider implements OauthCodeRequestUrlProv
 
     @Override
     public OauthServerType supportServer() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> featureBE-hw
         return OauthServerType.KAKAO;
     }
 
@@ -31,4 +34,7 @@ public class KaKaoOauthCodeRequestUrlProvider implements OauthCodeRequestUrlProv
                 .toUriString();
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> featureBE-hw

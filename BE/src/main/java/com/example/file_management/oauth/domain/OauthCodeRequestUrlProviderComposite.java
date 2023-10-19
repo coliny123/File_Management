@@ -32,4 +32,3 @@ public class OauthCodeRequestUrlProviderComposite {
                 .orElseThrow(() -> new RuntimeException("지원하지 않는 로그인 타입입니다."));
     }
 }
-
