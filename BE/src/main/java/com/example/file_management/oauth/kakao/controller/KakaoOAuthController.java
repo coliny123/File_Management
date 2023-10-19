@@ -26,6 +26,7 @@ public class KakaoOAuthController {
         this.kakaoOAuth2Service = kakaoOAuth2Service;
         this.kakaoUserService = kakaoUserService;
     }
+
     @PostMapping("/auth/kakao")
     public ResponseEntity<?> authenticateNave(@RequestBody AuthCodeDto authRequest) {
         String kakaoAuthCode = authRequest.getAuthCode();
