@@ -9,12 +9,12 @@ function Sidebar() {
 
     const navigate = useNavigate();
 
-    const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
+    // const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
 
-    const handleOpenTogglebar = () => {
-        setIsTogglebarOpen((pre) => !pre);
-        console.log(isTogglebarOpen)
-    };
+    // const handleOpenTogglebar = () => {
+    //     setIsTogglebarOpen((pre) => !pre);
+    //     console.log(isTogglebarOpen)
+    // };
 
     return (
         <>
@@ -28,11 +28,11 @@ function Sidebar() {
                 </div>
             </div>
             {/* <div className={`z-10 fixed left-[64px] top-0 flex-col w-24 bg-green-500 h-full transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : '-translate-x-full'}`}> */}
-            <div className={`z-10 fixed md:left-[64px] left-[12vw] top-0 flex-col w-24 bg-green-500 h-full transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : '-translate-x-full'}`}>
+            {/* <div className={`z-10 fixed md:left-[64px] left-[12vw] top-0 flex-col w-24 bg-green-500 h-full transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : '-translate-x-full'}`}>
                 <div>토글</div>
                 <div>토글</div>
                 <div>토글</div>
-            </div>
+            </div> */}
         </>
     );
 }
