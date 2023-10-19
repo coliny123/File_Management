@@ -23,8 +23,6 @@ public class UserService {
     @Autowired
     private GoogleUserRepository googleUserRepository;
 
-
-
     public UserService(GoogleUserRepository googleUserRepository) {
         this.googleUserRepository = googleUserRepository;
         this.webClient = WebClient.builder()
