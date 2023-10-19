@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+
 const fileInfoRow = (fileInfo, idx, handleTogglebar) => {
     return(
         <div onClick={() => handleTogglebar(fileInfo)} className={`flex justify-around hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''}`} >
@@ -10,14 +11,21 @@ const fileInfoRow = (fileInfo, idx, handleTogglebar) => {
     )
 }
 
+
 function FileList({fileInfoList}) {
   
     const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
     
     const handleTogglebar = (fileInfo) => {
-       setTogglebarDataInfo(fileInfo)
-        setIsTogglebarOpen(true)
+        if (!isTogglebarOpen) {
+            setIsTogglebarOpen(true);
+            setTogglebarDataInfo(fileInfo)
+        } else if (togglebarDataInfo === fileInfo) {
+            setIsTogglebarOpen(false);
+        } else if (togglebarDataInfo !== fileInfo) {
+            setTogglebarDataInfo(fileInfo)
+        }
     }
 
     return (
