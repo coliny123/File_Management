@@ -1,6 +1,6 @@
 package com.example.file_management.oauth.google.controller;
 
-import com.example.file_management.oauth.google.model.dto.auth.AuthCodeDto;
+import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.google.model.dto.response.UserResponse;
 import com.example.file_management.oauth.google.service.GoogleOAuth2Service;
 import com.example.file_management.oauth.google.service.UserService;
@@ -25,11 +25,11 @@ public class AuthController {
 
     @PostMapping("/auth/google")
     public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest) {
-        String redirectUri = "http://localhost:3000/auth/google/callback";
+//        String redirectUri = "http://localhost:3000/auth/google/callback";
 
         System.out.println("Received auth code(google): " + authRequest.getAuthCode());
 
-        String accessToken = googleOAuth2Service.getAccessToken(authRequest, redirectUri);
+        String accessToken = googleOAuth2Service.getAccessToken(authRequest);
 
         //인증 코드를 바탕으로 Google OAuth2 서버로부터 받은 액세스 토큰
         System.out.println("Received access token(google): " + accessToken);

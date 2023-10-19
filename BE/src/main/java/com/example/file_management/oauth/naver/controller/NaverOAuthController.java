@@ -1,8 +1,8 @@
 package com.example.file_management.oauth.naver.controller;
 
+import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.naver.model.dto.response.NaverUserResponse;
 import com.example.file_management.oauth.naver.service.NaverUserService;
-import com.example.file_management.oauth.naver.model.dto.auth.NaverAuthCodeDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,18 +15,18 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
-public class NaverAuthController {
+public class NaverOAuthController {
 
     private final NaverOAuth2Service naverOAuth2Service;
     private final NaverUserService naverUserService;
 
     @Autowired
-    public NaverAuthController(NaverOAuth2Service naverOAuth2Service, NaverUserService naverUserService) {
+    public NaverOAuthController(NaverOAuth2Service naverOAuth2Service, NaverUserService naverUserService) {
         this.naverOAuth2Service = naverOAuth2Service;
         this.naverUserService =  naverUserService;
     }
     @PostMapping("/auth/naver")
-    public ResponseEntity<?> authenticateNave(@RequestBody NaverAuthCodeDto authRequest) {
+    public ResponseEntity<?> authenticateNave(@RequestBody AuthCodeDto authRequest) {
         String naverAuthCode = authRequest.getAuthCode();
 
         System.out.println("Received auth code(naver): " + naverAuthCode);

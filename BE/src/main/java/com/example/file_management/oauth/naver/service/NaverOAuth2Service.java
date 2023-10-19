@@ -1,6 +1,6 @@
 package com.example.file_management.oauth.naver.service;
 
-import com.example.file_management.oauth.naver.model.dto.auth.NaverAuthCodeDto;
+import com.example.file_management.oauth.AuthCodeDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -22,7 +22,7 @@ public class NaverOAuth2Service {
     @Value("${oauth.naver.clientSecret}")
     private String clientSecret;
 
-    public String getAccessToken(NaverAuthCodeDto authRequest)  throws Exception{
+    public String getAccessToken(AuthCodeDto authRequest)  throws Exception{
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -40,8 +40,6 @@ public class NaverOAuth2Service {
         ObjectMapper mapper = new ObjectMapper();
 
         Map<String, Object> responseMap = mapper.readValue(response.getBody(), new TypeReference<>() {});
-
-
 
         return (String)responseMap.get("access_token");
     }
