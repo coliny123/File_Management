@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const fileInfoRow = (fileInfo, idx, handleTogglebar) => {
     return(
-        <div onClick={() => handleTogglebar(fileInfo)} className='flex justify-around'>
+        <div onClick={() => handleTogglebar(fileInfo)} className={`flex justify-around hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''}`} >
             <div>{fileInfo?.fileName}</div>
             <div>{fileInfo?.fileUploadedDate}</div>
             <div>{fileInfo?.fileSharePermission}</div>
