@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useIsLogin } from '../../context/IsLoginContext';
 import { BsCloudArrowDown } from 'react-icons/bs'
-import { HiMiniHome } from 'react-icons/hi2'
 
 const LoginBtn = () => {
 

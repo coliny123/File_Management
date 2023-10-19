@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+<<<<<<< HEAD
 # dependencies
 /node_modules
 /.pnp
@@ -23,3 +24,13 @@ yarn-debug.log*
 yarn-error.log*
 
 FE/front/.env
+=======
+
+
+BE/src/main/resources/application.yml
+BE/src/main/resources/application.properties
+BE/src/main/resources/application_secret.properties
+
+
+BE/gradle/.env
+>>>>>>> f2261347558b16bc13349203f9285c9ec15fac4d
