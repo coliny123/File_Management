@@ -40,10 +40,10 @@ function Navbar() {
                     <HiMiniHome />
                 </div>
             </button>
-            <input className='absolute left-[156px] bg-[#F7F6FB] text-center w-[200px] h-[48px] rounded-full' placeholder='코드 입력'></input>
-            {/* <div onClick={() => navigate('/')} className='hover:cursor-pointer absolute left-1/2 -translate-x-1/2 text-center bg-[#F7F6FB] w-[160px] h-[40px] flex items-center justify-center'><BsCloudArrowDown className='text-black' /><p>ICloduU</p></div> */}
+            <div className='absolute left-[156px] bg-[#F7F6FB] w-[200px] h-[48px] rounded-[18px] flex items-center font-bold text-md pl-5'> <div>코드입력:</div>  <input className='w-[120px] h-full rounded-[18px] pointer-events-auto' type="text"/></div>
             <div className='absolute right-10'>{isLogin ? <LogoutBtn /> : <LoginBtn />}</div>
         </div>
+
     )
 }
 
