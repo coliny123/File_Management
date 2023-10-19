@@ -7,6 +7,7 @@ import LoginLayout from './layout/LoginLayout';
 import MainLayout from './layout/MainLayout';
 import LoginRedirectPage from './pages/LoginRedirectPage';
 import FileDownloadPage from './pages/FileDownloadPage';
+import FileManagePage from './pages/FileManagePage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route element={<MainLayout/>}>
             <Route path='/' element={<LandingPage/>}/>
+            <Route path='/file' element={<FileManagePage/>}/>
           </Route>
           <Route element={<LoginLayout/>}>
             <Route path='/login' element={<LoginPage/>} />
