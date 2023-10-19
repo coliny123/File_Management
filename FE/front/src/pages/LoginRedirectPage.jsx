@@ -1,50 +1,4 @@
-// import React from 'react';
-// import { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import { loginApi } from '../api/loginApi';
-// import { useQuery } from '@tanstack/react-query';
-
-// const Server_IP = process.env.REACT_APP_Server_IP;
-
-// function LoginRedirectPage() {
-
-//     const [loginSuccess, setLoginSuccess] = useState(false);
-//     const { provider } = useParams();
-
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const code = urlParams.get('code');
-
-//   const { isPending, error, data } = useQuery({
-//     queryKey: ['userData'],
-//     queryFn: () =>
-//       loginApi(provider, code),
-//   })
-
-//   console.log(data);
-
-//     console.log(provider)
-
-//     useEffect(() => {
-//         const urlParams = new URLSearchParams(window.location.search);
-//         const code = urlParams.get('code');
-
-//         const userData = loginApi(provider, code);
-        
-//     }, []);
-
-//     return (
-//     <div>
-      
-//     </div>
-//   )
-// }
-
-// export default LoginRedirectPage
-
-
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { loginApi } from '../api/loginApi';
@@ -58,16 +12,25 @@ function LoginRedirectPage() {
     const { provider } = useParams();
 
     const code = new URLSearchParams(window.location.search).get('code');
-    const [isLogin, setIsLogin] = useIsLogin();
+    const { isLogin, setIsLogin } = useIsLogin();
 
     // const queryClient = useQueryClient()
     // const { isPending, error, data } = useUserDataQuery(provider, code);
 
-    useEffect(async () => {
-      await loginApi(provider, code);
-      setIsLogin(true);
-      window.location.href = 'http://localhost:3000/'
-    })
+    async function fetchData() {
+        try {
+            const isSuccess = await loginApi(provider, code);
+            // window.location.href = 'http://localhost:3000/';
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchData(); // fetchData 함수를 호출
+    }, []);
+
+
 
     return (
         <div>

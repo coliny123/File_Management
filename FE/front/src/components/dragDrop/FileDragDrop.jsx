@@ -1,8 +1,30 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
-import { sendFiles } from '../../services/sendFiles';
-import { useUploadProgress } from '../../context/UploadProgressContext';
+import { useUpload } from '../../context/UploadContext';
+import { checkFileExtension } from '../../services/checkFileExtension';
 
+const Dragging = () => {
+    return (
+        <>
+            <div>파일을 놓아주세요!!</div>
+        </>
+    )
+}
+
+const BeforeDrop = () => {
+    return (
+        <div>
+            <div className='mt-10 text-2xl font-bold'>파일 업로드</div>
+            <div className='mt-10 text-lg'>한글, 워드, PPT, PDF만 업로드 가능합니다</div>
+            <div className='mt-20 text-lg'>drag and drop</div>
+            <div>or</div>
+            <label
+                className='DragDrop-File'
+                htmlFor="fileUpload"
+            >파일 올리기 버튼</label>
+        </div>
+    )
+}
 
 const fileInventory = (files, deleteFilesById) => {
     return (
@@ -28,17 +50,21 @@ const fileInventory = (files, deleteFilesById) => {
 
 function FileDragDrop() {
 
-    const { setUploadProgress } = useUploadProgress();
-
     const [isDragging, setIsDragging] = useState(false);
-    const [files, setFiles] = useState([]);
     const fileId = useRef(0);
     const dragRef = useRef(null);
 
+    const {uploadedFile, setUploadedFile, setUploadStatus, setUploadedFileType} = useUpload();
+
+    const handleUploadBtn = () => {
+        setUploadedFileType(checkFileExtension(uploadedFile))
+        setUploadStatus(1)
+    }
+
     const onChangeFiles = (e) => {
         const newFiles = e.type === "drop" ? e.dataTransfer.files : e.target.files;
-        setFiles((prevFiles) => [
-            ...prevFiles,
+        setUploadedFile((prevFile) => [
+            ...prevFile,
             ...Array.from(newFiles).map((file) => ({
                 id: fileId.current++,
                 type: file.type,
@@ -48,7 +74,7 @@ function FileDragDrop() {
     };
 
     const deleteFilesById = (id) => {
-        setFiles(files.filter((file) => file.id !== id));
+        setUploadedFile(uploadedFile.filter((file) => file.id !== id));
     };
 
     const handleDragIn = (e) => {
@@ -101,13 +127,26 @@ function FileDragDrop() {
     };
 
     useEffect(() => {
-        initDragEvents();
-        return () => resetDragEvents();
-    }, []);
+        if (uploadedFile.length > 0) {
+            if (checkFileExtension(uploadedFile) === false) {
+                setUploadedFile([])
+                alert('지원 가능한 파일만 업로드해주세요')
+            }
+        }
+    }, [uploadedFile])
+
+    useEffect(() => {
+        if (uploadedFile.length === 0) {
+            initDragEvents();
+        } 
+        return () => {
+            resetDragEvents();
+        };
+    }, [uploadedFile]);
 
     return (
-        <div className="DragDrop flex flex-col justify-center items-center">
-            <div className='dropBox w-80 h-40 border-4 border-dashed rounded-2xl'>
+        <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
+            <div className='dropBox w-full h-full border-4 border-dashed rounded-3xl'>
                 <input
                     type="file"
                     id="fileUpload"
@@ -116,23 +155,16 @@ function FileDragDrop() {
                     onChange={onChangeFiles}
                 />
                 <label
-                    className='DragDrop-File w-40 h-40'
+                    className='DragDrop-File w-full h-full'
                     ref={dragRef}
                 >
-                    {/* <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
-                        {files.length > 0 ? fileInventory(files, deleteFilesById) : '파일 첨부 전입니다.'}
-                    </div> */}
-                    <div className={`w-full h-full ${isDragging ? "bg-sky-500" : ""}`}>
-                        {isDragging ? '파일을 놓아주세요' : files.length > 0 ? fileInventory(files, deleteFilesById) : '파일 첨부 전입니다.'}
+                    <div className={`w-full h-full flex justify-center`}>
+                        {isDragging ? <Dragging/> : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
                     </div>
                 </label>
             </div>
-            <div className='btns border-4 border-dashed w-80'>
-                <button onClick={() => sendFiles(files, setUploadProgress)}>전송 버튼</button>
-                <label
-                    className='DragDrop-File'
-                    htmlFor="fileUpload"
-                >업로드 버튼</label>
+            <div className={`btns relative ${uploadedFile.length > 0 ? 'bg-blue-500' : 'bg-blue-200'} text-white w-[160px] h-[56px] mt-10 flex justify-center items-center`}>
+                <button onClick={handleUploadBtn} disabled={uploadedFile.length > 0 ? false : true} className='w-full h-full'>Upload</button>
             </div>
         </div>
     )
