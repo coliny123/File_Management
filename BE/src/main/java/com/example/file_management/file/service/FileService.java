@@ -10,7 +10,7 @@ public interface FileService {
     void fileUpload(MultipartFile file) throws IOException;
 
     // 다운로드 메소드
-
+//
     // 확장자 변환 메소드
 //    FileInfo convertFiles(String originalFileName, String targetExtension) throws Exception;
     // 저장된 파일 가져오는 메서드
