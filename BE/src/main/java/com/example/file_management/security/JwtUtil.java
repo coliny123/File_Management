@@ -1,4 +1,4 @@
-package com.example.file_management.oauth.google.security;
+package com.example.file_management.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -9,10 +9,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class AppConfig {
     @Bean
     public WebClient webClient() {
-//        return WebClient.create();
+        return WebClient.create();
 
-        return WebClient.builder()
-                .filter(ExchangeFilterFunctions.basicAuthentication("a6f22a74964f7bed67c0c5713fb357f9", "UhbeLsSE1g6JzEN0UCtOqhEMXy5hbV4c"))
-                .build();
+//        return WebClient.builder()
+//                .filter(ExchangeFilterFunctions.basicAuthentication("a6f22a74964f7bed67c0c5713fb357f9", "UhbeLsSE1g6JzEN0UCtOqhEMXy5hbV4c"))
+//                .build();
     }
 }
