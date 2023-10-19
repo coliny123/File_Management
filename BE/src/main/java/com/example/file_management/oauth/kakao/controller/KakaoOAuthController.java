@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
 public class KakaoOAuthController {
@@ -49,7 +52,14 @@ public class KakaoOAuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while updating user info.");
         }
 
-        return ResponseEntity.ok(kakaoUserResponse);
+        // 클라이언트에게 보낼 새로운 응답 객체 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("email", kakaoUserResponse.getKakaoAccount().get("email"));
+        response.put("name", kakaoUserResponse.getProperties().get("nickname"));
+        response.put("token", kakaoUserResponse.getToken());
+
+
+        return ResponseEntity.ok(response);
     }
 
 }

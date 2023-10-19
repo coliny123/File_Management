@@ -4,6 +4,7 @@ import com.example.file_management.file.service.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +14,11 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins="http://localhost:3000")
 public class FileUploadController {
 
     private final FileServiceImpl fileService;
 
-    //
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file) {
         try {

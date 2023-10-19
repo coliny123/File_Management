@@ -79,10 +79,11 @@ public class KakaoUserService {
             String email = (String)response.getBody().getKakaoAccount().get("email");
             String nickname = (String)response.getBody().getProperties().get("nickname");
 
-            // 새로운 KakaoUserResonse 객체 생성하지 않고, 이미 받아온 response의 body를 반환합니다.
+            // 새로운 KakaoUserResonse 객체 생성하지 않고, 이미 받아온 response의 body를 반환
             return response.getBody();
+
         } catch (RestClientException e){
-            System.out.println("Kakoou Use Info API 호출 중 오류가 발생했습니다:" + e.getMessage());
+            System.out.println("Kakao Use Info API 호출 중 오류가 발생했습니다:" + e.getMessage());
             e.printStackTrace();
 
             return null;
