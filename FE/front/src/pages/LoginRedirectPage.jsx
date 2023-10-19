@@ -20,7 +20,7 @@ function LoginRedirectPage() {
     async function fetchData() {
         try {
             const isSuccess = await loginApi(provider, code);
-            // window.location.href = 'http://localhost:3000/';
+            window.location.href = 'http://localhost:3000/';
         } catch (error) {
             console.error(error);
         }

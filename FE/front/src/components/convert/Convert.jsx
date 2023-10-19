@@ -70,7 +70,8 @@ function Convert() {
     return (
         <div className='w-full h-full flex flex-col justify-center items-center'>
             <div className='w-full h-full border-2'>
-                {!isLogin ? <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>}
+                {/* {!isLogin ? <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert> : <IsNotLoginConvert></IsNotLoginConvert>} */}
+                <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert>
             </div>
             <div className={`btns relative text-white w-[160px] h-[56px] mt-10 flex justify-center items-center ${transferredFileFormat === '' ? 'bg-blue-200' : 'bg-blue-500'}`}>
                 <button onClick={handleNextBtn} disabled={transferredFileFormat === '' ? true : false} className='h-full w-full'>Next</button>
