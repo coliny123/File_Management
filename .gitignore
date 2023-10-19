@@ -3,7 +3,8 @@
 
 
 BE/src/main/resources/application.yml
-
+BE/src/main/resources/application.properties
+BE/src/main/resources/application_secret.properties
 
 
 BE/gradle/.env
