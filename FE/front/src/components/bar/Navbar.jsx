@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useIsLogin } from '../../context/IsLoginContext';
 import { BsCloudArrowDown } from 'react-icons/bs'
+import { HiMiniHome } from 'react-icons/hi2'
 
 const LoginBtn = () => {
 
@@ -39,7 +40,7 @@ function Navbar() {
                     <HiMiniHome />
                 </div>
             </button>
-            <div className='absolute left-[156px] bg-[#F7F6FB] w-[200px] h-[48px] rounded-[18px] flex items-center font-bold text-md pl-5'> <div>코드입력:</div>  <input className='w-[120px] h-full rounded-[18px] pointer-events-auto' type="text"/></div>
+            <div className='absolute left-[156px] bg-[#F7F6FB] w-[200px] h-[48px] rounded-[18px] flex items-center font-bold text-md pl-5'> <div>코드입력:</div>  <input className='w-[120px] h-full rounded-[18px] pointer-events-auto bg-[#F7F6FB] outline-none' type="text"/></div>
             <div className='absolute right-10'>{isLogin ? <LogoutBtn /> : <LoginBtn />}</div>
         </div>
 
