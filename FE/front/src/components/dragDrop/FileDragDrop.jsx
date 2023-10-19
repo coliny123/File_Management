@@ -126,11 +126,9 @@ function FileDragDrop() {
         }
     };
 
-    const possibleFileTypeList = ['hwp', 'pdf', 'word', 'ppt']
-
     useEffect(() => {
         if (uploadedFile.length > 0) {
-            if (possibleFileTypeList.includes(checkFileExtension(uploadedFile)) === false) {
+            if (checkFileExtension(uploadedFile) === false) {
                 setUploadedFile([])
                 alert('지원 가능한 파일만 업로드해주세요')
             }
