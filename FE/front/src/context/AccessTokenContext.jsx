@@ -5,10 +5,9 @@ const AccessTokenContext = createContext();
 export function AccessTokenProvider({ children }) {
 
     const [accessToken, setAccessToken] = useState('');
-    const [accessTokenExpire, setAccessTokenExpire] = useState('');
 
     return (
-        <AccessTokenContext.Provider value={{ accessToken, setAccessToken, accessToken, setAccessTokenExpire }}>
+        <AccessTokenContext.Provider value={{ accessToken, setAccessToken }}>
             {children}            
         </AccessTokenContext.Provider>
   )

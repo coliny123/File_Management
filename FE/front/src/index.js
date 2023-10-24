@@ -8,25 +8,28 @@ import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-quer
 import { IsLoginProvider } from './context/IsLoginContext';
 import { UploadProvider } from './context/UploadContext';
 import { FileInfoProvider } from './context/FileInfoContext';
+import { AccessTokenProvider } from './context/AccessTokenContext';
 
 const queryClient = new QueryClient();
 const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <FileInfoProvider>
-    <UploadProvider>
-      <IsLoginProvider>
-          <QueryClientProvider client={queryClient}>
-            <GoogleOAuthProvider clientId={Google_Client_ID}>
-              {/* <React.StrictMode> */}
-                  <App />
-                {/* </React.StrictMode> */}
-            </GoogleOAuthProvider>
-          </QueryClientProvider>
-      </IsLoginProvider>
-    </UploadProvider>
-  </FileInfoProvider>
+  <AccessTokenProvider>
+    <FileInfoProvider>
+      <UploadProvider>
+        <IsLoginProvider>
+            <QueryClientProvider client={queryClient}>
+              <GoogleOAuthProvider clientId={Google_Client_ID}>
+                {/* <React.StrictMode> */}
+                    <App />
+                  {/* </React.StrictMode> */}
+              </GoogleOAuthProvider>
+            </QueryClientProvider>
+        </IsLoginProvider>
+      </UploadProvider>
+    </FileInfoProvider>
+  </AccessTokenProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

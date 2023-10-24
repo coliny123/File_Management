@@ -5,6 +5,7 @@ import { loginApi } from '../api/loginApi';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { useUserDataQuery } from '../hooks/query/useUserDataQuery';
 import { useIsLogin } from '../context/IsLoginContext';
+import { useAccessToken } from '../context/AccessTokenContext';
 
 const Server_IP = process.env.REACT_APP_Server_IP;
 
@@ -13,13 +14,16 @@ function LoginRedirectPage() {
 
     const code = new URLSearchParams(window.location.search).get('code');
     const { isLogin, setIsLogin } = useIsLogin();
+    const { accessToken, setAccessToken, accessTokenExpire, setAccessTokenExpire } = useAccessToken();
 
+    
     // const queryClient = useQueryClient()
     // const { isPending, error, data } = useUserDataQuery(provider, code);
 
     async function fetchData() {
         try {
-            const isSuccess = await loginApi(provider, code);
+            const accessToken = await loginApi(provider, code);
+
             window.location.href = 'http://localhost:3000/';
         } catch (error) {
             console.error(error);
