@@ -14,7 +14,7 @@ function LoginRedirectPage() {
 
     const code = new URLSearchParams(window.location.search).get('code');
     const { isLogin, setIsLogin } = useIsLogin();
-    const { accessToken, setAccessToken, accessTokenExpire, setAccessTokenExpire } = useAccessToken();
+    const { accessToken, setAccessToken } = useAccessToken();
 
     
     // const queryClient = useQueryClient()
@@ -22,8 +22,8 @@ function LoginRedirectPage() {
 
     async function fetchData() {
         try {
-            const accessToken = await loginApi(provider, code);
-
+            const token = await loginApi(provider, code);
+            setAccessToken(token)
             window.location.href = 'http://localhost:3000/';
         } catch (error) {
             console.error(error);

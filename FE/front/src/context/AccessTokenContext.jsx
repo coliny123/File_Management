@@ -8,7 +8,7 @@ export function AccessTokenProvider({ children }) {
 
     return (
         <AccessTokenContext.Provider value={{ accessToken, setAccessToken }}>
-            {children}            
+            {children}
         </AccessTokenContext.Provider>
   )
 }
