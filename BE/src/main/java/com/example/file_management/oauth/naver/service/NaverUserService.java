@@ -39,11 +39,14 @@ public class NaverUserService {
 
                 System.out.println("Successfully updated user info in the database: " + userInfo);
 
-                // JWT 토큰 생성
+                // JWT 토큰, Refresh 토큰 생성
                 String jwtToken = JwtUtil.generateToken(naverUser.getEmail(), naverUser.getName());
 
-                // JWT 토큰을 응답 DTO에 추가
+                String refreshToken = JwtUtil.generateRefreshToken(naverUser.getEmail());
+
+                // JWT, Refresh 토큰을 응답 DTO에 추가
                 userInfo.getResponse().setToken(jwtToken);
+                userInfo.getResponse().setRefreshToken(refreshToken);
 
                 System.out.println("Generated JWT token: " + jwtToken);
 
@@ -51,6 +54,7 @@ public class NaverUserService {
                 System.out.println("Returning user info: " + userInfo);
 
                 return userInfo;
+
             } else {
                 System.out.println("No user info found.");
                 return null;

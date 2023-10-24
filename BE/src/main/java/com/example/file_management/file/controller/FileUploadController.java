@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class FileUploadController {
     public ResponseEntity upload(@RequestParam("file") MultipartFile file) {
         try {
             fileService.fileUpload(file);
+
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(file.getOriginalFilename());
         }

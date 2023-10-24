@@ -57,6 +57,7 @@ public class KakaoOAuthController {
         response.put("email", kakaoUserResponse.getKakaoAccount().get("email"));
         response.put("name", kakaoUserResponse.getProperties().get("nickname"));
         response.put("token", kakaoUserResponse.getToken());
+        response.put("refreshToken", kakaoUserResponse.getRefreshToken());
 
 
         return ResponseEntity.ok(response);

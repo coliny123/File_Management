@@ -16,5 +16,4 @@ public interface FileService {
     // 저장된 파일 가져오는 메서드
     FileInfo getFile(String fileName) throws FileNotFoundException;
 
-
 }

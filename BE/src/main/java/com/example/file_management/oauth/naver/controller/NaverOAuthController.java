@@ -55,6 +55,7 @@ public class NaverOAuthController {
         response.put("email",  naverUserResponse.getResponse().getEmail());
         response.put("name",  naverUserResponse.getResponse().getName());
         response.put("token",  naverUserResponse.getResponse().getToken());
+        response.put("refreshToken", naverUserResponse.getResponse().getRefreshToken());
 
         return ResponseEntity.ok(response);
     }

@@ -1,6 +1,8 @@
 package com.example.file_management.oauth.google.service;
 
 import com.example.file_management.oauth.google.model.entity.GoogleUser;
+import com.example.file_management.oauth.model.entity.RefreshToken;
+import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +16,17 @@ import java.util.Optional;
 
 import com.example.file_management.security.JwtUtil;
 
-import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
-
 @Service
 public class UserService {
     private final WebClient webClient;
+    private final GoogleUserRepository googleUserRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    private GoogleUserRepository googleUserRepository;
-
-    public UserService(GoogleUserRepository googleUserRepository) {
+    public UserService(GoogleUserRepository googleUserRepository, RefreshTokenRepository refreshTokenRepository) {
         this.googleUserRepository = googleUserRepository;
-        this.webClient = WebClient.builder()
-                .filter(logRequest())
-                .build();
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.webClient = WebClient.builder().filter(logRequest()).build();
     }
 
     // 로그 출력용 ExchangeFilterFunction
@@ -84,7 +83,16 @@ public class UserService {
                 System.out.println("User saved successfully.");
 
                 String jwtToken = JwtUtil.generateToken(googleUser.getEmail(), googleUser.getName());
-                return new UserResponse(jwtToken, email, name);
+                String refreshToken = JwtUtil.generateRefreshToken(googleUser.getEmail());
+
+                // 리프레시 토큰 저장
+                RefreshToken refreshTokenEntity = new RefreshToken();
+                refreshTokenEntity.setEmail(email);
+                refreshTokenEntity.setRefreshToken(refreshToken);
+                refreshTokenRepository.save(refreshTokenEntity);
+
+                return new UserResponse(jwtToken, email, name, refreshToken);
+
             } catch (Exception e) {
                 System.out.println("Error saving user: " + e.getMessage());
             }
