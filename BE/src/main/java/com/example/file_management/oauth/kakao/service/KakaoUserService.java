@@ -3,7 +3,6 @@ package com.example.file_management.oauth.kakao.service;
 import com.example.file_management.oauth.kakao.model.dto.response.KakaoUserResponse;
 import com.example.file_management.oauth.kakao.model.entity.KakaoUser;
 import com.example.file_management.oauth.kakao.repository.KakaoUserRepository;
-import com.example.file_management.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,18 +35,6 @@ public class KakaoUserService {
                 kakaoUserRepository.save(kakaouser);
 
                 System.out.println("데이터베이스에 사용자 정보를 성공적으로 업데이트했습니다: " + userInfo);
-
-                // JWT, Refresh 토큰 생성
-                String jwtToken = JwtUtil.generateToken(kakaouser.getEmail(), kakaouser.getName());
-                String refreshToken = JwtUtil.generateRefreshToken(kakaouser.getEmail());
-
-                // JWT, Refresh 토큰을 응답 DTO에 추가
-                userInfo.setToken(jwtToken);
-                userInfo.setToken(refreshToken);
-
-                System.out.println("생성된 JWT 토큰: " + jwtToken);
-                System.out.println("생성된 Refresh 토큰: " + refreshToken);
-                System.out.println("사용자 정보 반환: " + userInfo);
 
                 return userInfo;
             } else {
@@ -92,6 +79,4 @@ public class KakaoUserService {
             return null;
         }
     }
-
-
 }
