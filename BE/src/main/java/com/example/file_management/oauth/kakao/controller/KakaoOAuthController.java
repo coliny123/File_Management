@@ -1,18 +1,19 @@
 package com.example.file_management.oauth.kakao.controller;
 
-
 import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.kakao.model.dto.response.KakaoUserResponse;
 import com.example.file_management.oauth.kakao.service.KakaoOAuth2Service;
 import com.example.file_management.oauth.kakao.service.KakaoUserService;
+import com.example.file_management.security.JwtUtil;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class KakaoOAuthController {
     }
 
     @PostMapping("/auth/kakao")
-    public ResponseEntity<?> authenticateNave(@RequestBody AuthCodeDto authRequest) {
+    public ResponseEntity<?> authenticateKakao(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {
         String kakaoAuthCode = authRequest.getAuthCode();
 
         System.out.println("Received auth code(kakao): " + kakaoAuthCode);
@@ -45,23 +46,35 @@ public class KakaoOAuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while getting access token.");
         }
 
-        //사용자 정보 얻기
         KakaoUserResponse kakaoUserResponse = kakaoUserService.updateUserInfo(accessToken);
 
-        if (kakaoUserResponse == null || kakaoUserResponse.getToken() == null) {  // getResponse() 대신 getToken() 호출
+        if (kakaoUserResponse == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while updating user info.");
         }
 
-        // 클라이언트에게 보낼 새로운 응답 객체 생성
-        Map<String, Object> response = new HashMap<>();
-        response.put("email", kakaoUserResponse.getKakaoAccount().get("email"));
-        response.put("name", kakaoUserResponse.getProperties().get("nickname"));
-        response.put("token", kakaoUserResponse.getToken());
-        response.put("refreshToken", kakaoUserResponse.getRefreshToken());
+        String email = kakaoUserResponse.getKakaoAccount().get("email").toString();
+        String nickname = kakaoUserResponse.getProperties().get("nickname").toString();
 
+        String jwtToken = JwtUtil.generateToken(email, nickname);
+        String refreshToken = JwtUtil.generateRefreshToken(email);
 
-        return ResponseEntity.ok(response);
+        Cookie jwtTokenCookie = new Cookie("jwt_token", jwtToken);
+        jwtTokenCookie.setHttpOnly(true);
+        jwtTokenCookie.setMaxAge(60 * 60);
+
+        Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 14);
+
+        response.addCookie(jwtTokenCookie);
+        response.addCookie(refreshTokenCookie);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("email", email);
+        responseBody.put("name", nickname);
+        responseBody.put("token", jwtToken);
+        responseBody.put("refreshToken", refreshToken);
+
+        return ResponseEntity.ok(responseBody);
     }
-
 }
-
