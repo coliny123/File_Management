@@ -14,10 +14,8 @@ import com.example.file_management.oauth.model.dto.TokenRequest;
 
 @RestController
 public class TokenController {
-
     @Autowired
     private JwtUtil jwtUtil;
-
     @PostMapping("/auth/refresh")
     public ResponseEntity<?> refresh(@RequestBody TokenRequest tokenRequest) {
         String refreshToken = tokenRequest.getRefreshToken();

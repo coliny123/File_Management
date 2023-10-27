@@ -6,6 +6,8 @@ import com.example.file_management.oauth.google.service.GoogleOAuth2Service;
 import com.example.file_management.oauth.google.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final GoogleOAuth2Service googleOAuth2Service;
     private final UserService userService;
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     public AuthController(GoogleOAuth2Service googleOAuth2Service, UserService userService) {
@@ -27,12 +30,12 @@ public class AuthController {
     public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest) {
 //        String redirectUri = "http://localhost:3000/auth/google/callback";
 
-        System.out.println("Received auth code(google): " + authRequest.getAuthCode());
+        log.info("Received auth code(google): " + authRequest.getAuthCode());
 
         String accessToken = googleOAuth2Service.getAccessToken(authRequest);
 
         //인증 코드를 바탕으로 Google OAuth2 서버로부터 받은 액세스 토큰
-        System.out.println("Received access token(google): " + accessToken);
+        log.info("Received access token(google): " + accessToken);
 
         //사용자 정보 얻고, 데이터베이스에 저장 및 JWT 토큰 생성 후 반환
         UserResponse userResponse = userService.getUserInfoAndSave(accessToken);

@@ -8,14 +8,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import org.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
 public class GoogleOAuth2Service {
 
-    private static final Logger logger = LoggerFactory.getLogger(GoogleOAuth2Service.class);
+    private static final Logger log = LoggerFactory.getLogger(GoogleOAuth2Service.class);
 
     @Value("${oauth.google.clientId}")
     private String clientId;
@@ -41,7 +40,7 @@ public class GoogleOAuth2Service {
 
                 .onStatus(status -> status.value() >= 400, clientResponse ->
                         clientResponse.bodyToMono(String.class).map(errorMessage -> {
-                            logger.error("Error occurred while calling Google OAuth2 API: " + errorMessage);
+                            log.error("Error occurred while calling Google OAuth2 API: " + errorMessage);
                             return new RuntimeException(errorMessage);
                         })
                 )

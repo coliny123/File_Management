@@ -3,6 +3,8 @@ package com.example.file_management.oauth.kakao.service;
 import com.example.file_management.oauth.kakao.model.dto.response.KakaoUserResponse;
 import com.example.file_management.oauth.kakao.model.entity.KakaoUser;
 import com.example.file_management.oauth.kakao.repository.KakaoUserRepository;
+import com.example.file_management.oauth.model.entity.RefreshToken;
+import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +17,21 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class KakaoUserService {
     private final KakaoUserRepository kakaoUserRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    public KakaoUserService(KakaoUserRepository kakaoUserRepository) {
+    public KakaoUserService(KakaoUserRepository kakaoUserRepository, RefreshTokenRepository refreshTokenRepository) {
         this.kakaoUserRepository = kakaoUserRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
+    }
+
+    public void saveRefreshToken(String email, String refreshToken) {
+        RefreshToken token = RefreshToken.builder()
+                .email(email)
+                .refreshToken(refreshToken)
+                .build();
+
+        refreshTokenRepository.save(token);
     }
 
     public KakaoUserResponse updateUserInfo(String accessToken) {

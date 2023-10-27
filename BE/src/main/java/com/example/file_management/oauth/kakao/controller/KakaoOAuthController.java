@@ -58,6 +58,9 @@ public class KakaoOAuthController {
         String jwtToken = JwtUtil.generateToken(email, nickname);
         String refreshToken = JwtUtil.generateRefreshToken(email);
 
+        // 리프레시 토큰 DB에 저장
+        kakaoUserService.saveRefreshToken(email, refreshToken);
+
         Cookie jwtTokenCookie = new Cookie("jwt_token", jwtToken);
         jwtTokenCookie.setHttpOnly(true);
         jwtTokenCookie.setMaxAge(60 * 60);

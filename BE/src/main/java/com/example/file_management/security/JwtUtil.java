@@ -26,11 +26,8 @@ public class JwtUtil {
     }
 
     private static final String SECRET_KEY =  System.getenv("JWT_SECRET_KEY");
-//    private static final int EXPIRATION_TIME = 3600000;  // 1 hour
-//    private static final long REFRESH_EXPIRATION_TIME = 1209600000L; //14 days
     private static final long EXPIRATION_TIME = TimeUnit.HOURS.toMillis(1);  // 1 hour
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
-
 
     public static String generateToken(String email, String name) {
         Map<String, Object> claims = new HashMap<>();
