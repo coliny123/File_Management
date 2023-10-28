@@ -15,7 +15,6 @@ function LoginRedirectPage() {
     const code = new URLSearchParams(window.location.search).get('code');
     const { isLogin, setIsLogin } = useIsLogin();
     const { accessToken, setAccessToken } = useAccessToken();
-
     
     // const queryClient = useQueryClient()
     // const { isPending, error, data } = useUserDataQuery(provider, code);

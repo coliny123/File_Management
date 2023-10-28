@@ -20,6 +20,7 @@ function FileDownloadPage() {
     return (
     <div>
       {`${fileId} 파일입니다.`}
+      <div><button>download</button></div>
     </div>
   )
 }

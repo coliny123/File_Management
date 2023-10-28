@@ -53,8 +53,8 @@ function QrCode() {
       <div className='w-full h-full flex flex-col justify-center items-center'>
           {/* <div className='w-full h-full border-2 flex justify-center items-center'> */}
           <div className="w-full h-full flex flex-col justify-center items-center border-4 bg-[#F7F6FB]" style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}>
-          <QRCodeCanvas className='qr-code-canvas' value={`http://165.246.116.55:3000/download/1`} size={250}></QRCodeCanvas>
-              {/* <QRCodeCanvas value={`http://192.168.219.103:3000/download/${fileId}`} size={250}></QRCodeCanvas> */}
+          <QRCodeCanvas className='qr-code-canvas' value={`http://165.246.223.19:3000/download/1`} size={250}></QRCodeCanvas>
+          {/* <QRCodeCanvas className='qr-code-canvas' value={`http://165.246.116.55:3000/download/1`} size={250}></QRCodeCanvas> */}
           </div>
           <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-around items-center'>
               <div>

@@ -52,7 +52,7 @@ function FileList({fileInfoList}) {
         <div className={`z-[1000] fixed top-[80px] right-0 flex-col md:w-80 w-60 h-full bg-green-500 transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : 'translate-x-full'}`}>
             <div>{togglebarDataInfo?.fileName}</div>
             <div onClick={() => setIsTogglebarOpen(false)}>닫기버튼</div>
-            <QRCodeCanvas value={`http://192.168.45.81:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
+            <QRCodeCanvas value={`http://165.246.223.19:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
             <div>토글</div>
             <div>토글</div>
             <div>토글</div>

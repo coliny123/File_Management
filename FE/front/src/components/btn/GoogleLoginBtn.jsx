@@ -14,8 +14,6 @@ function GoogleLoginBtn() {
 
     const { provider } = useParams();
 
-    console.log(provider)
-
     const handleGoogleLogin = () => {
         window.location.href =
             `https://accounts.google.com/o/oauth2/v2/auth?client_id=${Google_Client_ID}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile`;
