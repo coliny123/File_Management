@@ -33,14 +33,24 @@ public class UserService {
     public void saveRefreshToken(String email, String refreshToken) {
         Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
 
-        if (existingToken.isEmpty()) {
-            RefreshToken token = RefreshToken.builder()
-                    .email(email)
-                    .refreshToken(refreshToken)
-                    .build();
-
-            refreshTokenRepository.save(token);
+        RefreshToken token;
+        if (existingToken.isPresent()) {
+            // 이미 존재하는 토큰이라면 가져옴
+            token = existingToken.get();
+            log.info("존재하는 리프레시 토큰입니다. 업데이트 info.");
+        } else {
+            // 새로운 토큰이라면 새 RefreshToken 객체를 생성
+            token = new RefreshToken();
+            log.info("새로운 리프레시 토큰 생성");
         }
+
+        // 토큰 정보 설정
+        token.setEmail(email);
+        token.setRefreshToken(refreshToken);
+
+        // DB에 토큰 정보 저장 (새로운 토큰이면 생성, 기존 토큰이면 업데이트)
+        refreshTokenRepository.save(token);
+
     }
 
     // 로그 출력용 ExchangeFilterFunction
@@ -87,7 +97,7 @@ public class UserService {
 
             // 사용자 정보 설정
             googleUser.setEmail(email);
-            String name = jsonObject.getString("family_name");
+            String name = jsonObject.getString("name");
             googleUser.setName(name);
 
             try {

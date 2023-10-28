@@ -5,6 +5,8 @@ import com.example.file_management.oauth.kakao.model.entity.KakaoUser;
 import com.example.file_management.oauth.kakao.repository.KakaoUserRepository;
 import com.example.file_management.oauth.model.entity.RefreshToken;
 import com.example.file_management.oauth.repository.RefreshTokenRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,26 +22,36 @@ import java.util.Optional;
 public class KakaoUserService {
     private final KakaoUserRepository kakaoUserRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private static final Logger log = LoggerFactory.getLogger(KakaoUserService.class);
 
     @Autowired
     public KakaoUserService(KakaoUserRepository kakaoUserRepository, RefreshTokenRepository refreshTokenRepository) {
         this.kakaoUserRepository = kakaoUserRepository;
         this.refreshTokenRepository = refreshTokenRepository;
     }
-    
+
     public void saveRefreshToken(String email, String refreshToken) {
         Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
 
-        if (!existingToken.isPresent()) {
-            RefreshToken token = RefreshToken.builder()
-                    .email(email)
-                    .refreshToken(refreshToken)
-                    .build();
-
-            refreshTokenRepository.save(token);
+        RefreshToken token;
+        if (existingToken.isPresent()) {
+            // 이미 존재하는 토큰이라면 가져옴
+            token = existingToken.get();
+            log.info("Existing token found. Updating info.");
+        } else {
+            // 새로운 토큰이라면 새 RefreshToken 객체를 생성
+            token = new RefreshToken();
+            log.info("Creating new token.");
         }
-    }
 
+        // 토큰 정보 설정
+        token.setEmail(email);
+        token.setRefreshToken(refreshToken);
+
+        // DB에 토큰 정보 저장 (새로운 토큰이면 생성, 기존 토큰이면 업데이트)
+        refreshTokenRepository.save(token);
+
+    }
 
     public KakaoUserResponse updateUserInfo(String accessToken) {
         try {
