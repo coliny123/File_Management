@@ -36,11 +36,26 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
 
     return ( 
         <div className='flex flex-col justify-center items-center'>
-            <div className='w-[161px]'>
+            <div className='w-[230px]'>
                 <div className='text-2xl font-bold mt-5'>파일 변환</div>
-                <div className='text-gray-500 w-full text-left mt-5'>올린 파일</div>
-                <div className='border-2 w-full h-10 flex justify-center items-center'>{uploadedFileType}</div>
-                <div className='text-gray-500 w-full text-left mt-5 mb-5'>확장자 선택</div>
+                <div className='flex items-center mt-5 h-[32px] justify-between'>
+                    <div className='text-gray-500 text-[14px]'>올린 파일</div>
+                    <div className='rounded-[80px] bg-[#FFFFFF] w-[160px] h-[32px] flex justify-center items-center'>{uploadedFileType}</div>
+                </div>
+                <div className='flex items-center mt-5 h-[32px] justify-between'>
+                    <div className='text-gray-500 text-[14px]'>확장자 선택</div>
+                    <div className='w-[160px] h-[32px] flex justify-center items-center'>
+                        <FormControl fullWidth fullHeight>
+                            <InputLabel id='select-label'>형식</InputLabel>
+                            <Select className='w-full' labelId='select-label' value={transferredFileFormat} label='format' onChange={(e) => setTransferredFileFormat(e.target.value)}>
+                                {formatOptions?.map((option) => (
+                                    <MenuItem key={option} value={option}>{option}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </div>
+                </div>
+                {/* <div className='text-gray-500 w-full text-left mt-5 mb-5'>확장자 선택</div>
                 <FormControl fullWidth>
                     <InputLabel id='select-label'>형식</InputLabel>
                     <Select className='w-full' labelId='select-label' value={transferredFileFormat} label='format' onChange={(e) => setTransferredFileFormat(e.target.value)}>
@@ -48,7 +63,7 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
                             <MenuItem key={option} value={option}>{option}</MenuItem>
                         ))}
                     </Select>
-                </FormControl>
+                </FormControl> */}
             </div>
         </div>
     )
