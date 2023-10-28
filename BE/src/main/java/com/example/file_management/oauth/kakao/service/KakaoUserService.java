@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class KakaoUserService {
@@ -46,10 +46,10 @@ public class KakaoUserService {
                 String name = (String)userInfo.getProperties().get("nickname");
 
                 // DB에서 이메일로 사용자 중복 확인
-                List<KakaoUser> existingUser = kakaoUserRepository.findByEmail(email);
+                Optional<KakaoUser> existingUser = kakaoUserRepository.findByEmail(email);
 
                 // 사용자가 존재하지 않으면 새로운 사용자를 생성하고 저장
-                if (!existingUser.isEmpty()) {
+                if (!existingUser.isPresent()) {
                     KakaoUser kakaoUser = new KakaoUser();
                     kakaoUser.setEmail(email);
                     kakaoUser.setName(name);
@@ -59,7 +59,7 @@ public class KakaoUserService {
 
                     System.out.println("데이터베이스에 사용자 정보를 성공적으로 업데이트했습니다: " + kakaoUser);
                 } else {
-                    System.out.println("이미 존재하는 사용자입니다: " + existingUser.get(0));
+                    System.out.println("이미 존재하는 사용자입니다: " + existingUser.get());
                 }
                 return userInfo;
 

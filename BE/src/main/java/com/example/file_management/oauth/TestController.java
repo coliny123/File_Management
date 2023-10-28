@@ -1,19 +1,18 @@
 package com.example.file_management.oauth;
 
+import com.example.file_management.oauth.model.dto.TokenRequest;
 import com.example.file_management.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.example.file_management.oauth.model.dto.TokenRequest;
 
 @RestController
-public class TokenController {
+public class TestController {
     @Autowired
     private JwtUtil jwtUtil;
     @PostMapping("/auth/refresh")
