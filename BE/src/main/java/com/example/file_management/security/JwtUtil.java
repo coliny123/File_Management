@@ -1,6 +1,5 @@
 package com.example.file_management.security;
 
-import com.example.file_management.exception.InvalidTokenException;
 import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -66,8 +65,8 @@ public class JwtUtil {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            log.error("리프레시 토큰의 유효성 검사에 실패했습니다.", e);
-            throw new InvalidTokenException("타당하지 않거나 만료된 리프레시 토큰입니다.");
+            log.error("토큰의 유효성 검사에 실패했습니다.", e);
+            return false;
         }
     }
 
