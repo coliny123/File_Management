@@ -26,15 +26,20 @@ public class KakaoUserService {
         this.kakaoUserRepository = kakaoUserRepository;
         this.refreshTokenRepository = refreshTokenRepository;
     }
-
+    
     public void saveRefreshToken(String email, String refreshToken) {
-        RefreshToken token = RefreshToken.builder()
-                .email(email)
-                .refreshToken(refreshToken)
-                .build();
+        Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
 
-        refreshTokenRepository.save(token);
+        if (!existingToken.isPresent()) {
+            RefreshToken token = RefreshToken.builder()
+                    .email(email)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            refreshTokenRepository.save(token);
+        }
     }
+
 
     public KakaoUserResponse updateUserInfo(String accessToken) {
         try {
