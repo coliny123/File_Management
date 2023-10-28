@@ -1,7 +1,8 @@
 package com.example.file_management.oauth.google.model.entity;
 
 import com.example.file_management.oauth.model.entity.User;
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,5 +13,6 @@ import lombok.EqualsAndHashCode;
 public class GoogleUser extends User {
     private String name;
 }
+
 
 

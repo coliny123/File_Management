@@ -8,3 +8,4 @@ import java.util.Optional;
 public interface GoogleUserRepository extends JpaRepository<GoogleUser, Long> {
     Optional<GoogleUser> findByEmail(String email);
 }
+
