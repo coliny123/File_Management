@@ -31,26 +31,17 @@ public class NaverUserService {
     }
 
     public void saveRefreshToken(String email, String refreshToken) {
-        Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
+        RefreshToken token = refreshTokenRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    log.info("새로운 리프레시 토큰 생성");
+                    RefreshToken newToken = new RefreshToken();
+                    newToken.setEmail(email);
+                    return newToken;
+                });
 
-        RefreshToken token;
-        if (existingToken.isPresent()) {
-            // 이미 존재하는 토큰이라면 가져옴
-            token = existingToken.get();
-            log.info("Existing token found. Updating info.");
-        } else {
-            // 새로운 토큰이라면 새 RefreshToken 객체를 생성
-            token = new RefreshToken();
-            log.info("Creating new token.");
-        }
-
-        // 토큰 정보 설정
-        token.setEmail(email);
         token.setRefreshToken(refreshToken);
-
-        // DB에 토큰 정보 저장 (새로운 토큰이면 생성, 기존 토큰이면 업데이트)
         refreshTokenRepository.save(token);
-
+        log.info("리프레시 토큰 저장 완료");
     }
 
     public NaverUserResponse updateUserInfo(String accessToken) {

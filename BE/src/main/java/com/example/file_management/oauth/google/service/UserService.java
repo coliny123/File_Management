@@ -31,27 +31,19 @@ public class UserService {
     }
 
     public void saveRefreshToken(String email, String refreshToken) {
-        Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
+        RefreshToken token = refreshTokenRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    log.info("새로운 리프레시 토큰 생성");
+                    RefreshToken newToken = new RefreshToken();
+                    newToken.setEmail(email);
+                    return newToken;
+                });
 
-        RefreshToken token;
-        if (existingToken.isPresent()) {
-            // 이미 존재하는 토큰이라면 가져옴
-            token = existingToken.get();
-            log.info("존재하는 리프레시 토큰입니다. 업데이트 info.");
-        } else {
-            // 새로운 토큰이라면 새 RefreshToken 객체를 생성
-            token = new RefreshToken();
-            log.info("새로운 리프레시 토큰 생성");
-        }
-
-        // 토큰 정보 설정
-        token.setEmail(email);
         token.setRefreshToken(refreshToken);
-
-        // DB에 토큰 정보 저장 (새로운 토큰이면 생성, 기존 토큰이면 업데이트)
         refreshTokenRepository.save(token);
-
+        log.info("리프레시 토큰 저장 완료");
     }
+
 
     // 로그 출력용 ExchangeFilterFunction
     private ExchangeFilterFunction logRequest() {
@@ -88,11 +80,11 @@ public class UserService {
             if (existingUserOptional.isPresent()) {
                 // 이미 존재하는 사용자라면 가져옴
                 googleUser = existingUserOptional.get();
-                log.info("Existing user found. Updating info.");
+                log.info("이미존재하는 user입니다. Updating info.");
             } else {
                 // 새로운 사용자라면 새 User 객체를 생성
                 googleUser = new GoogleUser();
-                log.info("Creating new user.");
+                log.info("새로운 user 생성");
             }
 
             // 사용자 정보 설정
