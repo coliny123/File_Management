@@ -34,27 +34,31 @@ public class FileServiceImpl implements FileService{
      * @param recivedfile
      * @throws IOException
      */
-    @Override
     public void fileUpload(MultipartFile recivedfile) throws IOException{
-            // 업로더가 업로드한 file 이름
-            String originalFilename = recivedfile.getOriginalFilename();
-
-            // uuid 식별자 붙힌 file 이름
-            String saveFileName = createSavedFileName(originalFilename);
-
-            // file이 로컬storage에 저장되는 경로(위치) -> cloud flare로 바꿀 예정
-            String savedPath = getFullPath(saveFileName);
-
-            File file = new File(savedPath);
-            // 파라미터로 java.io.File 객체를 받아 해당 위치에 파일을 저장!!!!!
-            recivedfile.transferTo(file);
+        // 업로더가 업로드한 file 이름
+        String originalFilename = recivedfile.getOriginalFilename();
+//
+//            // uuid 식별자 붙힌 file 이름
+//            String saveFileName = createSavedFileName(originalFilename);
+//
+//            // file이 로컬storage에 저장되는 경로(위치) -> cloud flare로 바꿀 예정
+//            String savedPath = getFullPath(saveFileName);
+//
+//            File file = new File(savedPath);
+//            // 파라미터로 java.io.File 객체를 받아 해당 위치에 파일을 저장!!!!!
+//            recivedfile.transferTo(file);
 
 //            // 로컬storage에 저장 된 file의 정보 db에 저장
 //            recodeFileInfoToDB(originalFilename, saveFileName, savedPath);
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(recivedfile.getContentType());
+        objectMetadata.setContentLength(recivedfile.getInputStream().available());
         try {
-            PutObjectResult result = amazonS3Client.putObject(new PutObjectRequest(bucketName, saveFileName, file));
+            System.out.println("aaa");
+            amazonS3Client.putObject(bucketName, originalFilename, recivedfile.getInputStream(), objectMetadata);
+            System.out.println("bbb");
         }catch (Exception e){
-            throw new IOException("amazonS3Client 에러가 발생했습니다.");
+            e.printStackTrace();
         }
     }
 
