@@ -4,17 +4,9 @@ import { useUpload } from '../../context/UploadContext';
 import { checkFileExtension } from '../../services/checkFileExtension';
 import { BsCloudUpload, BsExclamationDiamond } from 'react-icons/bs'
 
-const Dragging = () => {
+const BeforeDrop = (isDragging) => {
     return (
-        <>
-            <div>파일을 놓아주세요!!</div>
-        </>
-    )
-}
-
-const BeforeDrop = () => {
-    return (
-        <div>
+        <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}>
             <div className='mt-5 text-2xl font-bold'>파일 업로드</div>
             <div className='mt-5 font-bold text-[#31D6D6] text-[100px] w-full flex justify-center'><BsCloudUpload/></div>
             <div className='mt- text-2xl font-bold text-[#6367EB]'>Drag & drop</div>
@@ -148,10 +140,9 @@ function FileDragDrop() {
     return (
         // <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
         <div className="DragDrop flex flex-col justify-center items-center m-0 w-full h-full">
-            {/* <div className='dropBox w-full h-full border-4 border-dashed rounded-3xl'> */}
-            {/* <div className='dropBox w-full h-full flex flex-col justify-center items-center border-4 style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}'> */}
             <div className="dropBox w-full h-full flex flex-col justify-center items-center border-4 bg-[#F7F6FB]" style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}>
-            <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}>
+            {/* <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}> */}
+            {/* <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}> */}
                 <input
                     type="file"
                     id="fileUpload"
@@ -163,13 +154,13 @@ function FileDragDrop() {
                     className='DragDrop-File w-full h-full'
                     ref={dragRef}
                 >
-                    <div className={`w-full h-full flex justify-center`}>
+                    <div className={`w-full h-full flex justify-center items-center`}>
                         {/* {isDragging ? <Dragging/> : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()} */}
-                        {uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
+                        {uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
                     </div>
                 </label>
             </div>
-            </div>
+            {/* </div> */}
             <div className={`btns relative ${uploadedFile.length > 0 ? 'bg-blue-500' : 'bg-blue-200'} text-white w-[160px] h-[56px] mt-10 flex justify-center items-center`}>
                 <button onClick={handleUploadBtn} disabled={uploadedFile.length > 0 ? false : true} className='w-full h-full'>Upload</button>
             </div>
