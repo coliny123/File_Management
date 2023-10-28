@@ -9,7 +9,7 @@ const LoginBtn = () => {
 
     const navigate = useNavigate();
     return (
-        <button className='text-white bg-[#6367EB] w-[160px] h-[48px] rounded-[18px]' onClick={() => navigate("/login")}>로그인</button>
+        <button className='text-white bg-[#6367EB] w-full h-[48px] rounded-[18px]' onClick={() => navigate("/login")}>로그인</button>
     )
 }
 
@@ -23,7 +23,7 @@ const LogoutBtn = () => {
     }
 
     return (
-        <button className='text-white bg-[#6367EB] w-[160px] h-[48px] rounded-[18px]' onClick={logout}>로그아웃</button>
+        <button className='text-white bg-[#6367EB] w-full h-[48px] rounded-[18px]' onClick={logout}>로그아웃</button>
     )
 }
 
@@ -41,8 +41,8 @@ function Navbar() {
                     <HiMiniHome />
                 </div>
             </button> */}
-            <div className='absolute left-[156px] bg-[#F7F6FB] w-[200px] h-[48px] rounded-[18px] flex items-center font-bold text-md pl-5'> <div>코드입력:</div>  <input className='w-[120px] h-full rounded-[18px] pointer-events-auto bg-[#F7F6FB] outline-none' type="text"/></div>
-            <div className='absolute right-10'>{isLogin ? <LogoutBtn /> : <LoginBtn />}</div>
+            <div className='absolute left-[156px] bg-[#F7F6FB] w-[200px] h-[48px] rounded-[18px] flex items-center font-bold pl-5'> <div className=''>코드입력:</div>  <input className='w-[100px] h-full rounded-[18px] pointer-events-auto bg-[#F7F6FB] outline-none' type="text"/></div>
+            <div className='absolute right-[40px] w-[120px] h-[48px]'>{isLogin ? <LogoutBtn /> : <LoginBtn />}</div>
         </div>
 
     )
