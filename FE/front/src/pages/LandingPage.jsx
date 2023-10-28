@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import FileDragDrop from '../components/dragDrop/FileDragDrop'
 import FileStatusbar from '../components/bar/FileStatusbar'
 import QrCode from '../components/qrCode/QrCode'
@@ -8,6 +8,7 @@ import { loginApi } from '../api/loginApi'
 import { useQuery, QueryClient } from '@tanstack/react-query'
 import { useUpload } from '../context/UploadContext'
 import Convert from '../components/convert/Convert'
+import { useAccessToken } from '../context/AccessTokenContext'
 
 function LandingPage() {
 
@@ -19,6 +20,9 @@ function LandingPage() {
   // })
 
   // console.log(data);
+
+  const { accessToken } = useAccessToken();
+  console.log(accessToken)
 
   const {uploadStatus} = useUpload();
   return (

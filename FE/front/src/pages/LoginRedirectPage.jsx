@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { loginApi } from '../api/loginApi';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ const Server_IP = process.env.REACT_APP_Server_IP;
 
 function LoginRedirectPage() {
     const { provider } = useParams();
-
+    const navigate = useNavigate();
     const code = new URLSearchParams(window.location.search).get('code');
     const { isLogin, setIsLogin } = useIsLogin();
     const { accessToken, setAccessToken } = useAccessToken();
@@ -24,7 +24,7 @@ function LoginRedirectPage() {
         try {
             const token = await loginApi(provider, code);
             setAccessToken(token)
-            // window.location.href = 'http://localhost:3000/';
+            navigate('/');
         } catch (error) {
             console.error(error);
         }
@@ -33,7 +33,6 @@ function LoginRedirectPage() {
     useEffect(() => {
         fetchData(); // fetchData 함수를 호출
     }, []);
-
 
 
     return (
