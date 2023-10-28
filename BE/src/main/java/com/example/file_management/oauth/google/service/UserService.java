@@ -1,11 +1,9 @@
 package com.example.file_management.oauth.google.service;
 
-import com.example.file_management.oauth.google.model.dto.response.UserResponse;
 import com.example.file_management.oauth.google.model.entity.GoogleUser;
 import com.example.file_management.oauth.google.repository.GoogleUserRepository;
 import com.example.file_management.oauth.model.entity.RefreshToken;
 import com.example.file_management.oauth.repository.RefreshTokenRepository;
-import com.example.file_management.security.JwtUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -32,6 +30,19 @@ public class UserService {
         this.webClient = WebClient.builder().filter(logRequest()).build();
     }
 
+    public void saveRefreshToken(String email, String refreshToken) {
+        Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
+
+        if (existingToken.isEmpty()) {
+            RefreshToken token = RefreshToken.builder()
+                    .email(email)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            refreshTokenRepository.save(token);
+        }
+    }
+
     // 로그 출력용 ExchangeFilterFunction
     private ExchangeFilterFunction logRequest() {
         return (clientRequest, next) -> {
@@ -41,7 +52,7 @@ public class UserService {
         };
     }
 
-    public UserResponse getUserInfoAndSave(String accessToken) {
+    public GoogleUser getUserInfoAndSave(String accessToken) {
         String userEndpointUrl="https://www.googleapis.com/oauth2/v3/userinfo";
 
         String userInfoResponse = webClient.get()
@@ -76,7 +87,7 @@ public class UserService {
 
             // 사용자 정보 설정
             googleUser.setEmail(email);
-            String name = jsonObject.getString("name");
+            String name = jsonObject.getString("family_name");
             googleUser.setName(name);
 
             try {
@@ -84,16 +95,7 @@ public class UserService {
                 googleUserRepository.save(googleUser);
                 log.info("사용자 정보 저장 성공");
 
-                String jwtToken = JwtUtil.generateToken(googleUser.getEmail(), googleUser.getName());
-                String refreshToken = JwtUtil.generateRefreshToken(googleUser.getEmail());
-
-                // 리프레시 토큰 저장
-                RefreshToken refreshTokenEntity = new RefreshToken();
-                refreshTokenEntity.setEmail(email);
-                refreshTokenEntity.setRefreshToken(refreshToken);
-                refreshTokenRepository.save(refreshTokenEntity);
-
-                return new UserResponse(jwtToken, email, name, refreshToken);
+                return googleUser;
 
             } catch (Exception e) {
                 log.error("사용자 정보 저장 오류 : ", e);
