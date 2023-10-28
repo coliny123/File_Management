@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useRef, useEffect } from 'react';
 import { useUpload } from '../../context/UploadContext';
 import { checkFileExtension } from '../../services/checkFileExtension';
+import { BsCloudUpload, BsExclamationDiamond } from 'react-icons/bs'
 
 const Dragging = () => {
     return (
@@ -14,15 +15,15 @@ const Dragging = () => {
 const BeforeDrop = () => {
     return (
         <div>
-            <div className='mt-10 text-2xl font-bold'>파일 업로드</div>
-            <div className='mt-10 text-lg'>한글, 워드, PPT, PDF만 업로드 가능합니다</div>
-            <div className='mt-20 text-lg'>drag and drop</div>
-            <div>or</div>
-            <label
-                className='DragDrop-File'
-                htmlFor="fileUpload"
-            >파일 올리기 버튼</label>
+            <div className='mt-5 text-2xl font-bold'>파일 업로드</div>
+            <div className='mt-5 font-bold text-[#31D6D6] text-[100px] w-full flex justify-center'><BsCloudUpload/></div>
+            <div className='mt- text-2xl font-bold text-[#6367EB]'>Drag & drop</div>
+            <label className='DragDrop-File' htmlFor="fileUpload">
+                <div className='text-lg font-bold text-[#6367EB]'>파일 선택</div>
+            </label>
+            <div className='mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
         </div>
+
     )
 }
 
@@ -145,8 +146,12 @@ function FileDragDrop() {
     }, [uploadedFile]);
 
     return (
-        <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
-            <div className='dropBox w-full h-full border-4 border-dashed rounded-3xl'>
+        // <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
+        <div className="DragDrop flex flex-col justify-center items-center m-0 w-full h-full">
+            {/* <div className='dropBox w-full h-full border-4 border-dashed rounded-3xl'> */}
+            {/* <div className='dropBox w-full h-full flex flex-col justify-center items-center border-4 style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}'> */}
+            <div className="dropBox w-full h-full flex flex-col justify-center items-center border-4 bg-[#F7F6FB]" style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}>
+            <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}>
                 <input
                     type="file"
                     id="fileUpload"
@@ -159,9 +164,11 @@ function FileDragDrop() {
                     ref={dragRef}
                 >
                     <div className={`w-full h-full flex justify-center`}>
-                        {isDragging ? <Dragging/> : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
+                        {/* {isDragging ? <Dragging/> : uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()} */}
+                        {uploadedFile.length > 0 ? fileInventory(uploadedFile, deleteFilesById) : BeforeDrop()}
                     </div>
                 </label>
+            </div>
             </div>
             <div className={`btns relative ${uploadedFile.length > 0 ? 'bg-blue-500' : 'bg-blue-200'} text-white w-[160px] h-[56px] mt-10 flex justify-center items-center`}>
                 <button onClick={handleUploadBtn} disabled={uploadedFile.length > 0 ? false : true} className='w-full h-full'>Upload</button>
