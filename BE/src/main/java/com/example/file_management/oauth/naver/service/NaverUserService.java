@@ -1,9 +1,10 @@
 package com.example.file_management.oauth.naver.service;
 
+import com.example.file_management.oauth.model.entity.RefreshToken;
 import com.example.file_management.oauth.naver.model.dto.response.NaverUserResponse;
 import com.example.file_management.oauth.naver.model.entity.NaverUser;
-import com.example.file_management.security.JwtUtil;
 import com.example.file_management.oauth.naver.repository.NaverUserRepository;
+import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,13 +14,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 public class NaverUserService {
     private final NaverUserRepository naverUserRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    public NaverUserService(NaverUserRepository naverUserRepository) {
+    public NaverUserService(NaverUserRepository naverUserRepository, RefreshTokenRepository refreshTokenRepository) {
         this.naverUserRepository = naverUserRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
+    }
+
+    public void saveRefreshToken(String email, String refreshToken) {
+        Optional<RefreshToken> existingToken = refreshTokenRepository.findByEmail(email);
+
+        if (existingToken.isEmpty()) {
+            RefreshToken token = RefreshToken.builder()
+                    .email(email)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            refreshTokenRepository.save(token);
+        }
     }
 
     public NaverUserResponse updateUserInfo(String accessToken) {
@@ -27,40 +45,35 @@ public class NaverUserService {
             NaverUserResponse userInfo = getUserInfo(accessToken);
 
             if (userInfo != null) {
-                // 새 User 객체 생성
-                NaverUser naverUser = new NaverUser();
+                String email = userInfo.getResponse().getEmail();
+                String name = userInfo.getResponse().getName();
 
-                // User 객체의 필드들을 설정
-                naverUser.setEmail(userInfo.getResponse().getEmail());
-                naverUser.setName(userInfo.getResponse().getName());
+                // DB에서 이메일로 사용자 중복 확인
+                Optional<NaverUser> existingUser = naverUserRepository.findByEmail(email);
 
-                // DB에 새 사용자 정보 저장. 이 때 id는 자동으로 생성됨.
-                naverUserRepository.save(naverUser);
+                // 사용자가 존재하지 않으면 새로운 사용자를 생성하고 저장
+                if (existingUser.isEmpty()) {
 
-                System.out.println("Successfully updated user info in the database: " + userInfo);
+                    NaverUser naverUser = new NaverUser();
+                    naverUser.setEmail(email);
+                    naverUser.setName(name);
 
-                // JWT 토큰, Refresh 토큰 생성
-                String jwtToken = JwtUtil.generateToken(naverUser.getEmail(), naverUser.getName());
+                    // DB에 새 사용자 정보 저장. 이 때 id는 자동으로 생성됨.
+                    naverUserRepository.save(naverUser);
 
-                String refreshToken = JwtUtil.generateRefreshToken(naverUser.getEmail());
-
-                // JWT, Refresh 토큰을 응답 DTO에 추가
-                userInfo.getResponse().setToken(jwtToken);
-                userInfo.getResponse().setRefreshToken(refreshToken);
-
-                System.out.println("Generated JWT token: " + jwtToken);
-
-                // 반환 값 출력
-                System.out.println("Returning user info: " + userInfo);
-
+                    System.out.println("데이터베이스에 사용자 정보를 성공적으로 업데이트했습니다: " + naverUser);
+                } else {
+                    System.out.println("이미 존재하는 사용자입니다: " + existingUser.get());
+                }
                 return userInfo;
 
             } else {
-                System.out.println("No user info found.");
+                System.out.println("사용자 정보를 찾을 수 없습니다.");
                 return null;
             }
+
         } catch (Exception e){
-            System.out.println("Error while saving user info to the database: " + e.getMessage());
+            System.out.println("사용자 정보를 데이터베이스에 저장하는 중 오류가 발생했습니다: " + e.getMessage());
             e.printStackTrace();
 
             return null;
