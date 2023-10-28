@@ -5,6 +5,8 @@ import com.example.file_management.oauth.kakao.model.entity.KakaoUser;
 import com.example.file_management.oauth.kakao.repository.KakaoUserRepository;
 import com.example.file_management.oauth.model.entity.RefreshToken;
 import com.example.file_management.oauth.repository.RefreshTokenRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class KakaoUserService {
     private final KakaoUserRepository kakaoUserRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private static final Logger log = LoggerFactory.getLogger(KakaoUserService.class);
 
     @Autowired
     public KakaoUserService(KakaoUserRepository kakaoUserRepository, RefreshTokenRepository refreshTokenRepository) {
@@ -28,12 +31,17 @@ public class KakaoUserService {
     }
 
     public void saveRefreshToken(String email, String refreshToken) {
-        RefreshToken token = RefreshToken.builder()
-                .email(email)
-                .refreshToken(refreshToken)
-                .build();
+        RefreshToken token = refreshTokenRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    log.info("새로운 리프레시 토큰 생성");
+                    RefreshToken newToken = new RefreshToken();
+                    newToken.setEmail(email);
+                    return newToken;
+                });
 
+        token.setRefreshToken(refreshToken);
         refreshTokenRepository.save(token);
+        log.info("리프레시 토큰 저장 완료");
     }
 
     public KakaoUserResponse updateUserInfo(String accessToken) {

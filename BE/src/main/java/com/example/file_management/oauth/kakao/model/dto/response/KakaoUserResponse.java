@@ -10,8 +10,6 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KakaoUserResponse {
-//    private String token;
-//    private String refreshToken;
 
     @JsonProperty("kakao_account")
     private Map<String, Object> kakaoAccount;

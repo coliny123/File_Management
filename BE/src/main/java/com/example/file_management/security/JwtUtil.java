@@ -1,6 +1,7 @@
 package com.example.file_management.security;
 
 import com.example.file_management.exception.InvalidTokenException;
+import com.example.file_management.oauth.model.entity.RefreshToken;
 import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,7 +28,9 @@ public class JwtUtil {
     }
 
     private static final String SECRET_KEY =  System.getenv("JWT_SECRET_KEY");
-    private static final long EXPIRATION_TIME = TimeUnit.HOURS.toMillis(1);  // 1 hour
+//    private static final long EXPIRATION_TIME = TimeUnit.HOURS.toMillis(1);  // 1 hour
+    private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
+
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
 
     public static String generateToken(String email, String name) {
@@ -60,14 +63,16 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
 
-    // 토큰 유효성 검사 로직 (generateAccessTokenFromRefreshToken 내부에서 자동으로 검증됨)
+    // 토큰 유효성 검사 로직
     public boolean validateRefreshToken(String token) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+            System.out.println("Token claims: " + claims.toString());  // 토큰의 클레임을 콘솔에 출력
             return true;
+
         } catch (Exception e) {
-            log.error("리프레시 토큰의 유효성 검사에 실패했습니다.", e);
-            throw new InvalidTokenException("타당하지 않거나 만료된 리프레시 토큰입니다.");
+            log.error("토큰의 유효성 검사에 실패했습니다.", e);
+            throw new InvalidTokenException("타당하지 않는 토큰입니다.");
         }
     }
 
@@ -91,9 +96,17 @@ public class JwtUtil {
                 .compact();
     }
 
-    // 토큰에서 이메일을 추출하는 메서드
-    public String getEmailFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-        return claims.getSubject();
+
+    public String getRefreshTokenFromToken(String refreshToken) {
+        // refreshTokenRepository를 이용해 DB에서 토큰을 조회
+        RefreshToken refreshTokenInDb = refreshTokenRepository.findRefreshTokenByRefreshToken(refreshToken);
+
+        // DB에 해당 토큰이 없으면 InvalidTokenException 발생
+        if (refreshTokenInDb == null) {
+            throw new InvalidTokenException("유효하지 않은 리프레시 토큰입니다.");
+        }
+
+        // DB에 저장된 토큰 값 반환
+        return refreshTokenInDb.getRefreshToken();
     }
 }

@@ -1,11 +1,9 @@
 package com.example.file_management.oauth.google.service;
 
-import com.example.file_management.oauth.google.model.dto.response.UserResponse;
 import com.example.file_management.oauth.google.model.entity.GoogleUser;
 import com.example.file_management.oauth.google.repository.GoogleUserRepository;
 import com.example.file_management.oauth.model.entity.RefreshToken;
 import com.example.file_management.oauth.repository.RefreshTokenRepository;
-import com.example.file_management.security.JwtUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
 import java.util.Optional;
 
 @Service
@@ -32,6 +29,21 @@ public class UserService {
         this.webClient = WebClient.builder().filter(logRequest()).build();
     }
 
+    public void saveRefreshToken(String email, String refreshToken) {
+        RefreshToken token = refreshTokenRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    log.info("새로운 리프레시 토큰 생성");
+                    RefreshToken newToken = new RefreshToken();
+                    newToken.setEmail(email);
+                    return newToken;
+                });
+
+        token.setRefreshToken(refreshToken);
+        refreshTokenRepository.save(token);
+        log.info("리프레시 토큰 저장 완료");
+    }
+
+
     // 로그 출력용 ExchangeFilterFunction
     private ExchangeFilterFunction logRequest() {
         return (clientRequest, next) -> {
@@ -41,7 +53,7 @@ public class UserService {
         };
     }
 
-    public UserResponse getUserInfoAndSave(String accessToken) {
+    public GoogleUser getUserInfoAndSave(String accessToken) {
         String userEndpointUrl="https://www.googleapis.com/oauth2/v3/userinfo";
 
         String userInfoResponse = webClient.get()
@@ -67,11 +79,11 @@ public class UserService {
             if (existingUserOptional.isPresent()) {
                 // 이미 존재하는 사용자라면 가져옴
                 googleUser = existingUserOptional.get();
-                log.info("Existing user found. Updating info.");
+                log.info("이미존재하는 user입니다. Updating info.");
             } else {
                 // 새로운 사용자라면 새 User 객체를 생성
                 googleUser = new GoogleUser();
-                log.info("Creating new user.");
+                log.info("새로운 user 생성");
             }
 
             // 사용자 정보 설정
@@ -84,16 +96,7 @@ public class UserService {
                 googleUserRepository.save(googleUser);
                 log.info("사용자 정보 저장 성공");
 
-                String jwtToken = JwtUtil.generateToken(googleUser.getEmail(), googleUser.getName());
-                String refreshToken = JwtUtil.generateRefreshToken(googleUser.getEmail());
-
-                // 리프레시 토큰 저장
-                RefreshToken refreshTokenEntity = new RefreshToken();
-                refreshTokenEntity.setEmail(email);
-                refreshTokenEntity.setRefreshToken(refreshToken);
-                refreshTokenRepository.save(refreshTokenEntity);
-
-                return new UserResponse(jwtToken, email, name, refreshToken);
+                return googleUser;
 
             } catch (Exception e) {
                 log.error("사용자 정보 저장 오류 : ", e);
