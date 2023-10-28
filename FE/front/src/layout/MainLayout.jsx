@@ -19,9 +19,9 @@ const MainLayout = () => {
                 <Navbar></Navbar>
                 {/* <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'> */}
                 <div className='page-area bg-[#F7F6FB] relative h-full'>
-                <div className='w-full h-10 ml-[80px] absolute left-0 top-0 z-10 bg-white'></div>
-                <div className='w-full h-10 ml-[80px] absolute left-0 top-0 z-20 bg-[#F7F6FB] rounded-tl-[30px]'></div>
-                    <div className='pt-10'>
+                <div className='w-full h-10 ml-[80px] fixed left-0 top-[80px] z-[200] bg-white'></div>
+                <div className='w-full h-10 ml-[80px] fixed left-0 top-[80px] z-[300] bg-[#F7F6FB] rounded-tl-[30px]'></div>
+                    <div className='pt-[120px]'>
                         <Outlet></Outlet>
                     </div>
                 </div>

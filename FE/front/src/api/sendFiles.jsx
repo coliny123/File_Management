@@ -13,8 +13,8 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
     formData.append('originFormat', uploadedFileType)
     formData.append('transferredFormat', transferredFileFormat)
 
-    // await axios.post('http://192.168.45.214:8080/upload', formData, {
-    await axios.post('https://filemanager.kro.kr/upload', formData, {
+    await axios.post('http://165.246.243.15:8080/upload', formData, {
+    // await axios.post('https://filemanager.kro.kr/upload', formData, {
     // await axios.post('https://1c48efd1-2f26-4d83-8447-35b841d6d0d4.mock.pstmn.io/localhost:8080/fileSend', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -26,6 +26,7 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
             setUploadProgress(percentCompleted);
         },
     }).then((res) => {
+        console.log(res.data)
         console.log('complete');
         // return res.data.fileId
     }).catch((error) => {

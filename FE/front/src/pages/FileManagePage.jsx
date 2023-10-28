@@ -24,9 +24,20 @@ const fileInfoList = [
 
 function FileManagePage(){
     return(
-        <div>
-            <div>파일 관리 페이지</div>
-            <FileList fileInfoList={fileInfoList}></FileList>
+        <div className='flex flex-col justify-center ml-32'>
+            <div className='manage-page-wrapper w-[720px]'>
+                <div className='text-content w-full text-left'>
+                    <div>User name</div>
+                    <div>File Management</div>
+                </div>
+                <div className='button-content w-[560px] h-[160px] bg-purple-400'>
+                    버튼
+                </div>
+            </div>
+            <div className='w-full text-left'>Dashboard</div>
+            <div className='w-[656px]'>
+                <FileList fileInfoList={fileInfoList}></FileList>
+            </div>
         </div>
     )
 }
