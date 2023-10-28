@@ -25,7 +25,7 @@ function LoginRedirectPage() {
             const token = await loginApi(provider, code);
             setAccessToken(token);
             // setIsLogin(true);
-            navigate('/');
+            navigate('https://file-management-ten.vercel.app/');
         } catch (error) {
             console.error(error);
         }
