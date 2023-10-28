@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @DiscriminatorValue("Google")
 public class GoogleUser extends User {
-    private String name;
+
 }
 
 
