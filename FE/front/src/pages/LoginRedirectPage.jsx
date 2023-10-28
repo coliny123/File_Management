@@ -23,7 +23,8 @@ function LoginRedirectPage() {
     async function fetchData() {
         try {
             const token = await loginApi(provider, code);
-            setAccessToken(token)
+            setAccessToken(token);
+            // setIsLogin(true);
             navigate('/');
         } catch (error) {
             console.error(error);
