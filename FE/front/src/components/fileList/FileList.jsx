@@ -48,14 +48,26 @@ function FileList({fileInfoList}) {
             fileInfoRow(fileInfo, idx, handleTogglebar)
         )}
       </div>
-        {/* <div className={`z-10 fixed top-[80px] right-0 flex-col md:w-80 w-60 bg-green-500 h-full transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : 'translate-x-full'}`}> */}
-        <div className={`z-[1000] fixed top-[80px] right-0 flex-col md:w-80 w-60 h-full bg-green-500 transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : 'translate-x-full'}`}>
+        <div className={`z-[1000] fixed top-[80px] right-0 flex-col items-center justify-center md:w-80 w-60 h-full bg-white bg-opacity-50 transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : 'translate-x-full'}`}>
             <div>{togglebarDataInfo?.fileName}</div>
             <div onClick={() => setIsTogglebarOpen(false)}>닫기버튼</div>
-            <QRCodeCanvas value={`http://165.246.223.19:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
-            <div>토글</div>
-            <div>토글</div>
-            <div>토글</div>
+            <div className='w-full flex justify-center'>
+                <div className='bg-[#F7F7F7] w-[240px] h-[240px] flex justify-center items-center'>
+                    <QRCodeCanvas value={`http://165.246.223.19:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
+                </div>
+            </div>
+            <div className='w-full flex justify-center'>
+                <div className='w-[240px] text-left'>파일 상세보기</div>
+            </div>
+            <div className='w-full flex justify-center'>
+                <div className='w-[240px]'>
+                    <div className='flex justify-between'><p>파일명</p><p>A</p></div>
+                    <div className='flex justify-between'><p>확장자</p><p>B</p></div>
+                    <div className='flex justify-between'><p>올린 날짜</p><p>C</p></div>
+                    <div className='flex justify-between'><p>공유 권한</p><p>DDD</p></div>
+                    <div className='flex justify-between'><p>다운 코드</p><p>EEEE</p></div>
+                </div>
+            </div>
         </div>
 
     </div>

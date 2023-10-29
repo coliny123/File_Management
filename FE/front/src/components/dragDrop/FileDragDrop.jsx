@@ -14,7 +14,7 @@ const BeforeDrop = (isDragging) => {
             <label className='DragDrop-File' htmlFor="fileUpload">
                 <div className='text-lg font-bold text-[#6367EB]'>파일 선택</div>
             </label>
-            <div className='mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
+            <div id='notice' className='mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
         </div>
     )
 }
