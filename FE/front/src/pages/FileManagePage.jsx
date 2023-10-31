@@ -1,5 +1,6 @@
 import React from 'react'
 import FileList from '../components/fileList/FileList'
+import { useNavigate } from 'react-router-dom'
 
 /*[{파일이름: , 파일크기: }, {파일이름: , 파일크기: }]*/
 
@@ -19,10 +20,21 @@ const fileInfoList = [
     {fileName: 'name3',
     fileUploadedDate: '333',
     fileSharePermission: '333',
+    fileId: '444'},
+    {fileName: 'name3',
+    fileUploadedDate: '333',
+    fileSharePermission: '333',
+    fileId: '444'},
+    {fileName: 'name3',
+    fileUploadedDate: '333',
+    fileSharePermission: '333',
     fileId: '444'}
 ]
 
 function FileManagePage(){
+
+    const navigate = useNavigate();
+
     return(
         <div className='flex flex-col justify-center ml-32'>
             <div className='manage-page-wrapper w-[720px]'>
@@ -30,8 +42,11 @@ function FileManagePage(){
                     <div>User name</div>
                     <div>File Management</div>
                 </div>
-                <div className='button-content w-[560px] h-[160px] bg-purple-400'>
-                    버튼
+                <div className='relative'>
+                    <div className='w-[560px] h-[160px]'>
+                        <img src="/assets/images/file_manage_img.png" alt="" />
+                    </div>
+                    <div className='bg-white absolute w-[120px] h-[40px] top-[100px] flex justify-center items-center text-[#6367EB] rounded-[4px] left-[20px] hover:cursor-pointer' onClick={() => navigate('/')}>upload</div>
                 </div>
             </div>
             <div className='w-full text-left'>Dashboard</div>
