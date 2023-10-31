@@ -35,7 +35,6 @@ public class FileServiceImpl implements FileService{
         String fileUrl = amazonS3.getUrl(bucket, originalFilename).toString();
 
         FileInfo fileInfo = new FileInfo();
-        fileInfo.savedFileName = originalFilename;
         fileInfo.originalFileName = multipartFile.getOriginalFilename();
         fileInfo.savedPath = fileUrl;
 
@@ -51,7 +50,6 @@ public class FileServiceImpl implements FileService{
      */
     private void recodeFileInfoToDB(String originalFilename, String savedFileName, String savedPath){
         FileInfo fileInfo = FileInfo.builder()
-                .savedFileName(savedFileName)
                 .originalFileName(originalFilename)
                 .savedPath(savedPath)
                 .build();
