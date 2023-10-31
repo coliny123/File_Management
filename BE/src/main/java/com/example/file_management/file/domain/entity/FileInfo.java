@@ -27,5 +27,6 @@ public class FileInfo {
 
     public String savedPath;  // 로컬 저장 주소(다운로드 링크로 변경예정)
 
+    public String email;
 
 }

@@ -1,7 +1,7 @@
 package com.example.file_management.file.service;
 
 
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.file_management.file.domain.entity.FileInfo;
 import com.example.file_management.file.repository.FileRepository;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
@@ -19,48 +18,30 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService{
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
-    @Value("${R2.BUCKET_NAME}")
-    private String bucketName;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     private final FileRepository fileRepository;
-    private final AmazonS3Client amazonS3Client;
+    private final AmazonS3 amazonS3;
 
+    public void fileUpload(MultipartFile multipartFile) throws IOException {
+        String originalFilename = multipartFile.getOriginalFilename();
 
-    /***
-     * 파일 업로드, DB에 파일 정보 저장 영역
-     * @param recivedfile
-     * @throws IOException
-     */
-    public void fileUpload(MultipartFile recivedfile) throws IOException{
-        // 업로더가 업로드한 file 이름
-        String originalFilename = recivedfile.getOriginalFilename();
-//
-//            // uuid 식별자 붙힌 file 이름
-//            String saveFileName = createSavedFileName(originalFilename);
-//
-//            // file이 로컬storage에 저장되는 경로(위치) -> cloud flare로 바꿀 예정
-//            String savedPath = getFullPath(saveFileName);
-//
-//            File file = new File(savedPath);
-//            // 파라미터로 java.io.File 객체를 받아 해당 위치에 파일을 저장!!!!!
-//            recivedfile.transferTo(file);
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(multipartFile.getSize());
+        metadata.setContentType(multipartFile.getContentType());
 
-//            // 로컬storage에 저장 된 file의 정보 db에 저장
-//            recodeFileInfoToDB(originalFilename, saveFileName, savedPath);
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(recivedfile.getContentType());
-        objectMetadata.setContentLength(recivedfile.getInputStream().available());
-        try {
-            System.out.println("aaa");
-            amazonS3Client.putObject(bucketName, originalFilename, recivedfile.getInputStream(), objectMetadata);
-            System.out.println("bbb");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        amazonS3.putObject(bucket, originalFilename, multipartFile.getInputStream(), metadata);
+        String fileUrl = amazonS3.getUrl(bucket, originalFilename).toString();
+
+        FileInfo fileInfo = new FileInfo();
+        fileInfo.savedFileName = originalFilename;
+        fileInfo.originalFileName = multipartFile.getOriginalFilename();
+        fileInfo.savedPath = fileUrl;
+
+        fileRepository.save(fileInfo);
     }
+
 
     /***
      * 로컬storage에 저장 된 file의 정보 db에 저장
@@ -82,9 +63,9 @@ public class FileServiceImpl implements FileService{
      * @param saveFileName
      * @return  파일 저장 경로
      */
-    private String getFullPath(String saveFileName) {   // 로컬 storage에 저장된 경로
-        return uploadPath + saveFileName;
-    }
+//    private String getFullPath(String saveFileName) {   // 로컬 storage에 저장된 경로
+//        return uploadPath + saveFileName;
+//    }
 
     /***
      * 업로드한 파일의 확장자(.py, .hwp, .png 등등) 추출 메소드

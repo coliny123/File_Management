@@ -1,5 +1,6 @@
 package com.example.file_management.file.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.file_management.file.service.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ public class FileUploadController {
 
     private final FileServiceImpl fileService;
 
+    private final AmazonS3Client amazonS3Client;
+
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file) {
         try {
@@ -33,7 +36,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/test")
-    public String test() {
-        return "test";
+    public void test() {
+        System.out.println("Endpoint: " + amazonS3Client);;
     }
 }

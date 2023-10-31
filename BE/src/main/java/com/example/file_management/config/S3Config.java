@@ -12,25 +12,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Config {
 
-    @Value("${R2.ACCOUNT_ID}")
-    private String accountId;
+    @Value("${cloud.aws.credentials.access-key}")
+    private String accessKey;
 
-    @Value("${R2.ACCESS_KEY_ID}")
-    private String accessKeyId;
+    @Value("${cloud.aws.credentials.secret-key}")
+    private String secretKey;
 
-    @Value("${R2.SECRET_KEY_ID}")
-    private String secretAccessKey;
-
-    private final String endpoint = "https://" + accountId + ".r2.cloudflarestorage.com";
+    @Value("${cloud.aws.region.static}")
+    private String region;
 
     @Bean
     public AmazonS3Client amazonS3Client() {
-        BasicAWSCredentials awsCredentials= new BasicAWSCredentials(accessKeyId, secretAccessKey);
-        return (AmazonS3Client) AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration(endpoint, "us-east-1"))
-                .build();
+        BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 
+        return (AmazonS3Client) AmazonS3ClientBuilder
+                .standard()
+                .withRegion(region)
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .build();
     }
 }
