@@ -1,6 +1,5 @@
 package com.example.file_management.config;
 
-import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +9,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -18,8 +19,8 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .anyRequest().permitAll()  // 모든 요청 허용
                 .and()
-                .csrf(csrf -> csrf.disable())  // CSRF 공격 방어 기능 비활성화
-                .cors().configurationSource(corsConfigurationSource());
+                .csrf(csrf -> csrf.disable());// CSRF 공격 방어 기능 비활성화
+//                .cors().configurationSource(corsConfigurationSource());
 
         return http.build();
     }
