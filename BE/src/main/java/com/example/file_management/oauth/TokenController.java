@@ -1,6 +1,5 @@
 package com.example.file_management.oauth;
 
-
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
 public class TokenController {
-
     private final JwtUtil jwtUtil;
 
     @Autowired
@@ -67,8 +65,6 @@ public class TokenController {
         return ResponseEntity.ok("새로운 access token이 생성되었습니다.");
     }
 }
-
-
 
 
 
