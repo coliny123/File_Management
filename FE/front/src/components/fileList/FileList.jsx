@@ -26,7 +26,7 @@ function FileList({fileInfoList}) {
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
     
     const handleTogglebar = (fileInfo) => {
-        if (!isTogglebarOpen) {
+        if (isTogglebarOpen === false) {
             setIsTogglebarOpen(true);
             setTogglebarDataInfo(fileInfo)
         } else if (isTogglebarOpen && togglebarDataInfo === fileInfo) {
@@ -49,7 +49,8 @@ function FileList({fileInfoList}) {
             fileInfoRow(fileInfo, idx, handleTogglebar)
         )}
       </div>
-        <div className={`z-[1000] fixed top-[80px] right-0 flex-col items-center justify-center md:w-80 w-60 h-full bg-[#FBFBFD] transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : 'translate-x-full'}`}>
+        {/* <div className={`z-[1000] fixed top-[80px] right-0 flex-col items-center justify-center md:w-80 w-60 h-full bg-[#FBFBFD] transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '' : 'translate-x-full'}`}> */}
+        <div className={`z-[1000] fixed top-[80px] -right-80 flex-col items-center justify-center md:w-80 w-60 h-full bg-[#FBFBFD] transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '-translate-x-full': ''}`}>
             <div className='absolute top-[10px] left-[10px] w-[20px] h-[20px] text-xl hover:cursor-pointer' onClick={() => setIsTogglebarOpen(false)}><IoClose/></div>
             <div className='w-full flex justify-center'>
                 <div className='bg-[#F7F7F7] w-[240px] h-[240px] flex justify-center items-center mt-[48px]'>

@@ -4,11 +4,12 @@ import FileStatusbar from '../components/bar/FileStatusbar'
 import QrCode from '../components/qrCode/QrCode'
 import useUser from '../hooks/query/useUserDataQuery'
 import Progressbar from '../components/bar/Progressbar'
-import { loginApi } from '../api/loginApi'
 import { useQuery, QueryClient } from '@tanstack/react-query'
 import { useUpload } from '../context/UploadContext'
 import Convert from '../components/convert/Convert'
 import { useAccessToken } from '../context/AccessTokenContext'
+import TestBtn from '../components/btn/TestBtn'
+import { getAccessTokenApi } from '../api/getAccessTokenApi'
 
 function LandingPage() {
 
@@ -29,6 +30,8 @@ function LandingPage() {
     <div>
         <div className='content-wrapper w-full h-full flex flex-col justify-center items-center '>
           {/* <div className='mt-[40px] w-[490px]'> */}
+          <TestBtn></TestBtn>
+          <div><button onClick={getAccessTokenApi}>리프레쉬로 액세스 발근</button></div>
           <div className='mt-[60px] md:w-[397px] w-[60vw]'>
             <FileStatusbar></FileStatusbar>
           </div>

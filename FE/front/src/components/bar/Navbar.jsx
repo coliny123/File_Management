@@ -20,6 +20,7 @@ const LogoutBtn = () => {
     const logout = () => {
         window.localStorage.removeItem('refreshToken');
         setIsLogin(false);
+        window.location.reload();
     }
 
     return (

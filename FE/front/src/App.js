@@ -8,8 +8,18 @@ import MainLayout from './layout/MainLayout';
 import LoginRedirectPage from './pages/LoginRedirectPage';
 import FileDownloadPage from './pages/FileDownloadPage';
 import FileManagePage from './pages/FileManagePage';
+import { getAccessTokenApi } from './api/getAccessTokenApi';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      getAccessTokenApi();
+    }
+  }, [])
+
   return (
     <div className="App">
       <Router>
