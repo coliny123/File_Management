@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
+
+@Service
 @RequiredArgsConstructor
 public class FileServiceV2 implements FileService {
 

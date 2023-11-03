@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
 @RequiredArgsConstructor
 public class FileServiceV1 implements FileService{
 
@@ -23,22 +22,9 @@ public class FileServiceV1 implements FileService{
     private String bucket;
     private final JwtUtil jwtUtil;
 
-    @Override
+
     public void fileUpload(MultipartFile multipartFile) throws IOException {
-        String originalFileName = multipartFile.getOriginalFilename();
 
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(multipartFile.getSize());
-        metadata.setContentType(multipartFile.getContentType());
-
-        amazonS3.putObject(bucket, originalFileName, multipartFile.getInputStream(), metadata);
-        String fileUrl = amazonS3.getUrl(bucket, originalFileName).toString();
-
-        FileInfo fileInfo = new FileInfo();
-        fileInfo.originalFileName = multipartFile.getOriginalFilename();
-        fileInfo.savedPath = fileUrl;
-
-        fileRepository.save(fileInfo);
     }
 
     @Override
