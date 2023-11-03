@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.file_management.file.domain.entity.FileInfo;
 import com.example.file_management.file.repository.FileRepository;
+import com.example.file_management.oauth.model.entity.User;
+import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +29,10 @@ public class FileServiceV2 implements FileService {
     private final FileRepository fileRepository;
     private final AmazonS3 amazonS3;
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
     @Override
-    public void fileUpload(MultipartFile multipartFile) throws IOException {
+    public void fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();
 
         ObjectMetadata metadata = new ObjectMetadata();
@@ -39,9 +42,14 @@ public class FileServiceV2 implements FileService {
         amazonS3.putObject(bucket, originalFilename, multipartFile.getInputStream(), metadata);
         String fileUrl = amazonS3.getUrl(bucket, originalFilename).toString();
 
+        String userEmail = getUserEmail(request);
+        User user = userRepository.findByEmail(userEmail);
+
         FileInfo fileInfo = new FileInfo();
         fileInfo.originalFileName = multipartFile.getOriginalFilename();
         fileInfo.savedPath = fileUrl;
+        fileInfo.email = user;
+
 
         fileRepository.save(fileInfo);
     }
@@ -72,5 +80,10 @@ public class FileServiceV2 implements FileService {
     @Override
     public Long getUserId(HttpServletRequest request) {
         return jwtUtil.getIdFromToken(request);
+    }
+
+    @Override
+    public String getUserEmail(HttpServletRequest request) {
+        return jwtUtil.getEmailFromToken(request);
     }
 }
