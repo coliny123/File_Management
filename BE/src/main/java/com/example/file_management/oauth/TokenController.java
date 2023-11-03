@@ -2,11 +2,15 @@ package com.example.file_management.oauth;
 
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -32,8 +36,20 @@ public class TokenController {
     }
 
     @GetMapping("/auth/refresh")
-    public ResponseEntity<?> refreshAccessToken(@RequestHeader(value="Authorization") String refreshToken, HttpServletResponse response) {
-        refreshToken = refreshToken.replace("Bearer ", ""); // 토큰에서 "Bearer " 문자열 제거
+    public ResponseEntity<?> refreshAccessToken(HttpServletRequest request, HttpServletResponse response) {
+//        refreshToken = refreshToken.replace("Bearer ", ""); // 토큰에서 "Bearer " 문자열 제거
+
+        Cookie[] cookies = request.getCookies();
+        String refreshToken = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("refresh_token")) {
+                    refreshToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
 
         // DB에서 리프레시 토큰을 조회
         String refreshTokenInDb = jwtUtil.getRefreshTokenFromToken(refreshToken);
@@ -53,13 +69,13 @@ public class TokenController {
         String newAccessToken = jwtUtil.generateAccessTokenFromRefreshToken(refreshTokenInDb);
 
         // 새로운 엑세스 토큰을 쿠키에 담아서 클라이언트에 전송
-        Cookie newAccessTokenCookie = new Cookie("access_token", newAccessToken);
+        Cookie newAccessTokenCookie = new Cookie("jwt_token", newAccessToken);
         newAccessTokenCookie.setHttpOnly(true);
         newAccessTokenCookie.setMaxAge(60 * 60);  // 1시간 후에 만료
 
         response.addCookie(newAccessTokenCookie);
 
-        return ResponseEntity.ok("새로운 access token이 생성되었습니다.");
+        return ResponseEntity.ok("새로운엑세스토큰발급");
     }
 }
 
