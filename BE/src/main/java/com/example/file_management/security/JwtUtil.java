@@ -6,6 +6,7 @@ import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +109,11 @@ public class JwtUtil {
 
         // DB에 저장된 토큰 값 반환
         return refreshTokenInDb.getRefreshToken();
+    }
+
+    public Long getIdFromToken(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7); // "Bearer " 제거
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return claims.get("id", Long.class);
     }
 }
