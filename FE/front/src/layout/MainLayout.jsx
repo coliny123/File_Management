@@ -55,7 +55,7 @@ const MainLayout = () => {
             <div className='h-screen'>
                 <Navbar></Navbar>
                 {/* <div className='page-area rounded-tl-3xl p-10 bg-[#F7F6FB] h-full'> */}
-                <div className='page-area bg-[#F7F6FB] relative'>
+                <div className='page-area bg-[#F7F6FB] relative min-h-screen'>
                 <div className='w-full h-10 ml-[80px] fixed left-0 top-[80px] z-[200] bg-white'></div>
                 <div className='w-full h-10 ml-[80px] fixed left-0 top-[80px] z-[300] bg-[#F7F6FB] rounded-tl-[30px]'></div>
                     <div className='pt-[120px]'>
