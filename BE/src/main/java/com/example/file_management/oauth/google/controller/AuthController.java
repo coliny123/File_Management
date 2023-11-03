@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
-//@CrossOrigin(origins="https://file-management-ten.vercel.app")
 public class AuthController {
     private final GoogleOAuth2Service googleOAuth2Service;
     private final UserService userService;
