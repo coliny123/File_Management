@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -21,7 +18,7 @@ public class TokenController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/test")
+    @GetMapping("/test/me")
     public ResponseEntity<?> validateToken(@RequestHeader(value="Authorization") String token) {
         token = token.replace("Bearer ", ""); // 토큰에서 "Bearer " 문자열 제거
 
@@ -34,7 +31,7 @@ public class TokenController {
         return ResponseEntity.ok("유효한 access token 입니다.");
     }
 
-    @PostMapping("/auth/refresh")
+    @GetMapping("/auth/refresh")
     public ResponseEntity<?> refreshAccessToken(@RequestHeader(value="Authorization") String refreshToken, HttpServletResponse response) {
         refreshToken = refreshToken.replace("Bearer ", ""); // 토큰에서 "Bearer " 문자열 제거
 
