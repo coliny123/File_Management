@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins="http://localhost:3000")
 public class FileUploadController {
 
     private final FileService fileService;
