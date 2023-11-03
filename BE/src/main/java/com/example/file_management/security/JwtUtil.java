@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +24,7 @@ public class JwtUtil {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
+//    private static final String SECRET_KEY =  System.getenv("JWT_SECRET_KEY");
     private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
     @Value("${JWT_SECRET_KEY}")
