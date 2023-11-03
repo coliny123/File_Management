@@ -23,8 +23,8 @@ public class FileServiceV1 implements FileService{
     private final JwtUtil jwtUtil;
 
 
-    public void fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
-
+    public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+        return null;
     }
 
     @Override

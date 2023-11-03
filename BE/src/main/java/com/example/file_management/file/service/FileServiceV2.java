@@ -32,7 +32,7 @@ public class FileServiceV2 implements FileService {
     private final UserRepository userRepository;
 
     @Override
-    public void fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+    public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();
 
         ObjectMetadata metadata = new ObjectMetadata();
@@ -50,8 +50,8 @@ public class FileServiceV2 implements FileService {
         fileInfo.savedPath = fileUrl;
         fileInfo.email = user;
 
-
         fileRepository.save(fileInfo);
+        return fileRepository.findIdByEmail(userEmail);
     }
 
     public String extractExt(String originalFilename) {  // 파일 확장자 추출 메소드

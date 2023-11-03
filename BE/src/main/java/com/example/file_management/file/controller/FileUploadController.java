@@ -24,13 +24,13 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        Long userId;
         try {
-            fileService.fileUpload(file, request);
-
+            userId = fileService.fileUpload(file, request);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(file.getOriginalFilename());
+            throw new RuntimeException(e);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(file.getOriginalFilename());
+        return ResponseEntity.status(HttpStatus.CREATED).body(userId);
     }
 
     @GetMapping("/test")

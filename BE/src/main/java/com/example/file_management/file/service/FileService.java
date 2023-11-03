@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface FileService {
-    void fileUpload(MultipartFile file, HttpServletRequest request) throws IOException;
+    Long fileUpload(MultipartFile file, HttpServletRequest request) throws IOException;
 
     // 다운로드 메소드
 //
