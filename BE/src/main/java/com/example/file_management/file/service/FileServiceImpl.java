@@ -24,6 +24,8 @@ public class FileServiceImpl implements FileService{
     private final FileRepository fileRepository;
     private final AmazonS3 amazonS3;
 
+    @Override
+
     public void fileUpload(MultipartFile multipartFile) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();
 
@@ -40,30 +42,6 @@ public class FileServiceImpl implements FileService{
 
         fileRepository.save(fileInfo);
     }
-
-
-    /***
-     * 로컬storage에 저장 된 file의 정보 db에 저장
-     * @param originalFilename
-     * @param savedFileName
-     * @param savedPath
-     */
-    private void recodeFileInfoToDB(String originalFilename, String savedFileName, String savedPath){
-        FileInfo fileInfo = FileInfo.builder()
-                .originalFileName(originalFilename)
-                .savedPath(savedPath)
-                .build();
-        fileRepository.save(fileInfo);
-    }
-
-    /***
-     * 저장소에 저장된 파일의 경로(위치) -> cloudflare 주소로 변경 예정
-     * @param saveFileName
-     * @return  파일 저장 경로
-     */
-//    private String getFullPath(String saveFileName) {   // 로컬 storage에 저장된 경로
-//        return uploadPath + saveFileName;
-//    }
 
     /***
      * 업로드한 파일의 확장자(.py, .hwp, .png 등등) 추출 메소드
