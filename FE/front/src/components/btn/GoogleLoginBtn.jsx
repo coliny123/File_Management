@@ -3,15 +3,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-// const redirectUri = "http://localhost:3000/auth/google/callback";
-// const redirectUri = "https://filemanager.kro.kr:3000/auth/google/callback";
-const redirectUri = "https://file-management-ten.vercel.app/auth/google/callback";
-const Server_IP = process.env.REACT_APP_Server_IP;
-const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
 
-// function GoogleLoginBtn({ provider }) {
 function GoogleLoginBtn() {
-
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
+    const redirectUri = `${Server_IP}/auth/google/callback`;
+        
     const [loginSuccess, setLoginSuccess] = useState(false);
 
     const { provider } = useParams();

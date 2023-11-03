@@ -22,8 +22,14 @@ function LandingPage() {
 
   // console.log(data);
 
-  const { accessToken } = useAccessToken();
-  console.log(accessToken)
+  // const { accessToken } = useAccessToken();
+  // console.log(accessToken)
+
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      getAccessTokenApi();
+    }
+  }, [])
 
   const {uploadStatus} = useUpload();
   return (
@@ -31,7 +37,7 @@ function LandingPage() {
         <div className='content-wrapper w-full h-full flex flex-col justify-center items-center '>
           {/* <div className='mt-[40px] w-[490px]'> */}
           <TestBtn></TestBtn>
-          <div><button onClick={getAccessTokenApi}>리프레쉬로 액세스 발근</button></div>
+          <div><button onClick={getAccessTokenApi}>리프레쉬로 액세스 발급</button></div>
           <div className='mt-[60px] md:w-[397px] w-[60vw]'>
             <FileStatusbar></FileStatusbar>
           </div>

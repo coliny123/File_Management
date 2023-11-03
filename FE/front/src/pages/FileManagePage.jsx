@@ -1,6 +1,8 @@
 import React from 'react'
 import FileList from '../components/fileList/FileList'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { getAccessTokenApi } from '../api/getAccessTokenApi'
 
 /*[{파일이름: , 파일크기: }, {파일이름: , 파일크기: }]*/
 
@@ -32,6 +34,12 @@ const fileInfoList = [
 ]
 
 function FileManagePage(){
+
+    useEffect(() => {
+        if (localStorage.getItem('refreshToken')) {
+        getAccessTokenApi();
+        }
+    }, [])
 
     const navigate = useNavigate();
 

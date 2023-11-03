@@ -14,12 +14,6 @@ import axios from 'axios';
 
 function App() {
 
-  useEffect(() => {
-    if (localStorage.getItem('refreshToken')) {
-      getAccessTokenApi();
-    }
-  }, [])
-
   return (
     <div className="App">
       <Router>
