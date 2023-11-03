@@ -6,7 +6,10 @@ import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import java.security.Key;
+import java.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +31,13 @@ public class JwtUtil {
     private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
     @Value("${JWT_SECRET_KEY}")
+    private String secretKey;
     private static String SECRET_KEY;
+
+    @PostConstruct
+    public void init() {
+        SECRET_KEY = secretKey;
+    }
 
     public static String generateToken(String email, String name) {
         Map<String, Object> claims = new HashMap<>();
