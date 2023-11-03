@@ -1,6 +1,7 @@
 package com.example.file_management.file.service;
 
 import com.example.file_management.file.domain.entity.FileInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
@@ -16,4 +17,7 @@ public interface FileService {
     // 저장된 파일 가져오는 메서드
     FileInfo getFile(String fileName) throws FileNotFoundException;
 
+    String fileDownload(Long id) throws IOException;
+
+    Long getUserId(HttpServletRequest request);
 }
