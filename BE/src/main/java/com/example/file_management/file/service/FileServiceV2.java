@@ -33,57 +33,65 @@ public class FileServiceV2 implements FileService {
 
     @Override
     public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
-        String originalFilename = multipartFile.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString();
-        String uniqueFilename = uuid + "_" + originalFilename;
+        String uniqueFilename = generateUniqueFilename(multipartFile.getOriginalFilename());
+        String fileUrl = uploadToS3(multipartFile, uniqueFilename);
 
+        String userEmail = getUserEmail(request);
+        User user = userRepository.findByEmail(userEmail);
+
+        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user);
+        FileInfo savedFileInfo = fileRepository.save(fileInfo);
+
+        return savedFileInfo.getUserId().getId();
+    }
+
+    // S3 업로드
+    private String uploadToS3(MultipartFile multipartFile, String uniqueFilename) throws IOException {
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(multipartFile.getSize());
         metadata.setContentType(multipartFile.getContentType());
 
         amazonS3.putObject(bucket, uniqueFilename, multipartFile.getInputStream(), metadata);
-        String fileUrl = amazonS3.getUrl(bucket, uniqueFilename).toString();
 
-        String userEmail = getUserEmail(request);
-        User user = userRepository.findByEmail(userEmail);
+        return amazonS3.getUrl(bucket, uniqueFilename).toString();
+    }
 
+    // fileInfo 생성
+    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.originalFileName = multipartFile.getOriginalFilename();
+        fileInfo.originalFileName = originalFilename;
         fileInfo.savedPath = fileUrl;
         fileInfo.userId = user;
 
-        FileInfo savedFileInfo = fileRepository.save(fileInfo);  // save and get the saved instance
-        return savedFileInfo.getUserId().getId();
+        return fileInfo;
     }
 
-    public String extractExt(String originalFilename) {  // 파일 확장자 추출 메소드
-        int pos = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos + 1);
-    }
-
-    public String createSavedFileName(
-            String originalFilename) {    // 로컬 storage에 저장되는 savedFileName 생성 메소드
-        String ext = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString();     // 식별자
-        return uuid + "." + ext;
+    // UUID
+    private String generateUniqueFilename(String originalFilename) {
+        String uuid = UUID.randomUUID().toString();
+        return uuid + "_" + originalFilename;
     }
 
     @Override
     public FileInfo getFile(String fileName) throws FileNotFoundException {
         return fileRepository.findById(fileName)
-                .orElseThrow(() -> new FileNotFoundException("File not found"));
+                .orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
     }
 
+    // userId에 대한 SavedPath 반환
+    // 전체 정보를 받으려면 list로 구현해야하고, String으로 하려면 파일 정보 추가 인덱싱 필요
     @Override
     public String fileDownload(Long id) {
         return fileRepository.findSavedPathById(id);
     }
 
+    // 토큰에서 user의 id값 추출
     @Override
     public Long getUserId(HttpServletRequest request) {
         return jwtUtil.getIdFromToken(request);
     }
 
+    // 토큰에서 user의 email값 추출
     @Override
     public String getUserEmail(HttpServletRequest request) {
         return jwtUtil.getEmailFromToken(request);
