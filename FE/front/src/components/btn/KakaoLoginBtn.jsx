@@ -4,7 +4,7 @@ export default function KakaoLoginBtn() {
   
   const Server_IP = process.env.REACT_APP_Server_IP;
   const Kakao_Client_ID = process.env.REACT_APP_Kakao_Client_ID;
-  const redirect_uri = `${Server_IP}/auth/kakao/callback`;
+  const redirect_uri = `https://file-management-ten.vercel.app/auth/kakao/callback`;
   const kakao_uri = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Kakao_Client_ID}&redirect_uri=${redirect_uri}`;
 
   const loginKakao = () => {
