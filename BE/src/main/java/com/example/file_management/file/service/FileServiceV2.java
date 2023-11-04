@@ -53,7 +53,7 @@ public class FileServiceV2 implements FileService {
         fileInfo.userId = user;
 
         FileInfo savedFileInfo = fileRepository.save(fileInfo);  // save and get the saved instance
-        return savedFileInfo.getId();
+        return savedFileInfo.getUserId().getId();
     }
 
     public String extractExt(String originalFilename) {  // 파일 확장자 추출 메소드
