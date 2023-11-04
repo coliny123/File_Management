@@ -36,6 +36,6 @@ public class FileInfo {
     public String savedPath;  // 로컬 저장 주소(다운로드 링크로 변경예정)
 
     @ManyToOne
-    @JoinColumn(name="email", nullable=false)
-    public User email;
+    @JoinColumn(name="userId", nullable=false)
+    public User userId;
 }

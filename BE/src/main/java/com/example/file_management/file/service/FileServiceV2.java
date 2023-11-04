@@ -34,13 +34,15 @@ public class FileServiceV2 implements FileService {
     @Override
     public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString();
+        String uniqueFilename = uuid + "_" + originalFilename;
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(multipartFile.getSize());
         metadata.setContentType(multipartFile.getContentType());
 
-        amazonS3.putObject(bucket, originalFilename, multipartFile.getInputStream(), metadata);
-        String fileUrl = amazonS3.getUrl(bucket, originalFilename).toString();
+        amazonS3.putObject(bucket, uniqueFilename, multipartFile.getInputStream(), metadata);
+        String fileUrl = amazonS3.getUrl(bucket, uniqueFilename).toString();
 
         String userEmail = getUserEmail(request);
         User user = userRepository.findByEmail(userEmail);
@@ -48,10 +50,10 @@ public class FileServiceV2 implements FileService {
         FileInfo fileInfo = new FileInfo();
         fileInfo.originalFileName = multipartFile.getOriginalFilename();
         fileInfo.savedPath = fileUrl;
-        fileInfo.email = user;
+        fileInfo.userId = user;
 
-        fileRepository.save(fileInfo);
-        return fileRepository.findIdByEmail(userEmail);
+        FileInfo savedFileInfo = fileRepository.save(fileInfo);  // save and get the saved instance
+        return savedFileInfo.getId();
     }
 
     public String extractExt(String originalFilename) {  // 파일 확장자 추출 메소드
