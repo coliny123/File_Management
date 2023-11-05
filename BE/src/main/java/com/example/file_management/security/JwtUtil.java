@@ -6,14 +6,10 @@ import com.example.file_management.oauth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import java.security.Key;
-import java.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -27,17 +23,16 @@ public class JwtUtil {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
-//    private static final String SECRET_KEY =  System.getenv("JWT_SECRET_KEY");
+    private static final String SECRET_KEY =  System.getenv("JWT_SECRET_KEY");
     private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
-    @Value("${JWT_SECRET_KEY}")
-    private String secretKey;
-    private static String SECRET_KEY;
+//    @Value("${JWT_SECRET_KEY}")
+//    private static String SECRET_KEY;
 
-    @PostConstruct
-    public void init() {
-        SECRET_KEY = secretKey;
-    }
+//    @PostConstruct
+//    public void init() {
+//        SECRET_KEY = secretKey;
+//    }
 
     public static String generateToken(String email, String name) {
         Map<String, Object> claims = new HashMap<>();
