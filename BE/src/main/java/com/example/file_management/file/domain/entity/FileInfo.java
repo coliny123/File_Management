@@ -1,6 +1,7 @@
 package com.example.file_management.file.domain.entity;
 
 import com.example.file_management.oauth.model.entity.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,9 +32,10 @@ public class FileInfo {
 //    public String uploader;     // 업로더 아이디
 //    public String contentType;  // 파일 형식? text/plain 같은거
 
+    @Column(length = 1000)
     public String savedPath;  // 로컬 저장 주소(다운로드 링크로 변경예정)
 
     @ManyToOne
-    @JoinColumn(name="email", nullable=false)
-    public User email;
+    @JoinColumn(name="userId", nullable=false)
+    public User userId;
 }

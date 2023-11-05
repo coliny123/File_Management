@@ -2,6 +2,7 @@ package com.example.file_management.file.controller;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.file_management.file.service.FileService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,14 @@ public class FileUploadController {
     private final AmazonS3Client amazonS3Client;
 
     @PostMapping("/upload")
-    public ResponseEntity upload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        Long userId;
         try {
-            fileService.fileUpload(file);
-
+            userId = fileService.fileUpload(file, request);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(file.getOriginalFilename());
+            throw new RuntimeException(e);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(file.getOriginalFilename());
+        return ResponseEntity.status(HttpStatus.CREATED).body(userId);
     }
 
     @GetMapping("/test")

@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface FileService {
-    void fileUpload(MultipartFile file) throws IOException;
+    Long fileUpload(MultipartFile file, HttpServletRequest request) throws IOException;
 
     // 다운로드 메소드
 //
@@ -20,4 +20,6 @@ public interface FileService {
     String fileDownload(Long id) throws IOException;
 
     Long getUserId(HttpServletRequest request);
+
+    String getUserEmail(HttpServletRequest request);
 }

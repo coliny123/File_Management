@@ -23,8 +23,8 @@ public class FileServiceV1 implements FileService{
     private final JwtUtil jwtUtil;
 
 
-    public void fileUpload(MultipartFile multipartFile) throws IOException {
-
+    public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+        return null;
     }
 
     @Override
@@ -41,5 +41,10 @@ public class FileServiceV1 implements FileService{
     @Override
     public Long getUserId(HttpServletRequest request) {
         return jwtUtil.getIdFromToken(request);
+    }
+
+    @Override
+    public String getUserEmail(HttpServletRequest request) {
+        return jwtUtil.getEmailFromToken(request);
     }
 }
