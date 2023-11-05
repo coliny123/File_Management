@@ -10,11 +10,11 @@ const BeforeDrop = (isDragging) => {
         <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}>
             <div className='mt-5 text-2xl font-bold'>파일 업로드</div>
             <div className='mt-5 font-bold text-[#31D6D6] text-[100px] w-full flex justify-center'><BsCloudUpload/></div>
-            <div className='mt- text-2xl font-bold text-[#6367EB]'>Drag & drop</div>
+            <div className='text-2xl font-bold text-[#6367EB] max-md:invisible'>Drag & drop</div>
             <label className='DragDrop-File' htmlFor="fileUpload">
                 <div className='text-lg font-bold text-[#6367EB]'>파일 선택</div>
             </label>
-            <div id='notice' className='mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
+            <div id='notice' className='md:mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
         </div>
     )
 }
