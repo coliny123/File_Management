@@ -28,7 +28,7 @@ function FileDownloadPage() {
   return (
     <div>
       {`${fileId} 파일입니다.`}
-      <div className='bg-yellow-500'><button onClick={() => {window.open(fileLink, '_blank')}}>download</button></div>
+      <div className='bg-yellow-500'><button onClick={() => {window.location = fileLink}}>download</button></div>
     </div>
   )
 }
