@@ -14,7 +14,7 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
     formData.append('transferredFormat', transferredFileFormat)
 
     // await axios.post('http://165.246.243.15:8080/upload', formData, {
-    await axios.post(`${Server_IP}/upload`, formData, {
+    return await axios.post(`${Server_IP}/upload`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
