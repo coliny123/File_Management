@@ -4,6 +4,7 @@ package com.example.file_management.file.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
 import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.oauth.repository.UserRepository;
@@ -32,7 +33,7 @@ public class FileServiceV2 implements FileService {
     private final UserRepository userRepository;
 
     @Override
-    public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+    public UploadResult fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         String uniqueFilename = generateUniqueFilename(multipartFile.getOriginalFilename());
         String fileUrl = uploadToS3(multipartFile, uniqueFilename);
 
@@ -42,7 +43,11 @@ public class FileServiceV2 implements FileService {
         FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user);
         FileInfo savedFileInfo = fileRepository.save(fileInfo);
 
-        return savedFileInfo.getUserId().getId();
+        UploadResult result = new UploadResult();
+        result.setUserId(savedFileInfo.getUserId().getId());
+        result.setUserName(user.getName());
+
+        return result;
     }
 
     // S3 업로드

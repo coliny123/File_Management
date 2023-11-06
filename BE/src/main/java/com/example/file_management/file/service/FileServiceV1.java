@@ -3,6 +3,7 @@ package com.example.file_management.file.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class FileServiceV1 implements FileService{
     private final JwtUtil jwtUtil;
 
 
-    public Long fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+    public UploadResult fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         return null;
     }
 
