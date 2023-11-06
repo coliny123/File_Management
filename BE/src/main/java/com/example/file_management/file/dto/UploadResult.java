@@ -12,6 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UploadResult {
 
-    private Long userId;
+    private Long id;
     private String userName;
 }
