@@ -8,8 +8,6 @@ export const loginApi = async (provider, code) => {
         console.log(res)
         if (res.data.token !== undefined) {
             window.localStorage.setItem('refreshToken', res.data.refreshToken);
-            alert(res.data)
-            console.log(res)
             return res.data.token;
         }
     })

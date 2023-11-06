@@ -17,7 +17,7 @@ function LandingPage() {
 
   // const { isPending, error, data } = useQuery({
   //   queryKey: ['userData'],
-  //   queryFn: () =>loginApi(),
+  //   queryFn: () => loginApi(),
   // })
 
   // console.log(data);

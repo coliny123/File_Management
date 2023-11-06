@@ -4,17 +4,28 @@ import { useUpload } from '../../context/UploadContext';
 import { checkFileExtension } from '../../services/checkFileExtension';
 import { BsCloudUpload, BsExclamationDiamond } from 'react-icons/bs'
 import { AiFillCheckCircle } from 'react-icons/ai'
+import { useIsLogin } from '../../context/IsLoginContext';
 
 const BeforeDrop = (isDragging) => {
     return (
         <div className={`dropBox w-[96%] h-[96%] border-4 border-dashed rounded-3xl ${isDragging ? 'border-[#6367EB]' : ''}`}>
             <div className='mt-5 text-2xl font-bold'>파일 업로드</div>
-            <div className='mt-5 font-bold text-[#31D6D6] text-[100px] w-full flex justify-center'><BsCloudUpload/></div>
-            <div className='text-2xl font-bold text-[#6367EB] max-md:invisible'>Drag & drop</div>
+            <label className='DragDrop-File' htmlFor="fileUpload">
+                <div className='mt-5 font-bold text-[#31D6D6] text-[100px] w-full flex justify-center'><BsCloudUpload/></div>
+            </label>
+            <div className='text-2xl font-bold text-[#6367EB] max-md:hidden'>Drag & drop</div>
             <label className='DragDrop-File' htmlFor="fileUpload">
                 <div className='text-lg font-bold text-[#6367EB]'>파일 선택</div>
             </label>
-            <div id='notice' className='md:mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
+            <div id='notice' className='mt-5 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div>
+        </div>
+    )
+}
+
+const LoginNotice = () => {
+    return (
+        <div>
+            <div>로그인 후 이용 가능합니다</div>
         </div>
     )
 }
@@ -43,6 +54,7 @@ function FileDragDrop() {
     const [isDragging, setIsDragging] = useState(false);
     const fileId = useRef(0);
     const dragRef = useRef(null);
+    const { isLogin } = useIsLogin();
 
     const {uploadedFile, setUploadedFile, setUploadStatus, setUploadedFileType} = useUpload();
 
@@ -135,7 +147,6 @@ function FileDragDrop() {
     }, [uploadedFile]);
 
     return (
-        // <div className="DragDrop flex flex-col justify-center items-center w-full h-full">
         <div className="DragDrop flex flex-col justify-center items-center m-0 w-full h-full">
             <div className="dropBox w-full h-full flex flex-col justify-center items-center border-4 bg-[#F7F6FB]" style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}>
                 <input
@@ -150,6 +161,7 @@ function FileDragDrop() {
                     ref={dragRef}
                 >
                     <div className={`w-full h-full flex justify-center items-center`}>
+                        {/* {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
                         {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
                     </div>
                 </label>

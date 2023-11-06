@@ -11,9 +11,9 @@ import FileManagePage from './pages/FileManagePage';
 import { getAccessTokenApi } from './api/getAccessTokenApi';
 import { useEffect } from 'react';
 import axios from 'axios';
+import DownloadCodePage from './pages/DownloadCodePage';
 
 function App() {
-
   return (
     <div className="App">
       <Router>
@@ -21,6 +21,7 @@ function App() {
           <Route element={<MainLayout/>}>
             <Route path='/' element={<LandingPage/>}/>
             <Route path='/file' element={<FileManagePage/>}/>
+            <Route path='/code' element={<DownloadCodePage/>}></Route>
           </Route>
           <Route element={<LoginLayout/>}>
             <Route path='/login' element={<LoginPage/>} />
