@@ -25,7 +25,7 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
             setUploadProgress(percentCompleted);
         },
     }).then((res) => {
-        console.log(res.data)
+        console.log(res.data.id)
         console.log('complete');
         return res.data.id
     }).catch((error) => {
