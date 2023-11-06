@@ -76,9 +76,9 @@ function Convert() {
     const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType} = useUpload();
     const { fileId, setFileId } = useFileInfo();
 
-    const handleNextBtn = () => {
+    const handleNextBtn = async () => {
         // setFileId(sendFiles(uploadedFile, setUploadProgress))
-        setFileId(sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType));
+        setFileId(await sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType));
         setUploadStatus(2)
     }
 
