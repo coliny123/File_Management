@@ -44,7 +44,7 @@ public class FileServiceV2 implements FileService {
         FileInfo savedFileInfo = fileRepository.save(fileInfo);
 
         UploadResult result = new UploadResult();
-        result.setUserId(savedFileInfo.getUserId().getId());
+        result.setId(savedFileInfo.getId());
         result.setUserName(user.getName());
 
         return result;
