@@ -29,8 +29,8 @@ public class FileServiceV1 implements FileService{
     }
 
     @Override
-    public FileInfo getFile(String fileName) throws FileNotFoundException {
-        return fileRepository.findById(fileName)
+    public FileInfo getFile(Long fileId) throws FileNotFoundException {
+        return fileRepository.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundException("File not found"));
     }
 

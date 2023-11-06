@@ -78,8 +78,8 @@ public class FileServiceV2 implements FileService {
     }
 
     @Override
-    public FileInfo getFile(String fileName) throws FileNotFoundException {
-        return fileRepository.findById(fileName)
+    public FileInfo getFile(Long fileId) throws FileNotFoundException {
+        return fileRepository.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
     }
 
