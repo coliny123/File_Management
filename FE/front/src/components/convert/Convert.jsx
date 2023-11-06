@@ -73,12 +73,12 @@ function Convert() {
 
     const [transferredFileFormat, setTransferredFileFormat] = useState('')
     const { isLogin, setIsLogin } = useIsLogin();
-    const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType } = useUpload();
+    const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType} = useUpload();
     const { fileId, setFileId } = useFileInfo();
 
     const handleNextBtn = () => {
         // setFileId(sendFiles(uploadedFile, setUploadProgress))
-        sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType)
+        setFileId(sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType));
         setUploadStatus(2)
     }
 

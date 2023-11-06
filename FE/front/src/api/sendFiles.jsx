@@ -27,7 +27,7 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
     }).then((res) => {
         console.log(res.data)
         console.log('complete');
-        // return res.data.fileId
+        return res.data.Id
     }).catch((error) => {
         console.log(error);
     })
