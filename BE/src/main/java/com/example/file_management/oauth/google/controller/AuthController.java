@@ -6,7 +6,6 @@ import com.example.file_management.oauth.google.model.entity.GoogleUser;
 import com.example.file_management.oauth.google.service.GoogleOAuth2Service;
 import com.example.file_management.oauth.google.service.UserService;
 import com.example.file_management.security.JwtUtil;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,17 +42,6 @@ public class AuthController {
 
         // 리프레시 토큰 DB에 저장
         userService.saveRefreshToken(googleUser.getEmail(), refreshToken);
-
-        Cookie jwtTokenCookie = new Cookie("jwt_token", jwtToken);
-        jwtTokenCookie.setHttpOnly(true);
-        jwtTokenCookie.setMaxAge(60 * 60);
-
-        Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 14);
-
-        response.addCookie(jwtTokenCookie);
-        response.addCookie(refreshTokenCookie);
 
         UserResponse userResponse = new UserResponse(jwtToken, googleUser.getEmail(), googleUser.getName(), refreshToken);
 
