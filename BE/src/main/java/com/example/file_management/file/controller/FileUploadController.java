@@ -1,6 +1,7 @@
 package com.example.file_management.file.controller;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +25,13 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        Long userId;
+        UploadResult result;
         try {
-            userId = fileService.fileUpload(file, request);
+            result = fileService.fileUpload(file, request);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(userId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @GetMapping("/test")

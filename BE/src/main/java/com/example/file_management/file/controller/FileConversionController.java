@@ -29,10 +29,10 @@ public class FileConversionController {
 //        }
 //    }
 //
-    @GetMapping("/{fileName}")
-    public ResponseEntity<FileInfo> getFile(@PathVariable String fileName) {
+    @GetMapping("/{fileId}")
+    public ResponseEntity<FileInfo> getFile(@PathVariable Long fileId) {
         try {
-            FileInfo fileInfo = this.fileService.getFile(fileName);
+            FileInfo fileInfo = this.fileService.getFile(fileId);
             return new ResponseEntity<>(fileInfo, HttpStatus.OK);
         } catch (FileNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

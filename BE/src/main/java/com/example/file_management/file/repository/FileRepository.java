@@ -11,11 +11,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FileRepository extends JpaRepository<FileInfo, String> {
+public interface FileRepository extends JpaRepository<FileInfo, Long> {
 
     FileInfo save(FileInfo file);
 
     @Query("SELECT f.savedPath FROM FileInfo f WHERE f.id = :id")
     String findSavedPathById(@Param("id") Long id);
-
 }

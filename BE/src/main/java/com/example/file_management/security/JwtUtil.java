@@ -25,6 +25,7 @@ public class JwtUtil {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
+<<<<<<< HEAD
     private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
 
@@ -36,6 +37,19 @@ public class JwtUtil {
         public void init() {
             SECRET_KEY = secretKey;
         }
+=======
+//    private static final String SECRET_KEY =  System.getenv("JWT_SECRET_KEY");
+    private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
+    private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
+    @Value("${JWT_SECRET_KEY}")
+    private String secretKey;
+    private static String SECRET_KEY;
+
+    @PostConstruct
+    public void init() {
+        SECRET_KEY = secretKey;
+    }
+>>>>>>> developBE
 
     public static String generateToken(String email, String name) {
         Map<String, Object> claims = new HashMap<>();
