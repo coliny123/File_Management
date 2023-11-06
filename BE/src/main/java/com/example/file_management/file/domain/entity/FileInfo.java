@@ -1,14 +1,7 @@
 package com.example.file_management.file.domain.entity;
 
 import com.example.file_management.oauth.model.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "fileinfo")
 public class FileInfo {
     // 파일 이름, 파일 형식, 피일 크기, 다운로드 링크 .... 수정 예정입니다.
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;    // uuid로 만든 저장되는 파일 이름

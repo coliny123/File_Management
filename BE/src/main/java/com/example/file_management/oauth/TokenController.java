@@ -23,7 +23,7 @@ public class TokenController {
         this.jwtUtil = jwtUtil;
     }
 
-    @GetMapping("/test/me")
+    @GetMapping("/test/fileinfo/me")
     public ResponseEntity<?> validateToken(@RequestHeader(value="Authorization") String token) {
         token = token.replace("Bearer ", ""); // 토큰에서 "Bearer " 문자열 제거
 
