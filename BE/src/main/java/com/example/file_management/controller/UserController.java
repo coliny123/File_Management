@@ -1,6 +1,7 @@
 package com.example.file_management.controller;
 
 import com.example.file_management.security.JwtUtil;
+import com.example.file_management.security.JwtValidator;
 import com.example.file_management.service.UserInfoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,13 @@ public class UserController {
 
     private final UserInfoService userInfoService;
 
+    private final JwtValidator jwtValidator;
+
     @Autowired
-    public UserController(JwtUtil jwtUtil, UserInfoService userInfoService) {
+    public UserController(JwtUtil jwtUtil, UserInfoService userInfoService, JwtValidator jwtValidator) {
         this.jwtUtil = jwtUtil;
         this.userInfoService = userInfoService;
+        this.jwtValidator = jwtValidator;
     }
     @GetMapping("/me")
     public ResponseEntity<?> User (@RequestHeader(value="Authorization") String token) {
@@ -35,6 +39,9 @@ public class UserController {
 
     @GetMapping("/files")
     public ResponseEntity<?> getUserFiles(HttpServletRequest request) {
+        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
+        if (responseEntity != null) return responseEntity;
+
         return ResponseEntity.ok(userInfoService.getUserInfoAndFiles(request));
     }
 }
