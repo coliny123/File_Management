@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class UserInfoService {
     public Map<String, Object> getUserInfoAndFiles(HttpServletRequest request) {
         String userName = getUserName(request);
         User user = userRepository.findByName(userName);
-        List<FileInfo> files = fileRepository.findAllByUserId(user);
+        List<FileInfo> files = fileRepository.findAllByUser(user);
 
         Map<String, Object> response = new HashMap<>();
         response.put("userName", user.getName());
