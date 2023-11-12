@@ -90,8 +90,8 @@ public class JwtUtil {
                 .getBody();
 
         Map<String, Object> newClaims = new HashMap<>();
-        newClaims.put("email", claims.getSubject());
-        newClaims.put("name", claims.get("name"));
+        newClaims.put("email", claims.get("email", String.class));
+        newClaims.put("name", claims.get("name", String.class));
 
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
