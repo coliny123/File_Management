@@ -6,7 +6,8 @@ import { useFileInfo } from '../../context/FileInfoContext';
 function QrCode() {
 
     const { setUploadStatus, setUploadedFile } = useUpload();
-    const { fileId } = useFileInfo();
+    const { fileId, setFileId } = useFileInfo();
+    // const { fileId } = useFileInfo();
 
   // const handleQRCodeOpen = () => {
   //   const qrCodeCanvas = document.querySelector('.qr-code-canvas'); // .qr-code-canvas 클래스로 캔버스 요소 선택
@@ -45,16 +46,10 @@ function QrCode() {
     `);
     }
   };
-
-
-
-
     return (
       <div className='w-full h-full flex flex-col justify-center items-center'>
-          {/* <div className='w-full h-full border-2 flex justify-center items-center'> */}
           <div className="w-full h-full flex flex-col justify-center items-center border-4 bg-[#F7F6FB]" style={{borderRadius: "30px", background: "linear-gradient(100deg, rgba(255, 255, 255, 0.25) 5.69%, rgba(255, 255, 255, 0.15) 98.55%)", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", backdropFilter: "blur(25px)"}}>
-          <QRCodeCanvas className='qr-code-canvas' value={`http://165.246.223.19:3000/download/1`} size={250}></QRCodeCanvas>
-          {/* <QRCodeCanvas className='qr-code-canvas' value={`http://165.246.116.55:3000/download/1`} size={250}></QRCodeCanvas> */}
+          <QRCodeCanvas className='qr-code-canvas' value={`https://file-management-ten.vercel.app/download/${fileId}`} size={250}></QRCodeCanvas>
           </div>
           <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-around items-center'>
               <div>

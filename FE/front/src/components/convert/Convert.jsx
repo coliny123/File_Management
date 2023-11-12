@@ -73,12 +73,15 @@ function Convert() {
 
     const [transferredFileFormat, setTransferredFileFormat] = useState('')
     const { isLogin, setIsLogin } = useIsLogin();
-    const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType } = useUpload();
+    const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType} = useUpload();
     const { fileId, setFileId } = useFileInfo();
 
-    const handleNextBtn = () => {
+    const handleNextBtn = async () => {
         // setFileId(sendFiles(uploadedFile, setUploadProgress))
-        sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType)
+        const id = await sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType);
+        console.log(id);
+        setFileId(id);
+        console.log(fileId);
         setUploadStatus(2)
     }
 
