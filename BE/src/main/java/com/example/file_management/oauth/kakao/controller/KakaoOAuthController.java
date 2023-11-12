@@ -7,10 +7,9 @@ import com.example.file_management.oauth.kakao.service.KakaoUserService;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,17 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@RequiredArgsConstructor
 public class KakaoOAuthController {
 
     private final KakaoOAuth2Service kakaoOAuth2Service;
     private final KakaoUserService kakaoUserService;
-
-    @Autowired
-    public KakaoOAuthController(KakaoOAuth2Service kakaoOAuth2Service, KakaoUserService kakaoUserService) {
-        this.kakaoOAuth2Service = kakaoOAuth2Service;
-        this.kakaoUserService = kakaoUserService;
-    }
 
     @PostMapping("/auth/kakao")
     public ResponseEntity<?> authenticateKakao(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {

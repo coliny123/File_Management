@@ -7,25 +7,18 @@ import com.example.file_management.oauth.google.service.GoogleOAuth2Service;
 import com.example.file_management.oauth.google.service.UserService;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@RequiredArgsConstructor
 public class AuthController {
     private final GoogleOAuth2Service googleOAuth2Service;
     private final UserService userService;
-
-    @Autowired
-    public AuthController(GoogleOAuth2Service googleOAuth2Service, UserService userService) {
-        this.googleOAuth2Service = googleOAuth2Service;
-        this.userService = userService;
-    }
 
     @PostMapping("/auth/google")
     public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {
