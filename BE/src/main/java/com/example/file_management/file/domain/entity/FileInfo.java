@@ -30,4 +30,7 @@ public class FileInfo {
     @ManyToOne
     @JoinColumn(name="userId", nullable=false)
     public User userId;
+
+    @Column(columnDefinition = "TINYINT(1)")
+    public boolean shared;
 }

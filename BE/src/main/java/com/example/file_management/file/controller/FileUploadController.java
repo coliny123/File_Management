@@ -33,9 +33,4 @@ public class FileUploadController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-
-    @GetMapping("/test")
-    public void test() {
-        System.out.println("Endpoint: " + amazonS3Client);;
-    }
 }
