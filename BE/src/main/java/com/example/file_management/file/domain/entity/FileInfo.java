@@ -2,6 +2,7 @@ package com.example.file_management.file.domain.entity;
 
 import com.example.file_management.oauth.model.entity.User;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,4 +34,18 @@ public class FileInfo {
 
     @Column(columnDefinition = "TINYINT(1)")
     public boolean shared;
+
+    @Column(name="authenticationCode")
+    public String authenticationCode;
+
+    @Column(name="uploadTime")
+    private LocalDateTime uploadTime;
+
+    @Column(name="size")
+    public long size;
+
+    @PrePersist
+    public void prePersist() {
+        this.uploadTime = LocalDateTime.now();
+    }
 }

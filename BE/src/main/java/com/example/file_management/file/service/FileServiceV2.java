@@ -10,6 +10,7 @@ import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -39,8 +40,10 @@ public class FileServiceV2 implements FileService {
 
         String userEmail = getUserEmail(request);
         User user = userRepository.findByEmail(userEmail);
+        String authenticationCode = generateRandomDownloadCode();
+        long size = multipartFile.getSize();
 
-        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user);
+        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user, authenticationCode, size);
         FileInfo savedFileInfo = fileRepository.save(fileInfo);
 
         UploadResult result = new UploadResult();
@@ -62,11 +65,13 @@ public class FileServiceV2 implements FileService {
     }
 
     // fileInfo 생성
-    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user) {
+    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user, String authenticationCode, long size) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.originalFileName = originalFilename;
         fileInfo.savedPath = fileUrl;
         fileInfo.userId = user;
+        fileInfo.authenticationCode = authenticationCode;
+        fileInfo.size = size;
 
         return fileInfo;
     }
@@ -81,6 +86,16 @@ public class FileServiceV2 implements FileService {
     public FileInfo getFile(Long fileId) throws FileNotFoundException {
         return fileRepository.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+    }
+
+    private String generateRandomDownloadCode() {
+        StringBuilder downloadCode = new StringBuilder();
+        Random random = new Random();
+
+        for(int i = 0; i < 6; i++){
+            downloadCode.append(random.nextInt(10)); // 0부터 9까지의 랜덤한 숫자 생성 6번함
+        }
+        return downloadCode.toString();
     }
 
     // userId에 대한 SavedPath 반환

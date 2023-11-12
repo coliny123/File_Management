@@ -2,6 +2,7 @@ package com.example.file_management.controller;
 
 import com.example.file_management.security.JwtUtil;
 import com.example.file_management.service.UserInfoService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,8 @@ public class UserController {
         return ResponseEntity.ok("유효한 access token 입니다.");
     }
 
-//    @GetMapping("/login")
-//    public ResponseEntity<?> userInfo(HttpServletRequest request) {
-//
-//    }
+    @GetMapping("/files")
+    public ResponseEntity<?> getUserFiles(HttpServletRequest request) {
+        return ResponseEntity.ok(userInfoService.getUserInfoAndFiles(request));
+    }
 }

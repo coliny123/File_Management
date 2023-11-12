@@ -1,8 +1,16 @@
 package com.example.file_management.service;
 
+import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.repository.FileRepository;
+import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +20,27 @@ public class UserInfoService {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final FileRepository fileRepository;
 
-
-    // 유저 id 가져오기
-    private Long getUserId(HttpServletRequest request) {
+    public Map<String, Object> getUserInfoAndFiles(HttpServletRequest request) {
         String userName = getUserName(request);
-        return userRepository.findByName(userName).getId();
+        User user = userRepository.findByName(userName);
+        List<FileInfo> files = fileRepository.findAllByUserId(user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("userName", user.getName());
+        response.put("files", files.stream().map(file -> {
+            Map<String, Object> fileMap = new HashMap<>();
+            fileMap.put("fileName", file.getOriginalFileName());
+            fileMap.put("uploadTime", file.getUploadTime());
+            fileMap.put("shared", file.isShared());
+            fileMap.put("downloadCode", file.getAuthenticationCode());
+            fileMap.put("fileId", file.getId());
+            fileMap.put("fileSize", file.getSize());
+            return fileMap;
+        }).collect(Collectors.toList()));
+
+        return response;
     }
 
     // 유저 name 추출
