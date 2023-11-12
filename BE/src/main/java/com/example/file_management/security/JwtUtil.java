@@ -54,14 +54,18 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static String generateRefreshToken(String email) {
+    public static String generateRefreshToken(String email, String name) {
 
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         Date expiryDateForRefreshToken = new Date(nowMillis + REFRESH_EXPIRATION_TIME);
 
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        claims.put("name", name);
+
         return Jwts.builder()
-                .setSubject(email)
+                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiryDateForRefreshToken)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();

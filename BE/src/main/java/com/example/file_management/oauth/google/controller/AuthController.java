@@ -31,7 +31,7 @@ public class AuthController {
         }
 
         String jwtToken = JwtUtil.generateToken(googleUser.getEmail(), googleUser.getName());
-        String refreshToken = JwtUtil.generateRefreshToken(googleUser.getEmail());
+        String refreshToken = JwtUtil.generateRefreshToken(googleUser.getEmail(), googleUser.getName());
 
         // 리프레시 토큰 DB에 저장
         userService.saveRefreshToken(googleUser.getEmail(), refreshToken);
