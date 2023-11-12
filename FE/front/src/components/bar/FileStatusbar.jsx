@@ -19,7 +19,7 @@ function FileStatusbar() {
                 </div>
                 <div className='content flex flex-col items-center'>
                     <div className={`uploadStatus rounded-full w-[16px] h-[16px] ${uploadStatus === (1 || 2) ? 'bg-[#6367EB]' : 'bg-[#999999]'} border-bg-500`}></div>
-                    <div>Convert</div>
+                    <div>Sending</div>
                 </div>
                  {/* <div className='content flex flex-col items-center'>
                     <div className={`uploadStatus rounded-full w-3 h-3 ${uploadStatus === 2 ? 'bg-blue-500' : ''} border-bg-500`}></div>

@@ -2,9 +2,11 @@ import React from "react"
 import { Outlet } from "react-router-dom"
 
 const LoginLayout = () => {
-    return (<>
-    <Outlet></Outlet>
-    </>)
+    return (
+    <div>
+        <Outlet></Outlet>
+    </div>
+    )
 }
 
 export default LoginLayout

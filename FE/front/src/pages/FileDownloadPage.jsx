@@ -29,18 +29,19 @@ function FileDownloadPage() {
     <div className='w-full h-screen bg-[#F7F6FB] flex flex-col items-center'>
       <div text-neutral-600 className='font-bold mt-[80px]'> {`${fileId} 파일 다운로드`} </div>
       <div className='m-[32px] flex flex-col'>
-        <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
+        {/* <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div> */}
             <div className='w-[240px]'>
-                <div className='flex justify-between'><p>파일명</p><p>A</p></div>
-                <div className='flex justify-between'><p>확장자</p><p>B</p></div>
-                <div className='flex justify-between'><p>올린 날짜</p><p>C</p></div>
-                <div className='flex justify-between'><p>공유 권한</p><p>DDD</p></div>
-                <div className='flex justify-between'><p>다운 코드</p><p>EEEE</p></div>
-                {`${fileId} 파일입니다.`}
-                <div className='bg-yellow-500'><button onClick={() => {window.location = fileLink}}>download</button></div>
+              <div className='w-full flex justify-center'>
+                <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
+              </div>
+              <div className='flex justify-between'><p>파일명</p><p>A</p></div>
+              <div className='flex justify-between'><p>확장자</p><p>B</p></div>
+              <div className='flex justify-between'><p>올린 날짜</p><p>C</p></div>
+              <div className='flex justify-between'><p>공유 권한</p><p>DDD</p></div>
+              <div className='flex justify-between'><p>다운 코드</p><p>EEEE</p></div>
             </div>
       </div>
-      <div className='text-white bg-[#6367EB] w-[200px] h-[48px] rounded-[4px] m-[32px] justify-center items-center'><button className='m-[10px]' >download</button></div>
+      <div className='text-white flex bg-[#6367EB] w-[200px] h-[48px] rounded-[4px] m-[32px] justify-center items-center'><button onClick={() => {window.location = fileLink}}>download</button></div>
       {/* 글씨를 버튼 가운데로 하고 싶어요.. */}
     </div>
     )

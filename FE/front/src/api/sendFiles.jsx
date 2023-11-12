@@ -6,7 +6,7 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
     const formData = new FormData();
     const Server_IP = process.env.REACT_APP_Server_IP;
     // files에서 forData에 파일 추가
-    files.map((file) => {
+    files.forEach((file) => {
         formData.append('file', file.object)
     })
 
@@ -25,10 +25,11 @@ export const sendFiles = async (files, setUploadProgress, transferredFileFormat,
             setUploadProgress(percentCompleted);
         },
     }).then((res) => {
-        console.log(res.data.id)
-        console.log('complete');
         return res.data.id
     }).catch((error) => {
         console.log(error);
+        if (error.response.status === 401) {
+            throw error;
+        }
     })
 }

@@ -7,7 +7,6 @@ function Progressbar() {
     const { uploadProgress, setUploadStatus } = useUpload();
 
     useEffect(() => {
-        console.log(uploadProgress)
         if (uploadProgress === 100) {
             setUploadStatus(3);
         }

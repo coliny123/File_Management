@@ -5,6 +5,7 @@ import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useUpload } from '../../context/UploadContext';
 import { sendFiles } from '../../api/sendFiles';
 import { useFileInfo } from '../../context/FileInfoContext';
+import { getAccessTokenApi } from '../../api/getAccessTokenApi';
 
 function IsNotLoginConvert() {
 
@@ -26,7 +27,7 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
     useEffect(() => {
         switch (uploadedFileType) {
             case ('hwp'):
-                setFormatOptions(['hwp', 'pdf'])
+                setFormatOptions(['hwp'])
                 break;
             case ('pdf'):
                 setFormatOptions(['pdf'])
@@ -37,7 +38,8 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
     return ( 
         <div className='flex flex-col justify-center items-center'>
             <div className='w-[230px]'>
-                <div className='text-2xl font-bold mt-5'>파일 변환</div>
+                <div className='text-2xl font-bold mt-5'>확장자 선택</div>
+                <div className='text-xl font-bold'>(추후 파일 변환 기능 추가)</div>
                 <div className='flex items-center mt-5 h-[32px] justify-between'>
                     <div className='text-gray-500 text-[14px]'>올린 파일</div>
                     <div className='rounded-[80px] bg-[#FFFFFF] w-[160px] h-[32px] flex justify-center items-center'>{uploadedFileType}</div>
@@ -55,15 +57,6 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
                         </FormControl>
                     </div>
                 </div>
-                {/* <div className='text-gray-500 w-full text-left mt-5 mb-5'>확장자 선택</div>
-                <FormControl fullWidth>
-                    <InputLabel id='select-label'>형식</InputLabel>
-                    <Select className='w-full' labelId='select-label' value={transferredFileFormat} label='format' onChange={(e) => setTransferredFileFormat(e.target.value)}>
-                        {formatOptions?.map((option) => (
-                            <MenuItem key={option} value={option}>{option}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl> */}
             </div>
         </div>
     )
@@ -76,12 +69,25 @@ function Convert() {
     const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType} = useUpload();
     const { fileId, setFileId } = useFileInfo();
 
+    const sendFilesWithAccessToken = async () => {
+        try {
+            const id = await sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType);
+            console.log(id);
+            return id;
+        } catch (err) {
+            await getAccessTokenApi();
+            return sendFilesWithAccessToken()
+        }
+    }
+
     const handleNextBtn = async () => {
-        // setFileId(sendFiles(uploadedFile, setUploadProgress))
-        const id = await sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType);
-        console.log(id);
+        const id = await sendFilesWithAccessToken();
+        if (id === undefined) {
+            alert('파일 전송에 실패했습니다. 다시 시도해주세요.')
+            window.location.reload();
+            return;
+        }
         setFileId(id);
-        console.log(fileId);
         setUploadStatus(2)
     }
 

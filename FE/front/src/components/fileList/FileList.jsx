@@ -40,6 +40,7 @@ function FileList({fileInfoList}) {
       <div className='flex justify-around w-full border-4 border-b-orange-800'>
         <div>파일명</div>
         <div>확장자</div>
+        <div>파일크기</div>
         <div>업로드일</div>
         <div>공유허용</div>
       </div>
@@ -52,7 +53,7 @@ function FileList({fileInfoList}) {
             <div className='absolute top-[10px] left-[10px] w-[20px] h-[20px] text-xl hover:cursor-pointer' onClick={() => setIsTogglebarOpen(false)}><IoClose/></div>
             <div className='w-full flex justify-center'>
                 <div className='bg-[#F7F7F7] w-[240px] h-[240px] flex justify-center items-center mt-[48px]'>
-                    <QRCodeCanvas value={`http://165.246.116.100:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
+                    <QRCodeCanvas value={`http://192.168.45.139:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
                 </div>
             </div>
             <div className='w-full flex justify-center'>
