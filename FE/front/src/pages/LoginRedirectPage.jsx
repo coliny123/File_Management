@@ -22,10 +22,12 @@ function LoginRedirectPage() {
     async function fetchData() {
         try {
             const token = await loginApi(provider, code);
+            alert(token);
+            console.log(token)
             setAccessToken(token);
             // setIsLogin(true);
-            navigate('https://file-management-ten.vercel.app/');
-            // navigate('/');
+            // navigate('https://file-management-ten.vercel.app/');
+            navigate('/');
         } catch (error) {
             console.error(error);
         }
