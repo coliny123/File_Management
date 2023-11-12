@@ -1,6 +1,6 @@
 package com.example.file_management.file.controller;
 
-import com.example.file_management.file.service.FileServiceImpl;
+import com.example.file_management.file.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.io.IOException;
 @CrossOrigin(origins="http://localhost:3000")
 public class FileUploadController {
 
-    private final FileServiceImpl fileService;
+    private final FileService fileService;
 
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file) {

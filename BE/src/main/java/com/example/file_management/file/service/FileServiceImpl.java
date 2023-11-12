@@ -78,7 +78,8 @@ public class FileServiceImpl implements FileService{
      * @param saveFileName
      * @return  파일 저장 경로
      */
-    private String getFullPath(String saveFileName) {   // 로컬 storage에 저장된 경로
+    @Override
+    public String getFullPath(String saveFileName) {   // 로컬 storage에 저장된 경로
         return uploadPath + saveFileName;
     }
 
@@ -87,6 +88,7 @@ public class FileServiceImpl implements FileService{
      * @param originalFilename
      * @return String 확장자
      */
+    @Override
     public String extractExt(String originalFilename){  // 파일 확장자 추출 메소드
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
@@ -97,6 +99,7 @@ public class FileServiceImpl implements FileService{
      * @param originalFilename
      * @return String 저장소에 저장될 파일명
      */
+    @Override
     public String createSavedFileName(String originalFilename) {    // 로컬 storage에 저장되는 savedFileName 생성 메소드
         String ext = extractExt(originalFilename);
         String uuid = UUID.randomUUID().toString();     // 식별자
