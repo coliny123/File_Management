@@ -21,9 +21,7 @@ public class FileDownloadController {
     private final JwtValidator jwtValidator;
 
     @GetMapping("/details/{id}")
-    public ResponseEntity getFileDownloadInfo(@PathVariable Long id, HttpServletRequest request) throws IOException {
-        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
-        if (responseEntity != null) return responseEntity;
+    public ResponseEntity getFileDownloadInfo(@PathVariable Long id) throws IOException {
 
         DownloadDTO fileDownloadInfo = fileService.fileDownload(id);
 
@@ -31,9 +29,7 @@ public class FileDownloadController {
     }
 
     @GetMapping("/download/{authenticationCode}")
-    public ResponseEntity<Long> getFileId(@PathVariable String authenticationCode, HttpServletRequest request){
-        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
-        if (responseEntity != null) return responseEntity;
+    public ResponseEntity<Long> getFileId(@PathVariable String authenticationCode){
 
         Long id = fileService.getFileId(authenticationCode);
 
