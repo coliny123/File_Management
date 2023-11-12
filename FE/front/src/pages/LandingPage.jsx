@@ -26,12 +26,28 @@ function LandingPage() {
   // const { accessToken } = useAccessToken();
   // console.log(accessToken)
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('refreshToken')) {
+  //     getAccessTokenApi();
+  //     fetchUserDataApi();
+  //   }
+  // }, [])
+
   useEffect(() => {
-    if (localStorage.getItem('refreshToken')) {
-      getAccessTokenApi();
-      fetchUserDataApi();
+  const fetchData = async () => {
+    try {
+      if (localStorage.getItem('refreshToken')) {
+        await getAccessTokenApi();
+        await fetchUserDataApi();
+      }
+    } catch (error) {
+      console.error("Error during data fetching:", error);
     }
-  }, [])
+  };
+
+  fetchData();
+}, []);
+
 
   const {uploadStatus} = useUpload();
   return (
