@@ -25,8 +25,7 @@ public class JwtUtil {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
-
-    private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(30);  // 30 seconds
+    private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(5);  // 5 seconds
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
 
     @Value("${JWT_SECRET_KEY}")
@@ -69,7 +68,7 @@ public class JwtUtil {
     }
 
     // 토큰 유효성 검사 로직
-    public boolean validateRefreshToken(String token) {
+    public static boolean validateRefreshToken(String token) {
         try {
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
             System.out.println("Token claims: " + claims.toString());  // 토큰의 클레임을 콘솔에 출력
