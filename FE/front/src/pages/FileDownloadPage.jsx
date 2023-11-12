@@ -12,7 +12,7 @@ function FileDownloadPage() {
   
   const getFileInfo = async (fileId) => {
     try {
-      const response = await axios.get(`${Server_IP}/download/${fileId}`);
+      const response = await axios.get(`${Server_IP}/details/${fileId}`);
       setFileLink(response.data)
       console.log(response.data)
       console.log(response.data.data)

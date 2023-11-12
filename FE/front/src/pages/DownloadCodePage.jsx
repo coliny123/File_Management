@@ -1,12 +1,17 @@
 import React from 'react'
 import { useState } from 'react'
+import { getFileIdByAuthCode } from '../api/getFileIdByAuthCode';
+import { useNavigate } from 'react-router-dom';
 
 function DownloadCodePage() {
 
   const [downloadCode, setDownloadCode] = useState('');
 
+  const navigate = useNavigate();
+
   const handleDownloadButton = () => {
-    console.log(downloadCode)
+    const fileId = getFileIdByAuthCode(downloadCode);
+    navigate(`https://file-management-ten.vercel.app/download/${fileId}`)
   }
 
   return (

@@ -1,9 +1,10 @@
 import axios from "axios"
 
 export const getFileIdByAuthCode = async (authCode) => {
-    await axios.post('엔드포인트', {authCode: authCode})
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    await axios.get(`${Server_IP}/download/${authCode}`)
     .then((res) => {
-        return res.data.fileId
+        return res.data.id
     })
     .catch((err) => {
         console.log(err)
