@@ -10,6 +10,7 @@ import Convert from '../components/convert/Convert'
 import { useAccessToken } from '../context/AccessTokenContext'
 import TestBtn from '../components/btn/TestBtn'
 import { getAccessTokenApi } from '../api/getAccessTokenApi'
+import fetchUserDataApi from '../api/fetchUserDataApi'
 
 function LandingPage() {
 
@@ -28,6 +29,7 @@ function LandingPage() {
   useEffect(() => {
     if (localStorage.getItem('refreshToken')) {
       getAccessTokenApi();
+      fetchUserDataApi();
     }
   }, [])
 
