@@ -10,6 +10,7 @@ import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +31,13 @@ public class FileServiceV1 implements FileService{
     }
 
     @Override
-    public FileInfo getFile(Long fileId) throws FileNotFoundException {
-        return fileRepository.findById(fileId)
-                .orElseThrow(() -> new FileNotFoundException("File not found"));
+    public Optional<FileInfo> getFile(Long fileId) {
+        return fileRepository.findById(fileId);
     }
 
     @Override
     public DownloadDTO fileDownload(Long id) throws FileNotFoundException {
-        FileInfo file = getFile(id);
+        FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
 
         return DownloadDTO.builder()
                 .originalFileName(file.getOriginalFileName())
@@ -61,7 +61,7 @@ public class FileServiceV1 implements FileService{
     @Override
     @Transactional
     public SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException {
-        FileInfo targetFile = getFile(id);
+        FileInfo targetFile = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
         targetFile.shared = shared;
 
         return SharedStateDTO.builder()

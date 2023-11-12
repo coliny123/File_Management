@@ -13,7 +13,7 @@ import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.File;
+import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,9 +88,8 @@ public class FileServiceV2 implements FileService {
     }
 
     @Override
-    public FileInfo getFile(Long fileId) throws FileNotFoundException {
-        return fileRepository.findById(fileId)
-                .orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+    public Optional<FileInfo> getFile(Long fileId) {
+        return fileRepository.findById(fileId);
     }
 
     private String generateRandomDownloadCode() {
@@ -107,7 +106,7 @@ public class FileServiceV2 implements FileService {
     // 전체 정보를 받으려면 list로 구현해야하고, String으로 하려면 파일 정보 추가 인덱싱 필요
     @Override
     public DownloadDTO fileDownload(Long id) throws FileNotFoundException {
-        FileInfo file = getFile(id);
+        FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
 
         return DownloadDTO.builder()
                 .originalFileName(file.getOriginalFileName())
@@ -133,7 +132,7 @@ public class FileServiceV2 implements FileService {
     @Override
     @Transactional
     public SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException {
-        FileInfo targetFile = getFile(id);
+        FileInfo targetFile = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
         targetFile.shared = shared;
 
         return SharedStateDTO.builder()
