@@ -8,7 +8,6 @@ export const getAccessTokenApi = () => {
             "Authorization": `Bearer ${refreshToken}`
         },
     })
-    // const accessToken = axios.get(`https://9fbda4cd-cd09-4227-8f94-f3943b8e6686.mock.pstmn.io/auth/refresh`)
         .then((res) => {
             console.log(res.data)
             axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`

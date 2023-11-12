@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FileDragDrop from '../components/dragDrop/FileDragDrop'
 import FileStatusbar from '../components/bar/FileStatusbar'
 import QrCode from '../components/qrCode/QrCode'
-import useUser from '../hooks/query/useUserDataQuery'
+import useUser, { useUserDataQuery } from '../hooks/query/useUserDataQuery'
 import Progressbar from '../components/bar/Progressbar'
 import { useQuery, QueryClient } from '@tanstack/react-query'
 import { useUpload } from '../context/UploadContext'
@@ -10,47 +10,35 @@ import Convert from '../components/convert/Convert'
 import { useAccessToken } from '../context/AccessTokenContext'
 import TestBtn from '../components/btn/TestBtn'
 import { getAccessTokenApi } from '../api/getAccessTokenApi'
-import fetchUserDataApi from '../api/fetchUserDataApi'
 
 function LandingPage() {
-
-  // const queryClient = new QueryClient();
-
-  // const { isPending, error, data } = useQuery({
-  //   queryKey: ['userData'],
-  //   queryFn: () => loginApi(),
-  // })
 
   // console.log(data);
 
   // const { accessToken } = useAccessToken();
   // console.log(accessToken)
+  
+  const [accessToken, setAccessToken] = useState(false);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('refreshToken')) {
-  //     getAccessTokenApi();
-  //     fetchUserDataApi();
-  //   }
-  // }, [])
+  const { isPending, error, data} = useUserDataQuery({
+    enabled: accessToken,
+  });
 
   useEffect(() => {
-  const fetchData = async () => {
-    if (localStorage.getItem('refreshToken')) {
-      await getAccessTokenApi();
-      try {
-        await fetchUserDataApi();
-        return;
-      } catch (error) {
-        console.error("Error during data fetching:", error);
-        return fetchData();
+    const fetchData = async () => {
+      if (localStorage.getItem('refreshToken')) {
+        console.log('토큰 받아오는 중')
+        await getAccessTokenApi();
+        console.log('토큰 받아왔음')
+        setAccessToken(true);
       }
-    }
-  };
-  fetchData();
-}, []);
+      };
+      fetchData();
+  }, []);
 
 
   const {uploadStatus} = useUpload();
+  console.log(data);
   return (
     <div>
         <div className='content-wrapper w-full h-full flex flex-col justify-center items-center '>
