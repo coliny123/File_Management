@@ -3,7 +3,10 @@ package com.example.file_management.oauth.kakao.service;
 import com.example.file_management.oauth.kakao.model.dto.response.KakaoUserResponse;
 import com.example.file_management.oauth.kakao.model.entity.KakaoUser;
 import com.example.file_management.oauth.kakao.repository.KakaoUserRepository;
-import com.example.file_management.security.JwtUtil;
+import com.example.file_management.oauth.model.entity.RefreshToken;
+import com.example.file_management.oauth.repository.RefreshTokenRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,13 +16,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 public class KakaoUserService {
     private final KakaoUserRepository kakaoUserRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private static final Logger log = LoggerFactory.getLogger(KakaoUserService.class);
 
     @Autowired
-    public KakaoUserService(KakaoUserRepository kakaoUserRepository) {
+    public KakaoUserService(KakaoUserRepository kakaoUserRepository, RefreshTokenRepository refreshTokenRepository) {
         this.kakaoUserRepository = kakaoUserRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
+    }
+
+    public void saveRefreshToken(String email, String refreshToken) {
+        RefreshToken token = refreshTokenRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    log.info("새로운 리프레시 토큰 생성");
+                    RefreshToken newToken = new RefreshToken();
+                    newToken.setEmail(email);
+                    return newToken;
+                });
+
+        token.setRefreshToken(refreshToken);
+        refreshTokenRepository.save(token);
+        log.info("리프레시 토큰 저장 완료");
     }
 
     public KakaoUserResponse updateUserInfo(String accessToken) {
@@ -27,26 +49,28 @@ public class KakaoUserService {
             KakaoUserResponse userInfo = getUserInfo(accessToken);
 
             if (userInfo != null) {
-                // 새로운 Kakoouser 객체 생성 후 필드 설정
-                KakaoUser kakaouser = new KakaoUser();
-                kakaouser.setEmail((String)userInfo.getKakaoAccount().get("email"));  // userInfo에 있는 이메일을 가져옵니다.
-                kakaouser.setName((String)userInfo.getProperties().get("nickname"));
 
-                // DB에 새 사용자 정보 저장. 이 때 id는 자동으로 생성됨.
-                kakaoUserRepository.save(kakaouser);
+                String email = (String)userInfo.getKakaoAccount().get("email");
+                String name = (String)userInfo.getProperties().get("nickname");
 
-                System.out.println("데이터베이스에 사용자 정보를 성공적으로 업데이트했습니다: " + userInfo);
+                // DB에서 이메일로 사용자 중복 확인
+                Optional<KakaoUser> existingUser = kakaoUserRepository.findByEmail(email);
 
-                // JWT 토큰 생성
-                String jwtToken = JwtUtil.generateToken(kakaouser.getEmail(), kakaouser.getName());
+                // 사용자가 존재하지 않으면 새로운 사용자를 생성하고 저장
+                if (!existingUser.isPresent()) {
+                    KakaoUser kakaoUser = new KakaoUser();
+                    kakaoUser.setEmail(email);
+                    kakaoUser.setName(name);
 
-                // JWT 토큰을 응답 DTO에 추가
-                userInfo.setToken(jwtToken);  // getResponse() 대신 직접 setter 호출
+                    // DB에 새 사용자 정보 저장. 이 때 id는 자동으로 생성됨.
+                    kakaoUserRepository.save(kakaoUser);
 
-                System.out.println("생성된 JWT 토큰: " + jwtToken);
-                System.out.println("사용자 정보 반환: " + userInfo);
-
+                    System.out.println("데이터베이스에 사용자 정보를 성공적으로 업데이트했습니다: " + kakaoUser);
+                } else {
+                    System.out.println("이미 존재하는 사용자입니다: " + existingUser.get());
+                }
                 return userInfo;
+
             } else {
                 System.out.println("사용자 정보를 찾을 수 없습니다.");
                 return null;
@@ -89,6 +113,4 @@ public class KakaoUserService {
             return null;
         }
     }
-
-
 }

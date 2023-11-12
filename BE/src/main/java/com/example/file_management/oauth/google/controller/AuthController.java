@@ -2,9 +2,13 @@ package com.example.file_management.oauth.google.controller;
 
 import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.google.model.dto.response.UserResponse;
+import com.example.file_management.oauth.google.model.entity.GoogleUser;
 import com.example.file_management.oauth.google.service.GoogleOAuth2Service;
 import com.example.file_management.oauth.google.service.UserService;
+import com.example.file_management.security.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,18 +28,22 @@ public class AuthController {
     }
 
     @PostMapping("/auth/google")
-    public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest) {
-//        String redirectUri = "http://localhost:3000/auth/google/callback";
-
-        System.out.println("Received auth code(google): " + authRequest.getAuthCode());
+    public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {
 
         String accessToken = googleOAuth2Service.getAccessToken(authRequest);
 
-        //인증 코드를 바탕으로 Google OAuth2 서버로부터 받은 액세스 토큰
-        System.out.println("Received access token(google): " + accessToken);
+        GoogleUser googleUser = userService.getUserInfoAndSave(accessToken);
+        if (googleUser == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error while updating user info.");
+        }
 
-        //사용자 정보 얻고, 데이터베이스에 저장 및 JWT 토큰 생성 후 반환
-        UserResponse userResponse = userService.getUserInfoAndSave(accessToken);
+        String jwtToken = JwtUtil.generateToken(googleUser.getEmail(), googleUser.getName());
+        String refreshToken = JwtUtil.generateRefreshToken(googleUser.getEmail());
+
+        // 리프레시 토큰 DB에 저장
+        userService.saveRefreshToken(googleUser.getEmail(), refreshToken);
+
+        UserResponse userResponse = new UserResponse(jwtToken, googleUser.getEmail(), googleUser.getName(), refreshToken);
 
         return ResponseEntity.ok(userResponse);  // HTTP 200 OK와 함께 JSON 응답 전송
     }

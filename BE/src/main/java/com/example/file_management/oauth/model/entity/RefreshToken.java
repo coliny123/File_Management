@@ -1,14 +1,16 @@
 package com.example.file_management.oauth.model.entity;
 
+import lombok.*;
 import jakarta.persistence.*;
-import lombok.Data;
 
-@Data
+@Builder
 @Entity
-@Table(name = "`user`")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type")
-public abstract class User {
+@Data
+@Table(name = "user_token")
+@NoArgsConstructor
+@AllArgsConstructor
+public class RefreshToken {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,7 +18,6 @@ public abstract class User {
     @Column(unique=true)
     private String email;
 
-    private String name;
+    private String refreshToken;
+
 }
-
-
