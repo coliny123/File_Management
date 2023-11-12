@@ -4,16 +4,19 @@ package com.example.file_management.file.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.SharedStateDTO;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
 import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
@@ -115,5 +118,19 @@ public class FileServiceV2 implements FileService {
     @Override
     public String getUserEmail(HttpServletRequest request) {
         return jwtUtil.getEmailFromToken(request);
+    }
+
+    @Override
+    @Transactional
+    public SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException {
+        SharedStateDTO result = new SharedStateDTO();
+
+        FileInfo targetFile = getFile(id);
+        targetFile.shared = shared;
+
+        result.setId(id);
+        result.setShared(targetFile.shared);
+
+        return result;
     }
 }

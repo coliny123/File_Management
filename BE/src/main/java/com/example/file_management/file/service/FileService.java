@@ -1,6 +1,7 @@
 package com.example.file_management.file.service;
 
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.SharedStateDTO;
 import com.example.file_management.file.dto.UploadResult;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,4 +22,6 @@ public interface FileService {
     Long getUserId(HttpServletRequest request);
 
     String getUserEmail(HttpServletRequest request);
+
+    SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException;
 }
