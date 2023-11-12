@@ -21,7 +21,6 @@ import java.io.IOException;
 public class FileUploadController {
 
     private final FileService fileService;
-
     private final AmazonS3Client amazonS3Client;
 
     private final JwtValidator jwtValidator;
@@ -40,8 +39,7 @@ public class FileUploadController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    @GetMapping("/test")
-    public void test() {
-        System.out.println("Endpoint: " + amazonS3Client);;
-    }
+
+
+
 }

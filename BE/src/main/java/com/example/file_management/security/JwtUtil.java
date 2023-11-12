@@ -125,4 +125,10 @@ public class JwtUtil {
         Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
         return claims.get("email", String.class);
     }
+
+    public String getUserNameFromToken(HttpServletRequest request) {
+            String token = request.getHeader("Authorization").substring(7);
+            Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+            return claims.get("name", String.class);
+    }
 }

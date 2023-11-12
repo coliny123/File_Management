@@ -12,12 +12,10 @@ public interface FileService {
     UploadResult fileUpload(MultipartFile file, HttpServletRequest request) throws IOException;
 
     // 다운로드 메소드
-//
     // 확장자 변환 메소드
 //    FileInfo convertFiles(String originalFileName, String targetExtension) throws Exception;
     // 저장된 파일 가져오는 메서드
     FileInfo getFile(Long fileId) throws FileNotFoundException;
-
     String fileDownload(Long id) throws IOException;
 
     Long getUserId(HttpServletRequest request);
