@@ -24,7 +24,7 @@ public class UserInfoService {
     public Map<String, Object> getUserInfoAndFiles(HttpServletRequest request) {
         String userName = getUserName(request);
         User user = userRepository.findByName(userName);
-        List<FileInfo> files = fileRepository.findAllByUserId(user);
+        List<FileInfo> files = fileRepository.findAllById(user.getId());
 
         Map<String, Object> response = new HashMap<>();
         response.put("userName", user.getName());
