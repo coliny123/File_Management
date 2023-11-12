@@ -9,8 +9,8 @@ function DownloadCodePage() {
 
   const navigate = useNavigate();
 
-  const handleDownloadButton = () => {
-    const fileId = getFileIdByAuthCode(downloadCode);
+  const handleDownloadButton = async () => {
+    const fileId = await getFileIdByAuthCode(downloadCode);
     navigate(`https://file-management-ten.vercel.app/download/${fileId}`)
   }
 
