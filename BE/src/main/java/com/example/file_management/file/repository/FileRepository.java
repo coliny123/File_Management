@@ -20,5 +20,7 @@ public interface FileRepository extends JpaRepository<FileInfo, Long> {
     @Query("SELECT f.savedPath FROM FileInfo f WHERE f.id = :id")
     String findSavedPathById(@Param("id") Long id);
 
+    Long findIdByAuthenticationCode(String authenticationCode);
+
 
 }
