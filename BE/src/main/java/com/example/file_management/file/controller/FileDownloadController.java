@@ -1,7 +1,11 @@
 package com.example.file_management.file.controller;
 
+import com.example.file_management.file.dto.DownloadDTO;
 import com.example.file_management.file.service.FileService;
 import java.io.IOException;
+
+import com.example.file_management.security.JwtValidator;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +18,27 @@ public class FileDownloadController {
 
     private final FileService fileService;
 
-    @GetMapping("/download/{id}")
-    public ResponseEntity getSavePath(@PathVariable Long id) throws IOException {
-        String savedPath = fileService.fileDownload(id);
-        return ResponseEntity.status(200).body(savedPath);
+    private final JwtValidator jwtValidator;
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity getFileDownloadInfo(@PathVariable Long id, HttpServletRequest request) throws IOException {
+        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
+        if (responseEntity != null) return responseEntity;
+
+        DownloadDTO fileDownloadInfo = fileService.fileDownload(id);
+
+        return ResponseEntity.status(200).body(fileDownloadInfo);
     }
+
+    @GetMapping("/download/{authenticationCode}")
+    public ResponseEntity<Long> getFileId(@PathVariable String authenticationCode, HttpServletRequest request){
+        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
+        if (responseEntity != null) return responseEntity;
+
+        Long id = fileService.getFileId(authenticationCode);
+
+        return ResponseEntity.status(200).body(id);
+    }
+
+
 }

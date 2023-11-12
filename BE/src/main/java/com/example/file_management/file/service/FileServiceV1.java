@@ -2,6 +2,7 @@ package com.example.file_management.file.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.DownloadDTO;
 import com.example.file_management.file.dto.SharedStateDTO;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
@@ -35,8 +36,16 @@ public class FileServiceV1 implements FileService{
     }
 
     @Override
-    public String fileDownload(Long id) {
-        return fileRepository.findSavedPathById(id);
+    public DownloadDTO fileDownload(Long id) throws FileNotFoundException {
+        FileInfo file = getFile(id);
+
+        return DownloadDTO.builder()
+                .originalFileName(file.getOriginalFileName())
+                .uploadTime(file.getUploadTime())
+                .shared(file.isShared())
+                .authenticationCode(file.getAuthenticationCode())
+                .savedPath(file.getSavedPath())
+                .build();
     }
 
     @Override
@@ -52,14 +61,17 @@ public class FileServiceV1 implements FileService{
     @Override
     @Transactional
     public SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException {
-        SharedStateDTO result = new SharedStateDTO();
-
         FileInfo targetFile = getFile(id);
         targetFile.shared = shared;
 
-        result.setId(id);
-        result.setShared(targetFile.shared);
+        return SharedStateDTO.builder()
+                .id(targetFile.getId())
+                .shared(targetFile.isShared())
+                .build();
+    }
 
-        return result;
+    @Override
+    public Long getFileId(String authenticationCode){
+        return fileRepository.findIdByAuthenticationCode(authenticationCode);
     }
 }
