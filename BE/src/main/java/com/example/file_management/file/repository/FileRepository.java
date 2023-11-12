@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface FileRepository extends JpaRepository<FileInfo, Long> {
 
-    List<FileInfo> findAllById(Long userId);
+    List<FileInfo> findAllByUser(User user);
     FileInfo save(FileInfo file);
 
     @Query("SELECT f.savedPath FROM FileInfo f WHERE f.id = :id")
