@@ -4,6 +4,7 @@ package com.example.file_management.file.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.DownloadDTO;
 import com.example.file_management.file.dto.SharedStateDTO;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
@@ -12,6 +13,7 @@ import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.File;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -104,8 +106,16 @@ public class FileServiceV2 implements FileService {
     // userId에 대한 SavedPath 반환
     // 전체 정보를 받으려면 list로 구현해야하고, String으로 하려면 파일 정보 추가 인덱싱 필요
     @Override
-    public String fileDownload(Long id) {
-        return fileRepository.findSavedPathById(id);
+    public DownloadDTO fileDownload(Long id) throws FileNotFoundException {
+        FileInfo file = getFile(id);
+
+        return DownloadDTO.builder()
+                .originalFileName(file.getOriginalFileName())
+                .uploadTime(file.getUploadTime())
+                .shared(file.isShared())
+                .authenticationCode(file.getAuthenticationCode())
+                .savedPath(file.getSavedPath())
+                .build();
     }
 
     // 토큰에서 user의 id값 추출
@@ -123,14 +133,17 @@ public class FileServiceV2 implements FileService {
     @Override
     @Transactional
     public SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException {
-        SharedStateDTO result = new SharedStateDTO();
-
         FileInfo targetFile = getFile(id);
         targetFile.shared = shared;
 
-        result.setId(id);
-        result.setShared(targetFile.shared);
+        return SharedStateDTO.builder()
+                .id(targetFile.getId())
+                .shared(targetFile.isShared())
+                .build();
+    }
 
-        return result;
+    @Override
+    public Long getFileId(String authenticationCode){
+        return fileRepository.findIdByAuthenticationCode(authenticationCode);
     }
 }
