@@ -69,7 +69,7 @@ public class FileServiceV2 implements FileService {
         FileInfo fileInfo = new FileInfo();
         fileInfo.originalFileName = originalFilename;
         fileInfo.savedPath = fileUrl;
-        fileInfo.userId = user;
+        fileInfo.user = user;
         fileInfo.authenticationCode = authenticationCode;
         fileInfo.size = size;
 

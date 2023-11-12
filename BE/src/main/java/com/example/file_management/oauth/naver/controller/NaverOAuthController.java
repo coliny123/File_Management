@@ -46,7 +46,7 @@ public class NaverOAuthController {
         String name = naverUserResponse.getResponse().getName();
 
         String jwtToken = JwtUtil.generateToken(email, name);
-        String refreshToken = JwtUtil.generateRefreshToken(email);
+        String refreshToken = JwtUtil.generateRefreshToken(email, name);
 
         // 리프레시 토큰 DB에 저장
         naverUserService.saveRefreshToken(email, refreshToken);

@@ -49,7 +49,7 @@ public class KakaoOAuthController {
         String nickname = kakaoUserResponse.getProperties().get("nickname").toString();
 
         String jwtToken = JwtUtil.generateToken(email, nickname);
-        String refreshToken = JwtUtil.generateRefreshToken(email);
+        String refreshToken = JwtUtil.generateRefreshToken(email, nickname);
 
         // 리프레시 토큰 DB에 저장
         kakaoUserService.saveRefreshToken(email, refreshToken);

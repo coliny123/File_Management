@@ -30,12 +30,12 @@ public class JwtUtil {
 
     @Value("${JWT_SECRET_KEY}")
     private String secretKey;
-        private static String SECRET_KEY;
+    private static String SECRET_KEY;
 
-        @PostConstruct
-        public void init() {
-            SECRET_KEY = secretKey;
-        }
+    @PostConstruct
+    public void init() {
+        SECRET_KEY = secretKey;
+    }
 
     public static String generateToken(String email, String name) {
         Map<String, Object> claims = new HashMap<>();
@@ -54,14 +54,18 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static String generateRefreshToken(String email) {
+    public static String generateRefreshToken(String email, String name) {
 
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        Date expiryDateForRefreshToken= new Date(nowMillis + REFRESH_EXPIRATION_TIME);
+        Date expiryDateForRefreshToken = new Date(nowMillis + REFRESH_EXPIRATION_TIME);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        claims.put("name", name);
 
         return Jwts.builder()
-                .setSubject(email)
+                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiryDateForRefreshToken)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
@@ -82,11 +86,12 @@ public class JwtUtil {
 
     // 리프레시 토큰에서 이메일, 이름 정보 추출 후 새로운 엑세스 토큰 생성
     public String generateAccessTokenFromRefreshToken(String refreshToken) {
-        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(refreshToken).getBody();
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(refreshToken)
+                .getBody();
 
         Map<String, Object> newClaims = new HashMap<>();
-        newClaims.put("email", claims.getSubject());
-        newClaims.put("name", claims.get("name"));
+        newClaims.put("email", claims.get("email", String.class));
+        newClaims.put("name", claims.get("name", String.class));
 
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
@@ -103,7 +108,8 @@ public class JwtUtil {
 
     public String getRefreshTokenFromToken(String refreshToken) {
         // refreshTokenRepository를 이용해 DB에서 토큰을 조회
-        RefreshToken refreshTokenInDb = refreshTokenRepository.findRefreshTokenByRefreshToken(refreshToken);
+        RefreshToken refreshTokenInDb = refreshTokenRepository.findRefreshTokenByRefreshToken(
+                refreshToken);
 
         // DB에 해당 토큰이 없으면 InvalidTokenException 발생
         if (refreshTokenInDb == null) {
@@ -127,8 +133,13 @@ public class JwtUtil {
     }
 
     public String getUserNameFromToken(HttpServletRequest request) {
-            String token = request.getHeader("Authorization").substring(7);
-            Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-            return claims.get("name", String.class);
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null) {
+            throw new InvalidTokenException("Authorization 헤더가 없습니다.");
+        }
+
+        String token = authHeader.substring(7);
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return claims.get("name", String.class);
     }
 }
