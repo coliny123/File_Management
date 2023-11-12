@@ -35,16 +35,17 @@ function LandingPage() {
 
   useEffect(() => {
   const fetchData = async () => {
-    try {
-      if (localStorage.getItem('refreshToken')) {
-        await getAccessTokenApi();
+    if (localStorage.getItem('refreshToken')) {
+      await getAccessTokenApi();
+      try {
         await fetchUserDataApi();
+        return;
+      } catch (error) {
+        console.error("Error during data fetching:", error);
+        return fetchData();
       }
-    } catch (error) {
-      console.error("Error during data fetching:", error);
     }
   };
-
   fetchData();
 }, []);
 
