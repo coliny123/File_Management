@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -153,4 +154,16 @@ public class FileServiceImpl implements FileService{
 //
 //        return convertedFileInfo;
 //    }
+
+    public String generateRandomDownloadCode() {
+        StringBuilder downloadCode = new StringBuilder();
+        Random random = new Random();
+
+        for(int i = 0; i < 6; i++){
+            downloadCode.append(random.nextInt(10)); // 0부터 9까지의 랜덤한 숫자 생성
+        }
+
+        return downloadCode.toString();
+    }
+
 }
