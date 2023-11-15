@@ -12,8 +12,9 @@ export default function KakaoLoginBtn() {
   }
   return (
     <div>
-      <button className="bg-blue-500 text-white px-10 py-5 text-2xl rounded-2xl" onClick={loginKakao}>
-        카카오 로그인</button>
+      <button className="inline-block overflow-hidden relative p-0 border-none cursor-pointer w-[220px]" onClick={loginKakao}>
+        <img src="/assets/images/btn_kakao_login.png" alt="google log" className='w-full h-full object-cover object-center' />
+      </button>
     </div>
   )
 }

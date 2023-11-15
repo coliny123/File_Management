@@ -16,7 +16,7 @@ function Sidebar() {
         <>
             <div className='fixed left-0 top-0 h-full md:w-[80px] w-[80px] flex flex-col bg-white z-20'>
                 <div className='menu mt-[120px] flex flex-col justify-center items-center text-[#999999] space-y-6'>
-                    <button onClick={() => navigate('/')}><div className={`w-[48px] h-[48px] bg-[#F7F6FB] rounded-[14px] flex justify-center items-center text-2xl shadow-customIconBox ${location.pathname.includes('file') ? 'text-[#999999]' : 'text-[#6367EB]'}`}><HiMiniHome /></div></button>
+                    <button onClick={() => navigate('/')}><div className={`w-[48px] h-[48px] bg-[#F7F6FB] rounded-[14px] flex justify-center items-center text-2xl shadow-customIconBox ${location.pathname.includes('file') || location.pathname.includes('code') ? 'text-[#999999]' : 'text-[#6367EB]'}`}><HiMiniHome /></div></button>
                     <button onClick={() => navigate('/file')}><div className='w-[48px] h-[48px] bg-[#F7F6FB] rounded-[14px] flex justify-center items-center text-2xl shadow-customIconBox'><HiFolderOpen/></div></button>
                     <button onClick={() => navigate('/code')}><div className='w-[48px] h-[48px] bg-[#F7F6FB] rounded-[14px] flex justify-center items-center text-2xl shadow-customIconBox'><FaCloudDownloadAlt/></div></button>
                 </div>

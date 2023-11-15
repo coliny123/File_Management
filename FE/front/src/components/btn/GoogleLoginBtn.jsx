@@ -7,8 +7,8 @@ import { useParams } from 'react-router-dom';
 function GoogleLoginBtn() {
     const Server_IP = process.env.REACT_APP_Server_IP;
     const Google_Client_ID = process.env.REACT_APP_Google_Client_ID;
-    const redirectUri = `https://file-management-ten.vercel.app/auth/google/callback`;
-    // const redirectUri = `http://localhost:3000/auth/google/callback`;
+    // const redirectUri = `https://file-management-ten.vercel.app/auth/google/callback`;
+    const redirectUri = `http://localhost:3000/auth/google/callback`;
         
     const [loginSuccess, setLoginSuccess] = useState(false);
 
@@ -21,8 +21,8 @@ function GoogleLoginBtn() {
 
     return (
         <div>
-            <button onClick={handleGoogleLogin}>
-                <img src="/assets/images/btn_google_login.png" alt="google log" />
+            <button onClick={handleGoogleLogin} className='inline-block overflow-hidden relative p-0 border-none cursor-pointer w-[226px]'>
+                <img src="/assets/images/btn_google_login.png" alt="google log" className='w-full h-full object-cover object-center' />
             </button>
         </div>
     );

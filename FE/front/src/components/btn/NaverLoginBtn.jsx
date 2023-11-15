@@ -13,7 +13,9 @@ export default function NaverLoginBtn() {
 
     return (
         <div>
-            <button onClick={loginNaver}>네이버 로그인</button>
+            <button className="inline-block overflow-hidden relative p-0 border-none cursor-pointer w-[220px]" onClick={loginNaver}>
+                <img src="/assets/images/btn_naver_login.png" alt="google log" className='w-full h-full object-cover object-center' />
+            </button>
         </div>
     )
 }

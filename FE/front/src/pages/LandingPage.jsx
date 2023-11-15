@@ -10,14 +10,9 @@ import Convert from '../components/convert/Convert'
 import { useAccessToken } from '../context/AccessTokenContext'
 import TestBtn from '../components/btn/TestBtn'
 import { getAccessTokenApi } from '../api/getAccessTokenApi'
+import axios from 'axios'
 
 function LandingPage() {
-
-  // console.log(data);
-
-  // const { accessToken } = useAccessToken();
-  // console.log(accessToken)
-  
   const [accessToken, setAccessToken] = useState(false);
 
   const { isPending, error, data} = useUserDataQuery({
@@ -26,14 +21,16 @@ function LandingPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (axios.defaults.headers.common['Authorization']) {
+        setAccessToken(true);
+        return;
+      }
       if (localStorage.getItem('refreshToken')) {
-        console.log('토큰 받아오는 중')
         await getAccessTokenApi();
-        console.log('토큰 받아왔음')
         setAccessToken(true);
       }
       };
-      fetchData();
+    fetchData();
   }, []);
 
 

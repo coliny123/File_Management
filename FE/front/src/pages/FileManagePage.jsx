@@ -1,45 +1,33 @@
 import React from 'react'
 import FileList from '../components/fileList/FileList'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getAccessTokenApi } from '../api/getAccessTokenApi'
-
-/*[{파일이름: , 파일크기: }, {파일이름: , 파일크기: }]*/
-
-const fileInfoList = [
-    {fileName: 'name1',
-    fileUploadedDate: '111',
-    fileSharePermission: 'true',
-    fileId: '111'},
-    {fileName: 'name2',
-    fileUploadedDate: '222',
-    fileSharePermission: 'false',
-    fileId: '222'},
-    {fileName: 'name3',
-    fileUploadedDate: '333',
-    fileSharePermission: '333',
-    fileId: '333'},
-    {fileName: 'name3',
-    fileUploadedDate: '333',
-    fileSharePermission: '333',
-    fileId: '444'},
-    {fileName: 'name3',
-    fileUploadedDate: '333',
-    fileSharePermission: '333',
-    fileId: '444'},
-    {fileName: 'name3',
-    fileUploadedDate: '333',
-    fileSharePermission: '333',
-    fileId: '444'}
-]
+import { useUserDataQuery } from '../hooks/query/useUserDataQuery'
+import axios from 'axios'
 
 function FileManagePage(){
+    const [accessToken, setAccessToken] = useState(false);
+
+    const { isPending, error, data} = useUserDataQuery({
+        enabled: accessToken,
+    });
+
+    const fileInfoList = data?.files;
 
     useEffect(() => {
-        if (localStorage.getItem('refreshToken')) {
-        getAccessTokenApi();
+        const fetchData = async () => {
+        if (axios.defaults.headers.common['Authorization']) {
+            setAccessToken(true);
+            return;
         }
-    }, [])
+        if (localStorage.getItem('refreshToken')) {
+            await getAccessTokenApi();
+            setAccessToken(true);
+        }
+        };
+        fetchData();
+    }, []);
 
     const navigate = useNavigate();
 

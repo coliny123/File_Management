@@ -32,6 +32,12 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
             case ('pdf'):
                 setFormatOptions(['pdf'])
                 break;
+            case ('word'):
+                setFormatOptions(['word'])
+                break;
+            case ('ppt'):
+                setFormatOptions(['ppt'])
+                break;
             }
     }, [uploadedFileType])
 
@@ -42,9 +48,17 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
                 <div className='text-xl font-bold'>(추후 파일 변환 기능 추가)</div>
                 <div className='flex items-center mt-5 h-[32px] justify-between'>
                     <div className='text-gray-500 text-[14px]'>올린 파일</div>
-                    <div className='rounded-[80px] bg-[#FFFFFF] w-[160px] h-[32px] flex justify-center items-center'>{uploadedFileType}</div>
+                    <div className='w-[160px] h-[32px] flex justify-center items-center'>
+                    {/* <div className='rounded-[80px] bg-[#FFFFFF] w-[160px] h-[32px] flex justify-center items-center'>{uploadedFileType}</div> */}
+                    <FormControl fullWidth fullHeight>
+                        <InputLabel id='select-label'>형식</InputLabel>
+                        <Select className='w-full' labelId='select-label' value={uploadedFileType} label='format' onChange={(e) => setTransferredFileFormat(e.target.value)}>
+                            <MenuItem key={uploadedFileType} value={uploadedFileType}>{uploadedFileType}</MenuItem>
+                        </Select>
+                    </FormControl>
+                    </div>
                 </div>
-                <div className='flex items-center mt-5 h-[32px] justify-between'>
+                <div className='flex items-center mt-7 h-[32px] justify-between'>
                     <div className='text-gray-500 text-[14px]'>확장자 선택</div>
                     <div className='w-[160px] h-[32px] flex justify-center items-center'>
                         <FormControl fullWidth fullHeight>
