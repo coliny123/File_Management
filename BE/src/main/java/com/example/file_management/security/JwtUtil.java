@@ -37,6 +37,10 @@ public class JwtUtil {
         SECRET_KEY = secretKey;
     }
 
+    public String getSecretKey() {
+        return SECRET_KEY;
+    }
+
     public static String generateToken(String email, String name) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
