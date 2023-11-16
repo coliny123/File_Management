@@ -5,7 +5,7 @@ import axios from 'axios';
 function FileDownloadPage() {
 
   const Server_IP = process.env.REACT_APP_Server_IP;
-  const [fileData, setFileData] = useState([]);
+  const [fileData, setFileData] = useState({});
   // useEffect로 api / 파일 id를 보내서 다운로드 링크를 받아옴
   // useEffect로 지금 현재 파일 다운 가능한지 서버로 요청 보내봐야함
 	const { fileId } = useParams();
@@ -19,6 +19,7 @@ function FileDownloadPage() {
   }
   
   setFileData(getFileInfo(fileId));
+  console.log(fileData)
 
     return (
     <div className='w-full h-screen bg-[#F7F6FB] flex flex-col items-center'>

@@ -13,7 +13,7 @@ function FileManagePage(){
         enabled: accessToken,
     });
     
-    const [fileInfoList, setFileInfoList] = useState([]);
+    const [fileInfoList, setFileInfoList] = useState({});
 
     const fetchData = async () => {
         if (axios.defaults.headers.common['Authorization']) {
