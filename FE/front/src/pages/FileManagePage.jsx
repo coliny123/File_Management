@@ -7,46 +7,6 @@ import { useUserDataQuery } from '../hooks/query/useUserDataQuery'
 import axios from 'axios'
 
 function FileManagePage(){
-    // const [accessToken, setAccessToken] = useState(false);
-
-    // const { isPending, error, data} = useUserDataQuery({
-    //     enabled: accessToken,
-    // });
-    
-    // const [fileInfoList, setFileInfoList] = useState([{}]);
-
-    // const fetchData = async () => {
-    //     if (axios.defaults.headers.common['Authorization']) {
-    //         setAccessToken(true);
-    //         return;
-    //     }
-    //     if (localStorage.getItem('refreshToken')) {
-    //         await getAccessTokenApi();
-    //         setAccessToken(true);
-    //     }
-    // };
-    // fetchData();
-    // useEffect(() => {
-    //     setFileInfoList(data?.files);
-    // }, [isPending])
-    // // useEffect(() => {
-    // //     const fetchData = async () => {
-    // //         if (axios.defaults.headers.common['Authorization']) {
-    // //             setAccessToken(true);
-    // //             return;
-    // //         }
-    // //         if (localStorage.getItem('refreshToken')) {
-    // //             await getAccessTokenApi();
-    // //             setAccessToken(true);
-    // //         }
-    // //     };
-    // //     fetchData();
-    // //     setFileInfoList(data?.files);
-    // // }, []);
-    
-    // const navigate = useNavigate();
-    // console.log(fileInfoList);
-
     const [accessToken, setAccessToken] = useState(false);
     const { isPending, error, data } = useUserDataQuery({
         enabled: accessToken,
@@ -71,6 +31,7 @@ function FileManagePage(){
     }, [isPending]);
 
     useEffect(() => {
+        setFileInfoList(null);
         // data가 정의된 경우에만 setFileInfoList를 호출하도록 변경
         if (data) {
             setFileInfoList(data.files);

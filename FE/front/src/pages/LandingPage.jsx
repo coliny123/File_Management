@@ -36,6 +36,9 @@ function LandingPage() {
 
   const {uploadStatus} = useUpload();
   console.log(data);
+
+
+  
   return (
     <div>
         <div className='content-wrapper w-full h-full flex flex-col justify-center items-center '>
