@@ -12,10 +12,9 @@ function FileManagePage(){
     const { isPending, error, data} = useUserDataQuery({
         enabled: accessToken,
     });
+    
+    const [fileInfoList, setFileInfoList] = useState('');
 
-    
-    console.log(fileInfoList);
-    
     useEffect(() => {
         const fetchData = async () => {
             if (axios.defaults.headers.common['Authorization']) {
@@ -28,9 +27,9 @@ function FileManagePage(){
             }
         };
         fetchData();
+        setFileInfoList(data?.files);
     }, []);
     
-    const fileInfoList = data?.files;
     const navigate = useNavigate();
     console.log(fileInfoList);
 
