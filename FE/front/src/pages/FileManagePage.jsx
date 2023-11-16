@@ -15,6 +15,8 @@ function FileManagePage(){
 
     const fileInfoList = data?.files;
 
+    console.log(fileInfoList);
+
     useEffect(() => {
         const fetchData = async () => {
         if (axios.defaults.headers.common['Authorization']) {
