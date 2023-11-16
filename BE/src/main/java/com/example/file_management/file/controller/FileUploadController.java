@@ -26,8 +26,8 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
-        if (responseEntity != null) return responseEntity;
+//        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
+//        if (responseEntity != null) return responseEntity;
 
         UploadResult result;
         try {
