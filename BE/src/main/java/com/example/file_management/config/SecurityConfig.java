@@ -29,7 +29,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new AntPathRequestMatcher("/users/files"), new AntPathRequestMatcher("/upload")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/users/files"),
+                                         new AntPathRequestMatcher("/upload"),
+                                         new AntPathRequestMatcher("/setShared"),
+                                         new AntPathRequestMatcher("/details/{id}"),
+                                         new AntPathRequestMatcher("/download/{authenticationCode}")).authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtValidationFilter(), AnonymousAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 공격 방어 기능 비활성화
