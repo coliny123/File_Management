@@ -97,7 +97,7 @@ function FileList({fileInfoList}) {
         <div className='w-[20%]'>공유허용</div>
       </div>
       <div className='w-full space-y-4 mt-5'>
-        {fileInfoList?.map((fileInfo, idx) =>
+        {fileInfoList && fileInfoList?.map((fileInfo, idx) =>
             FileInfoRow(fileInfo, idx, handleTogglebar)
         )}
       </div>
