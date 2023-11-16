@@ -106,7 +106,8 @@ function FileList({fileInfoList}) {
             <div className='absolute top-[10px] left-[10px] w-[20px] h-[20px] text-xl hover:cursor-pointer' onClick={() => setIsTogglebarOpen(false)}><IoClose/></div>
             <div className='w-full flex justify-center'>
                 <div className='bg-[#F7F7F7] w-[240px] h-[240px] flex justify-center items-center mt-[48px]'>
-                    <QRCodeCanvas value={`http://192.168.45.139:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
+                    {/* <QRCodeCanvas value={`http://192.168.45.139:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas> */}
+                    <QRCodeCanvas value={`https://file-management-ten.vercel.app/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
                 </div>
             </div>
             <div className='w-full flex justify-center'>
