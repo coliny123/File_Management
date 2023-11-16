@@ -13,25 +13,26 @@ function FileManagePage(){
         enabled: accessToken,
     });
 
-    const fileInfoList = data?.files;
-
+    
     console.log(fileInfoList);
-
+    
     useEffect(() => {
         const fetchData = async () => {
-        if (axios.defaults.headers.common['Authorization']) {
-            setAccessToken(true);
-            return;
-        }
-        if (localStorage.getItem('refreshToken')) {
-            await getAccessTokenApi();
-            setAccessToken(true);
-        }
+            if (axios.defaults.headers.common['Authorization']) {
+                setAccessToken(true);
+                return;
+            }
+            if (localStorage.getItem('refreshToken')) {
+                await getAccessTokenApi();
+                setAccessToken(true);
+            }
         };
         fetchData();
     }, []);
-
+    
+    const fileInfoList = data?.files;
     const navigate = useNavigate();
+    console.log(fileInfoList);
 
     return(
         <div className='max-md:flex max-md:justify-center'>
