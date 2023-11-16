@@ -19,11 +19,11 @@ public class FileDetailController {
 
 
     @PostMapping("/setShared")
-    public ResponseEntity setAuthenticationCode(@RequestBody SharedStateDTO request) throws IOException {
-        ResponseEntity responseEntity = jwtValidator.validateRequestToken((HttpServletRequest) request);
+    public ResponseEntity setAuthenticationCode(@RequestBody SharedStateDTO sharedStateDTO, HttpServletRequest request) throws IOException {
+        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
         if (responseEntity != null) return responseEntity;
 
-        SharedStateDTO result = fileService.setSharedState(request.getId(), request.isShared());
+        SharedStateDTO result = fileService.setSharedState(sharedStateDTO.getId(), sharedStateDTO.isShared());
 
         return ResponseEntity.status(200).body(result);
     }
