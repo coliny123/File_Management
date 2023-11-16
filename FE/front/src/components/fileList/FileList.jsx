@@ -63,6 +63,8 @@ function FileList({fileInfoList}) {
     const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
     
+    console.log(fileInfoList)
+
     const handleTogglebar = (fileInfo) => {
 
         if (isTogglebarOpen === false) {
