@@ -45,11 +45,11 @@ function FileDownloadPage() {
               <div className='w-full flex justify-center'>
                 <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
               </div>
-              <div className='flex justify-between'><p>파일명</p><p>{fileData?.originalFileName}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일명</p><p>{fileData?.originalFileName}</p></div>
               {/* <div className='flex justify-between'><p>확장자</p><p>{fi.split('.')[1]}</p></div> */}
-              <div className='flex justify-between'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
-              <div className='flex justify-between'><p>공유 권한</p><p>{fileData?.shared === true ? '허용' : fileData?.shared === false ? '차단' : ''}</p></div>
-              <div className='flex justify-between'><p>다운 코드</p><p>{fileData?.authenticationCode}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>공유 권한</p><p>{fileData?.shared === true ? '허용' : fileData?.shared === false ? '차단' : ''}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>다운 코드</p><p>{fileData?.authenticationCode}</p></div>
             </div>
       </div>
       <div className={`text-white flex bg-[#6367EB] w-[200px] h-[48px] rounded-[4px] m-[32px] justify-center items-center ${!fileData.shared ? 'opacity-50' : 'opacity-100'}`}><button onClick={() => {window.location = fileData.savedPath}} disabled={!fileData.shared} >download</button></div>
