@@ -6,6 +6,7 @@ import { useUpload } from '../../context/UploadContext';
 import { sendFiles } from '../../api/sendFiles';
 import { useFileInfo } from '../../context/FileInfoContext';
 import { getAccessTokenApi } from '../../api/getAccessTokenApi';
+import { useUserDataQuery } from '../../hooks/query/useUserDataQuery';
 
 function IsNotLoginConvert() {
 
@@ -78,6 +79,7 @@ function IsLoginConvert({ transferredFileFormat, setTransferredFileFormat }) {
 
 function Convert() {
 
+    const { isPending, error, data, refetch } = useUserDataQuery({});
     const [transferredFileFormat, setTransferredFileFormat] = useState('')
     const { isLogin, setIsLogin } = useIsLogin();
     const { setUploadStatus, uploadedFile, setUploadProgress, uploadedFileType} = useUpload();
@@ -102,6 +104,7 @@ function Convert() {
             return;
         }
         setFileId(id);
+        refetch();
         setUploadStatus(2)
     }
 

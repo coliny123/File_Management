@@ -2,8 +2,10 @@ import React from 'react'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useUpload } from '../../context/UploadContext'
 import { useFileInfo } from '../../context/FileInfoContext';
+import { useUserDataQuery } from '../../hooks/query/useUserDataQuery';
 
 function QrCode() {
+
 
     const { setUploadStatus, setUploadedFile } = useUpload();
     const { fileId, setFileId } = useFileInfo();
