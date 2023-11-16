@@ -26,6 +26,7 @@ function FileDownloadPage() {
       try {
         const response = await axios.get(`${Server_IP}/details/${fileId}`);
         setFileData(response.data);
+        console.log(fileData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -45,7 +46,7 @@ function FileDownloadPage() {
                 <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
               </div>
               <div className='flex justify-between'><p>파일명</p><p>{fileData?.originalFileName}</p></div>
-              <div className='flex justify-between'><p>확장자</p><p>{fileData?.split('.')[1]}</p></div>
+              {/* <div className='flex justify-between'><p>확장자</p><p>{fi.split('.')[1]}</p></div> */}
               <div className='flex justify-between'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
               <div className='flex justify-between'><p>공유 권한</p><p>{fileData?.shared === true ? '허용' : fileData?.shared === false ? '차단' : ''}</p></div>
               <div className='flex justify-between'><p>다운 코드</p><p>{fileData?.authenticationCode}</p></div>
