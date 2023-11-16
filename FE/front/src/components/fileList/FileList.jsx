@@ -6,7 +6,7 @@ import axios from 'axios';
 import { setSharedStatusApi } from '../../api/setSharedStatusApi';
 import { isEqual } from 'lodash';
 
-const transferedSize = size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
+const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
 const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     console.log(fileInfo)
