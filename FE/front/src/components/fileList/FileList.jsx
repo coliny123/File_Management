@@ -8,6 +8,8 @@ import { isEqual } from 'lodash';
 
 const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     
+    console.log(fileInfo)
+
     const [sharedStatus, setSharedStatus] = useState({
         checked: fileInfo?.shared,
     });
