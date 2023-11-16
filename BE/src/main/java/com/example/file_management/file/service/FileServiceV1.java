@@ -1,17 +1,19 @@
 package com.example.file_management.file.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.file_management.file.domain.entity.FileInfo;
+import com.example.file_management.file.dto.DownloadDTO;
+import com.example.file_management.file.dto.SharedStateDTO;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
@@ -29,14 +31,21 @@ public class FileServiceV1 implements FileService{
     }
 
     @Override
-    public FileInfo getFile(Long fileId) throws FileNotFoundException {
-        return fileRepository.findById(fileId)
-                .orElseThrow(() -> new FileNotFoundException("File not found"));
+    public Optional<FileInfo> getFile(Long fileId) {
+        return fileRepository.findById(fileId);
     }
 
     @Override
-    public String fileDownload(Long id) {
-        return fileRepository.findSavedPathById(id);
+    public DownloadDTO fileDownload(Long id) throws FileNotFoundException {
+        FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+
+        return DownloadDTO.builder()
+                .originalFileName(file.getOriginalFileName())
+                .uploadTime(file.getUploadTime())
+                .shared(file.isShared())
+                .authenticationCode(file.getAuthenticationCode())
+                .savedPath(file.getSavedPath())
+                .build();
     }
 
     @Override
@@ -47,5 +56,22 @@ public class FileServiceV1 implements FileService{
     @Override
     public String getUserEmail(HttpServletRequest request) {
         return jwtUtil.getEmailFromToken(request);
+    }
+
+    @Override
+    @Transactional
+    public SharedStateDTO setSharedState(Long id, Boolean shared)  throws FileNotFoundException {
+        FileInfo targetFile = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+        targetFile.shared = shared;
+
+        return SharedStateDTO.builder()
+                .id(targetFile.getId())
+                .shared(targetFile.isShared())
+                .build();
+    }
+
+    @Override
+    public Long getFileId(String authenticationCode){
+        return fileRepository.findIdByAuthenticationCode(authenticationCode);
     }
 }

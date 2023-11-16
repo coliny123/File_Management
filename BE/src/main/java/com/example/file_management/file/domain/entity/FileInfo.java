@@ -32,7 +32,7 @@ public class FileInfo {
     @JoinColumn(name="userId", nullable=false)
     public User user;
 
-    @Column(columnDefinition = "TINYINT(1)")
+    @Column(columnDefinition = "TINYINT(1) default=1")
     public boolean shared;
 
     @Column(name="authenticationCode")
@@ -43,6 +43,9 @@ public class FileInfo {
 
     @Column(name="size")
     public long size;
+
+    @Column(name="originFormat")
+    public String originFormat;
 
     @PrePersist
     public void prePersist() {
