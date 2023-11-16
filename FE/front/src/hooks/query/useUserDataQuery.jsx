@@ -20,11 +20,13 @@
 //     });
 // }
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import fetchUserDataApi from '../../api/fetchUserDataApi';
 import { getAccessTokenApi } from '../../api/getAccessTokenApi';
 
 export function useUserDataQuery(options) {
+  const queryClient = useQueryClient();
+  
   const query = useQuery(['userData'], () => fetchUserDataApi(), {
     ...options,
     retry: (failureCount, error) => {
@@ -39,7 +41,8 @@ export function useUserDataQuery(options) {
       if (error.response.status === 401 || error.response.status === 500) {
         console.log('쿼리에서 토큰 받기')
         await getAccessTokenApi(); // 토큰 새로 발급받기
-        query.refetch(); // 쿼리 다시 실행
+        // query.refetch(); // 쿼리 다시 실행
+        queryClient.invalidateQueries('userData'); // 쿼리 다시 실행
       }
     },
   });

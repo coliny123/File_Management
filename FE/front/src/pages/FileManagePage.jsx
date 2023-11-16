@@ -8,7 +8,7 @@ import axios from 'axios'
 
 function FileManagePage(){
     const [accessToken, setAccessToken] = useState(false);
-    const { isPending, error, data } = useUserDataQuery({
+    const { isPending, error, data, refetch } = useUserDataQuery({
         enabled: accessToken,
     });
     const [fileInfoList, setFileInfoList] = useState(null);
@@ -31,7 +31,6 @@ function FileManagePage(){
     }, [isPending]);
 
     useEffect(() => {
-        setFileInfoList(null);
         // data가 정의된 경우에만 setFileInfoList를 호출하도록 변경
         if (data) {
             setFileInfoList(data.files);
