@@ -8,7 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
@@ -27,6 +28,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(new AntPathRequestMatcher("/users/files"), new AntPathRequestMatcher("/upload")).authenticated()
+                        .anyRequest().permitAll())
+                .addFilterBefore(jwtValidationFilter(), AnonymousAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 공격 방어 기능 비활성화
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
@@ -34,12 +39,7 @@ public class SecurityConfig {
                     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 허용할 HTTP 메소드
                     configuration.setAllowedHeaders(List.of("*"));
                     return configuration;
-                }))
-                .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/upload").authenticated()
-//                .requestMatchers("/auth/refresh").authenticated()
-                .anyRequest().permitAll())
-                .addFilterBefore(jwtValidationFilter(), UsernamePasswordAuthenticationFilter.class);
+                }));
 
         return http.build();
     }
