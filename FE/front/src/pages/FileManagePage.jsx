@@ -15,20 +15,34 @@ function FileManagePage(){
     
     const [fileInfoList, setFileInfoList] = useState([]);
 
+    const fetchData = async () => {
+        if (axios.defaults.headers.common['Authorization']) {
+            setAccessToken(true);
+            return;
+        }
+        if (localStorage.getItem('refreshToken')) {
+            await getAccessTokenApi();
+            setAccessToken(true);
+        }
+    };
+    fetchData();
     useEffect(() => {
-        const fetchData = async () => {
-            if (axios.defaults.headers.common['Authorization']) {
-                setAccessToken(true);
-                return;
-            }
-            if (localStorage.getItem('refreshToken')) {
-                await getAccessTokenApi();
-                setAccessToken(true);
-            }
-        };
-        fetchData();
         setFileInfoList(data?.files);
-    }, []);
+    }, [data])
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         if (axios.defaults.headers.common['Authorization']) {
+    //             setAccessToken(true);
+    //             return;
+    //         }
+    //         if (localStorage.getItem('refreshToken')) {
+    //             await getAccessTokenApi();
+    //             setAccessToken(true);
+    //         }
+    //     };
+    //     fetchData();
+    //     setFileInfoList(data?.files);
+    // }, []);
     
     const navigate = useNavigate();
     console.log(fileInfoList);
