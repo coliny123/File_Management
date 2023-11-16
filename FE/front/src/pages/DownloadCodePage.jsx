@@ -11,6 +11,7 @@ function DownloadCodePage() {
 
   const handleDownloadButton = async () => {
     const fileId = await getFileIdByAuthCode(downloadCode);
+    console.log(fileId)
     navigate(`/download/${fileId}`)
   }
 

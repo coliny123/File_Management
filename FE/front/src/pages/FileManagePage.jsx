@@ -13,7 +13,7 @@ function FileManagePage(){
         enabled: accessToken,
     });
     
-    const [fileInfoList, setFileInfoList] = useState(undefined);
+    const [fileInfoList, setFileInfoList] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
