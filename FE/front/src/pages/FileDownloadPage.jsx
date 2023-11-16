@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
+const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
+
 function FileDownloadPage() {
 
   const Server_IP = process.env.REACT_APP_Server_IP;
@@ -9,17 +11,6 @@ function FileDownloadPage() {
   // useEffect로 api / 파일 id를 보내서 다운로드 링크를 받아옴
   // useEffect로 지금 현재 파일 다운 가능한지 서버로 요청 보내봐야함
 	const { fileId } = useParams();
-  
-  // const getFileInfo = async (fileId) => {
-  //   try {
-  //     return await axios.get(`${Server_IP}/details/${fileId}`);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // }
-  
-  // setFileData(getFileInfo(fileId));
-  // console.log(fileData)
 
   useEffect(() => {
     const fetchFileInfo = async () => {
@@ -46,8 +37,9 @@ function FileDownloadPage() {
                 <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
               </div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일명</p><p>{fileData?.originalFileName}</p></div>
-              {/* <div className='flex justify-between'><p>확장자</p><p>{fi.split('.')[1]}</p></div> */}
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>확장자</p><p>{fileData?.originFormat}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일 크기</p><p>{transferedSize(fileData?.fileSize)}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>공유 권한</p><p>{fileData?.shared === true ? '허용' : fileData?.shared === false ? '차단' : ''}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>다운 코드</p><p>{fileData?.authenticationCode}</p></div>
             </div>
