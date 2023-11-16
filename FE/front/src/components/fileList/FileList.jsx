@@ -26,7 +26,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
 
     useEffect(() => {
         setSharedStatus(fileInfo?.shared);
-    }, [fileInfo])
+    }, [fileInfo?.shared])
 
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
@@ -65,9 +65,9 @@ function FileList({fileInfoList}) {
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
     
     console.log(fileInfoList)
-
+    console.log(togglebarDataInfo)
     const handleTogglebar = (fileInfo) => {
-
+        console.log(togglebarDataInfo);
         if (isTogglebarOpen === false) {
             setIsTogglebarOpen(true);
             setTogglebarDataInfo(fileInfo)
