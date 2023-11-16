@@ -36,6 +36,7 @@ public class UserInfoService {
             fileMap.put("downloadCode", file.getAuthenticationCode());
             fileMap.put("fileId", file.getId());
             fileMap.put("fileSize", file.getSize());
+            fileMap.put("originFormat", file.getOriginFormat());
             return fileMap;
         }).collect(Collectors.toList()));
 

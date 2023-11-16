@@ -44,6 +44,9 @@ public class FileInfo {
     @Column(name="size")
     public long size;
 
+    @Column(name="originFormat")
+    public String originFormat;
+
     @PrePersist
     public void prePersist() {
         this.uploadTime = LocalDateTime.now();
