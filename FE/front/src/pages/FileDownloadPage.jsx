@@ -12,18 +12,13 @@ function FileDownloadPage() {
   
   const getFileInfo = async (fileId) => {
     try {
-      const response = await axios.get(`${Server_IP}/details/${fileId}`);
-      setFileData(response.data)
-      console.log(response.data)
-      console.log(response.data.data)
+      return await axios.get(`${Server_IP}/details/${fileId}`);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
   
-  useEffect(() => {
-    getFileInfo(fileId);
-  }, [])
+  setFileData(getFileInfo(fileId));
 
     return (
     <div className='w-full h-screen bg-[#F7F6FB] flex flex-col items-center'>
