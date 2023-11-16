@@ -10,16 +10,29 @@ function FileDownloadPage() {
   // useEffect로 지금 현재 파일 다운 가능한지 서버로 요청 보내봐야함
 	const { fileId } = useParams();
   
-  const getFileInfo = async (fileId) => {
-    try {
-      return await axios.get(`${Server_IP}/details/${fileId}`);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }
+  // const getFileInfo = async (fileId) => {
+  //   try {
+  //     return await axios.get(`${Server_IP}/details/${fileId}`);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // }
   
-  setFileData(getFileInfo(fileId));
-  console.log(fileData)
+  // setFileData(getFileInfo(fileId));
+  // console.log(fileData)
+
+  useEffect(() => {
+    const fetchFileInfo = async () => {
+      try {
+        const response = await axios.get(`${Server_IP}/details/${fileId}`);
+        setFileData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchFileInfo();
+  }, [Server_IP, fileId]);
 
     return (
     <div className='w-full h-screen bg-[#F7F6FB] flex flex-col items-center'>
