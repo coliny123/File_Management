@@ -51,7 +51,7 @@ function FileManagePage(){
     const { isPending, error, data } = useUserDataQuery({
         enabled: accessToken,
     });
-    const [fileInfoList, setFileInfoList] = useState([{}]);
+    const [fileInfoList, setFileInfoList] = useState(null);
 
     const navigate = useNavigate();
 
@@ -95,9 +95,14 @@ function FileManagePage(){
                     </div>
                 </div>
                 <div className='w-full text-left'>Dashboard</div>
+                {/* <div className='md:w-[70%]'>
+                    <FileList fileInfoList={fileInfoList}></FileList>
+                </div> */}
+                {fileInfoList && (
                 <div className='md:w-[70%]'>
                     <FileList fileInfoList={fileInfoList}></FileList>
                 </div>
+                )}
             </div>
         </div>
     )
