@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { QRCodeCanvas } from 'qrcode.react';
 import { Switch } from '@mui/material';
 import { IoClose } from 'react-icons/io5';
@@ -10,18 +10,15 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     
     console.log(fileInfo)
 
-    const [sharedStatus, setSharedStatus] = useState({
-        checked: fileInfo?.shared,
-    });
+    const [sharedStatus, setSharedStatus] = useState(false);
 
     const handleChange = async (event) => {
-        console.log(sharedStatus.checked)
+        console.log(sharedStatus)
         console.log(event)
         event.stopPropagation();
-        setSharedStatus({...sharedStatus, [event.target.name]: event.target.checked})
         try {
-            await setSharedStatusApi(fileInfo.id, sharedStatus)
-            setSharedStatus({...sharedStatus, [event.target.name]: event.target.checked})
+            await setSharedStatusApi(fileInfo.id, !sharedStatus)
+            setSharedStatus(!sharedStatus)
         } catch (error) {
             console.error(error); // 에러 출력
         }
@@ -46,7 +43,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
                 </div> */}
                 <div className='notAllowedToggleArea w-[20%]' onClick={(e) => e.stopPropagation()}>
                     <Switch
-                        checked={sharedStatus.checked}
+                        checked={sharedStatus}
                         onChange={(e) => handleChange(e)}
                         name="checked"
                         inputProps={{ 'aria-label': 'controlled' }}
