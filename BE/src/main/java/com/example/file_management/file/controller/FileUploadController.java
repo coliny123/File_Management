@@ -3,7 +3,6 @@ package com.example.file_management.file.controller;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.service.FileService;
-import com.example.file_management.security.JwtValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,13 +21,8 @@ public class FileUploadController {
     private final FileService fileService;
     private final AmazonS3Client amazonS3Client;
 
-    private final JwtValidator jwtValidator;
-
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-//        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
-//        if (responseEntity != null) return responseEntity;
-
         UploadResult result;
         try {
             result = fileService.fileUpload(file, request);
