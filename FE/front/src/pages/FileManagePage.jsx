@@ -15,6 +15,10 @@ function FileManagePage(){
 
     const navigate = useNavigate();
 
+    const refetchData = async () => {
+        await refetch();
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             if (axios.defaults.headers.common['Authorization']) {
@@ -31,11 +35,13 @@ function FileManagePage(){
     }, [isPending]);
 
     useEffect(() => {
-        // data가 정의된 경우에만 setFileInfoList를 호출하도록 변경
         if (data) {
+            refetchData();
             setFileInfoList(data.files);
         }
     }, [data]);
+    
+
 
     console.log(fileInfoList);
 
