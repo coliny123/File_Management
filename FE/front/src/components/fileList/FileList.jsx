@@ -17,12 +17,16 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
         console.log(event)
         event.stopPropagation();
         try {
-            await setSharedStatusApi(fileInfo.id, !sharedStatus)
+            await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
             setSharedStatus(!sharedStatus)
         } catch (error) {
             console.error(error); // 에러 출력
         }
     }
+
+    useEffect(() => {
+        setSharedStatus(fileInfo?.shared);
+    }, [fileInfo])
 
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
