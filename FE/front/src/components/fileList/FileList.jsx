@@ -6,8 +6,9 @@ import axios from 'axios';
 import { setSharedStatusApi } from '../../api/setSharedStatusApi';
 import { isEqual } from 'lodash';
 
+const transferedSize = size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
+
 const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
-    
     console.log(fileInfo)
 
     const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
@@ -33,10 +34,10 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
             <div className='allowedToggleArea w-full flex ml-5 items-center' onClick={() => handleTogglebar(fileInfo)}>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileName}</div>
-                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.originalFormat}</div>
-                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.uploadTime}</div>
+                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.originFormat}</div>
+                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.uploadTime.split('.')[0].split('T').join(' ')}</div>
                 {/* <div>{fileInfo?.downloadCode}</div> */}
-                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileSize}</div>
+                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{transferedSize(fileInfo?.fileSize)}</div>
                 {/* <div>{fileInfo?.fileSharePermission}</div> */}
                 {/* <div className='notAllowedToggleArea w-[20%]' onClick={() => console.log(idx)}>
                     <Switch
@@ -114,11 +115,11 @@ function FileList({fileInfoList}) {
             <div className='w-full flex justify-center'>
                 <div className='w-[240px]'>
                     <div className='flex justify-between'><p>파일명</p><p className='whitespace-nowrap overflow-hidden text-ellipsis w-[80%] text-right'>{togglebarDataInfo?.fileName}</p></div>
-                    <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>B</p></div>
-                    <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>C</p></div>
-                    <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>C</p></div>
-                    <div className='flex justify-between'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>DDD</p></div>
-                    <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>EEEE</p></div>
+                    <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
+                    <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.uploadTime.split('.')[0].split('T').join(' ')}</p></div>
+                    <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
+                    <div className='flex justify-between'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.shared}</p></div>
+                    <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
                 </div>
             </div>
         </div>
