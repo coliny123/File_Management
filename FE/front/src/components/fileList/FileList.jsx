@@ -29,7 +29,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
             <div className='allowedToggleArea w-full flex ml-5 items-center' onClick={() => handleTogglebar(fileInfo)}>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileName}</div>
-                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>확장자</div>
+                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.originalFormat}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.uploadTime}</div>
                 {/* <div>{fileInfo?.downloadCode}</div> */}
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileSize}</div>
@@ -75,11 +75,11 @@ function FileList({fileInfoList}) {
         }
     }
 
-    fileInfoList = [
-        {fileName: 'a', uploadTime: '123', shared: false, downloadCode: '123', fileId: 'abc', fileSize: 123},
-        {fileName: 'b12345615615615615611561565616', uploadTime: '123', shared: true, downloadCode: '123', fileId: 'abc', fileSize: 123},
-        {fileName: 'c', uploadTime: '123', shared: false, downloadCode: '123', fileId: 'abc', fileSize: 123},
-    ]
+    // fileInfoList = [
+    //     {fileName: 'a', uploadTime: '123', shared: false, downloadCode: '123', fileId: 'abc', fileSize: 123},
+    //     {fileName: 'b12345615615615615611561565616', uploadTime: '123', shared: true, downloadCode: '123', fileId: 'abc', fileSize: 123},
+    //     {fileName: 'c', uploadTime: '123', shared: false, downloadCode: '123', fileId: 'abc', fileSize: 123},
+    // ]
 
     return (
     <div className='w-full'>
