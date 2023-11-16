@@ -162,8 +162,8 @@ function FileDragDrop() {
                     ref={dragRef}
                 >
                     <div className={`w-full h-full flex justify-center items-center`}>
-                        {/* {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
-                        {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
+                        {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
+                        {/* {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
                     </div>
                 </label>
             </div>
