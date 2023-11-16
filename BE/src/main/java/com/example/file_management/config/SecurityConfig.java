@@ -14,11 +14,14 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().permitAll()  // 모든 요청 허용
-                .and()
+        http
+                .authorizeRequests(auth -> auth
+                        .antMatchers("/download/**").permitAll()  // 다운로드 관련 API에 대해 모든 요청 허용
+                        .anyRequest().authenticated()  // 그 외의 모든 요청은 인증 필요
+                )
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 공격 방어 기능 비활성화
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();

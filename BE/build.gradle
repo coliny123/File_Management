@@ -41,14 +41,14 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.json:json:20210307'
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-config:5.6.0'
 
     //mysql
-    implementation 'mysql:mysql-connector-java:8.0.26'
+    implementation 'mysql:mysql-connector-java:8.0.33'
     runtimeOnly 'mysql:mysql-connector-java'
 
     //jjwt
