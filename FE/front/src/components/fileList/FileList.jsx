@@ -10,7 +10,8 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     
     console.log(fileInfo)
 
-    const [sharedStatus, setSharedStatus] = useState(false);
+    const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
+    // const [sharedStatus, setSharedStatus] = useState(false);
 
     const handleChange = async (event) => {
         console.log(sharedStatus)
@@ -18,7 +19,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
         event.stopPropagation();
         try {
             await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
-            setSharedStatus(!sharedStatus)
+            setSharedStatus((prevSharedStatus) => !prevSharedStatus);
         } catch (error) {
             console.error(error); // 에러 출력
         }
