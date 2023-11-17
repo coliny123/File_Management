@@ -46,7 +46,7 @@ function Navbar() {
 
     const handleDownloadButton = async () => {
         const fileId = await getFileIdByAuthCode(downloadCode);
-        if (fileId !== undefined && fileId.length > 0) {
+        if (fileId !== undefined && fileId !== null && fileId) {
             navigate(`/download/${fileId}`)
         } else {
             alert('인증코드를 확인해주세요.')
