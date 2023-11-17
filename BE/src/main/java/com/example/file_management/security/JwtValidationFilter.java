@@ -18,7 +18,7 @@ import java.util.List;
 public class JwtValidationFilter extends OncePerRequestFilter {
 
     private final JwtValidator jwtValidator;
-    private final List<String> pathsToAuth = Arrays.asList("/upload","/users/files");
+    private final List<String> pathsToAuth = Arrays.asList("/upload","/users/files","/setShared");
 
     public JwtValidationFilter(JwtValidator jwtValidator) {
         this.jwtValidator = jwtValidator;
