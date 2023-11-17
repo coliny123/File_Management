@@ -17,12 +17,14 @@ function FileDownloadPage() {
       try {
         const response = await axios.get(`${Server_IP}/details/${fileId}`);
         setFileData(response.data);
+        console.log(fileData)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+    
     fetchFileInfo();
+    console.log(fileData)
   }, [Server_IP, fileId]);
 
     return (
