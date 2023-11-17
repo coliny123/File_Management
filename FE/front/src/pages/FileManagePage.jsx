@@ -81,7 +81,7 @@ function FileManagePage(){
                 {!isLogin && <NotLoginFileInfo/>}
                 {fileInfoList && (
                 <div className='md:w-[70%] mb-4'>
-                    <FileList fileInfoList={fileInfoList}></FileList>
+                    <FileList fileInfoList={fileInfoList} refetch={refetch}></FileList>
                 </div>
                 )}
             </div>

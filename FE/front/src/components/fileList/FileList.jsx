@@ -10,7 +10,7 @@ import { useIsLogin } from '../../context/IsLoginContext';
 
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
-const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
+const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
 
     const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
 
@@ -18,6 +18,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
         event.stopPropagation();
         try {
             await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
+            await refetch();
             setSharedStatus((prevSharedStatus) => !prevSharedStatus);
         } catch (error) {
             console.error(error); // 에러 출력
@@ -49,7 +50,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     )
 }
 
-function FileList({fileInfoList}) {
+function FileList({fileInfoList, refetch}) {
   
     const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
@@ -70,7 +71,7 @@ function FileList({fileInfoList}) {
     <div className='w-full'>
       <div className='w-full space-y-4 mt-5'>
         {fileInfoList && fileInfoList?.map((fileInfo, idx) =>
-            FileInfoRow(fileInfo, idx, handleTogglebar)
+            FileInfoRow(fileInfo, idx, handleTogglebar, refetch)
         )}
       </div>
         <div className={`z-[1000] fixed top-[80px] -right-60 md:-right-80 flex-col items-center justify-center md:w-80 w-60 h-full bg-[#FBFBFD] transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '-translate-x-full': ''}`}>
