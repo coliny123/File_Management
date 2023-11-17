@@ -4,7 +4,6 @@ export const getFileIdByAuthCode = async (authCode) => {
     const Server_IP = process.env.REACT_APP_Server_IP;
     return await axios.get(`${Server_IP}/download/${authCode}`)
     .then((res) => {
-        console.log(res.data);
         return res.data;
     })
     .catch((err) => {

@@ -41,10 +41,6 @@ function FileManagePage(){
         }
     }, [data]);
     
-
-
-    console.log(fileInfoList);
-
     return(
         <div className='max-md:flex max-md:justify-center'>
             <div className='flex flex-col justify-center md:ml-32 max-md:w-[90%]'>
@@ -65,7 +61,7 @@ function FileManagePage(){
                     <FileList fileInfoList={fileInfoList}></FileList>
                 </div> */}
                 {fileInfoList && (
-                <div className='md:w-[70%]'>
+                <div className='md:w-[70%] mb-6'>
                     <FileList fileInfoList={fileInfoList}></FileList>
                 </div>
                 )}

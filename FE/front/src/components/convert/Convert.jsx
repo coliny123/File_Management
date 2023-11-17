@@ -88,7 +88,6 @@ function Convert() {
     const sendFilesWithAccessToken = async () => {
         try {
             const id = await sendFiles(uploadedFile, setUploadProgress, transferredFileFormat, uploadedFileType);
-            console.log(id);
             return id;
         } catch (err) {
             await getAccessTokenApi();

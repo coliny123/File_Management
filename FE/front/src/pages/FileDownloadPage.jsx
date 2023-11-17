@@ -17,14 +17,12 @@ function FileDownloadPage() {
       try {
         const response = await axios.get(`${Server_IP}/details/${fileId}`);
         setFileData(response.data);
-        console.log(fileData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchFileInfo();
-    console.log(fileData);
   }, [Server_IP, fileId]);
 
     return (
@@ -37,10 +35,10 @@ function FileDownloadPage() {
               <div className='w-full flex justify-center'>
                 <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
               </div>
-              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일명</p><p>{fileData?.originalFileName}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일명</p><p className='w-[70%]'>{fileData?.originalFileName}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>확장자</p><p>{fileData?.originFormat}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
-              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일 크기</p><p>{transferedSize(fileData?.fileSize)}</p></div>
+              <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>파일 크기</p><p>{transferedSize(fileData?.size)}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>공유 권한</p><p>{fileData?.shared === true ? '허용' : fileData?.shared === false ? '차단' : ''}</p></div>
               <div className='flex justify-between whitespace-nowrap overflow-hidden text-ellipsis'><p>다운 코드</p><p>{fileData?.authenticationCode}</p></div>
             </div>

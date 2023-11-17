@@ -39,7 +39,6 @@ export function useUserDataQuery(options) {
     onError: async (error, variables, context) => {
     console.log(error)
       if (error.response.status === 401 || error.response.status === 500) {
-        console.log('쿼리에서 토큰 받기')
         await getAccessTokenApi(); // 토큰 새로 발급받기
         // query.refetch(); // 쿼리 다시 실행
         queryClient.invalidateQueries('userData'); // 쿼리 다시 실행

@@ -9,14 +9,11 @@ import { isEqual } from 'lodash';
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
 const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
-    console.log(fileInfo)
 
     const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
     // const [sharedStatus, setSharedStatus] = useState(false);
 
     const handleChange = async (event) => {
-        console.log(sharedStatus)
-        console.log(event)
         event.stopPropagation();
         try {
             await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
@@ -66,8 +63,6 @@ function FileList({fileInfoList}) {
     const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
     
-    console.log(fileInfoList)
-    console.log(togglebarDataInfo)
     const handleTogglebar = (fileInfo) => {
         console.log(togglebarDataInfo);
         if (isTogglebarOpen === false) {

@@ -35,9 +35,6 @@ function LandingPage() {
 
 
   const {uploadStatus} = useUpload();
-  console.log(data);
-
-
   
   return (
     <div>

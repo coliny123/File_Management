@@ -9,7 +9,6 @@ export const getAccessTokenApi = () => {
         },
     })
         .then((res) => {
-            console.log(res.data)
             axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`
         });
 
