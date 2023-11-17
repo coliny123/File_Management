@@ -88,7 +88,7 @@ function FileList({fileInfoList}) {
                 <div className='max-md:w-[200px] w-[240px]'>
                     <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
                     <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
-                    <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
+                    <div className='flex justify-between'><p>날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm flex justify-end items-center'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
                     <div className='flex justify-between'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.shared ? '허용' : '차단'}</p></div>
                     <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>

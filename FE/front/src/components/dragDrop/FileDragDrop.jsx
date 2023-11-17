@@ -45,13 +45,11 @@ const FileInventory = (files, deleteFilesById) => {
     const transferredFileFormat = checkFileExtension(files);
     return (
         <div className="DragDrop-Files flex flex-col justify-center items-center">
-            <div className='preview-area w-[120px] h-[160px] rounded-[5px]'>
-                {transferredFileFormat === 'hwp' && <div className='text-[100px] text-center'><RiFileHwpLine /></div>}
-                {transferredFileFormat === 'pdf' && <div className='text-[100px] text-center'><FaRegFilePdf /></div>}
-                {transferredFileFormat === 'ppt' && <div className='text-[100px] text-center'><BsFiletypePpt /></div>}
-                {transferredFileFormat === 'word' && <div className='text-[100px] text-center'><FaRegFileWord /></div>}
-            </div>
-            <div className='fileInfo-area'>
+            {transferredFileFormat === 'hwp' && <div className='text-[100px] text-center'><RiFileHwpLine /></div>}
+            {transferredFileFormat === 'pdf' && <div className='text-[100px] text-center'><FaRegFilePdf /></div>}
+            {transferredFileFormat === 'ppt' && <div className='text-[100px] text-center'><BsFiletypePpt /></div>}
+            {transferredFileFormat === 'word' && <div className='text-[100px] text-center'><FaRegFileWord /></div>}
+            <div className='fileInfo-area flex flex-col justify-center items-center'>
                 <div className='flex space-x-1 items-center justify-center text-lg font-bold'><div className='text-[#107C10] text-2xl'><AiFillCheckCircle/></div><div>{name}</div></div>
                 <div className="DragDrop-Files-Filter w-[20px] h-[20px] rounded-full bg-[#DBDADE] hover:cursor-pointer flex justify-center items-center" onClick={() => deleteFilesById(id)}>X</div>
                 <div>{transferedSize}</div>
