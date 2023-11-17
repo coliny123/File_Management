@@ -34,19 +34,24 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
         event.stopPropagation();
         try {
             await setSharedStatusApi(fileInfo.fileId, !sharedStatus);
-            setSharedStatus((prevSharedStatus) => !prevSharedStatus);
+            window.location.reload();
+            // setSharedStatus((prevSharedStatus) => !prevSharedStatus);
         } catch (error) {
             console.error(error);
         }
     }
 
-    useEffect(() => {
-        setSharedStatus(fileInfo?.shared);
-    }, [fileInfo?.shared]);
+    // useEffect(() => {
+    //     setSharedStatus(fileInfo?.shared);
+    // }, [fileInfo?.shared]);
 
-    useEffect(() => {
-        refetch(); // fileInfo.shared가 변경될 때마다 refetch 실행
-    }, [fileInfo?.shared, refetch]);
+    // const refetchData = async () => {
+    //     await refetch();
+    // }
+
+    // useEffect(() => {
+    //     refetchData();
+    // }, [fileInfo?.shared, refetch]);
 
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
