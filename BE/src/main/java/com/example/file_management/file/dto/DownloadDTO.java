@@ -17,6 +17,8 @@ public class DownloadDTO {
     public boolean shared;
     public String authenticationCode;
     public String savedPath;
+    public long size;
+    public String originFormat;
 
 
 

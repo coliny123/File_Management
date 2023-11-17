@@ -117,6 +117,8 @@ public class FileServiceV2 implements FileService {
                 .shared(file.isShared())
                 .authenticationCode(file.getAuthenticationCode())
                 .savedPath(file.getSavedPath())
+                .size(file.getSize())
+                .originFormat(file.getOriginFormat())
                 .build();
     }
 
