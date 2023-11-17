@@ -49,7 +49,7 @@ public class FileServiceV2 implements FileService {
         String authenticationCode = generateRandomDownloadCode();
         long size = multipartFile.getSize();
 
-        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user, authenticationCode, size, originFormat);
+        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user, authenticationCode, size, originFormat, true);
         FileInfo savedFileInfo = fileRepository.save(fileInfo);
 
         UploadResult result = new UploadResult();
@@ -71,7 +71,7 @@ public class FileServiceV2 implements FileService {
     }
 
     // fileInfo 생성
-    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user, String authenticationCode, long size, String originFormat) {
+    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user, String authenticationCode, long size, String originFormat, boolean shared) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.originalFileName = originalFilename;
         fileInfo.savedPath = fileUrl;
@@ -79,6 +79,7 @@ public class FileServiceV2 implements FileService {
         fileInfo.authenticationCode = authenticationCode;
         fileInfo.size = size;
         fileInfo.originFormat = originFormat;
+        fileInfo.shared = shared;
 
         return fileInfo;
     }

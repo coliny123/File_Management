@@ -33,7 +33,7 @@ public class FileInfo {
     @JoinColumn(name="userId", nullable=false)
     public User user;
 
-    @Column()
+    @Column(name="shared", columnDefinition = "default = 1")
     public boolean shared;
 
     @Column(name="authenticationCode")
