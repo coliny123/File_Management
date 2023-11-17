@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
+import { deleteExtensionsInFileName } from '../services/deleteExtensionInFileName';
 
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
@@ -38,7 +39,7 @@ function FileDownloadPage() {
               <div className='w-full flex justify-center'>
                 <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>
               </div>
-              <div className='flex justify-between'><p>파일명</p><p className='w-[70%] break-all'>{fileData?.originalFileName?.split('.').splice(0, -1).join('')}</p></div>
+              <div className='flex justify-between'><p>파일명</p><p className='w-[70%] break-all text-right'>{deleteExtensionsInFileName(fileData?.originalFileName)}</p></div>
               <div className='flex justify-between'><p>확장자</p><p>{fileData?.originFormat}</p></div>
               <div className='flex justify-between'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
               <div className='flex justify-between'><p>파일 크기</p><p>{transferedSize(fileData?.size)}</p></div>

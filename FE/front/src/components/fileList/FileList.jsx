@@ -5,6 +5,7 @@ import { IoClose } from 'react-icons/io5';
 import axios from 'axios';
 import { setSharedStatusApi } from '../../api/setSharedStatusApi';
 import { isEqual } from 'lodash';
+import { deleteExtensionsInFileName } from '../../services/deleteExtensionInFileName';
 
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
@@ -30,7 +31,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
             <div className='allowedToggleArea w-full flex ml-5 items-center' onClick={() => handleTogglebar(fileInfo)}>
-                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileName?.split('.').splice(0, -1).join('')}</div>
+                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{deleteExtensionsInFileName(fileInfo?.fileName)}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.originFormat}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.uploadTime.split('.')[0].split('T').join(' ')}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{transferedSize(fileInfo?.fileSize)}</div>
@@ -92,7 +93,7 @@ function FileList({fileInfoList}) {
             </div>
             <div className='w-full flex justify-center'>
                 <div className='w-[240px]'>
-                    <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{togglebarDataInfo?.fileName?.split('.')?.splice(0, -1).join('')}</p></div>
+                    <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
                     <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
                     <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
