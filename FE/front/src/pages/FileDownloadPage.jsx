@@ -36,7 +36,7 @@ function FileDownloadPage() {
     return (
     <div className='w-full h-screen bg-[#F7F6FB] flex flex-col items-center'>
       <div text-neutral-600 className='font-bold mt-[80px] text-2xl'> {`파일 다운로드`} </div>
-      <div className='m-[32px] flex flex-col'>
+      <div className='m-[20px] flex flex-col'>
             <div className='w-[240px]'>
               <div className='w-full flex justify-center'>
                 {fileData?.originFormat === 'hwp' && <div className='text-[100px] text-center mt-20'><RiFileHwpLine /></div>}
@@ -45,7 +45,7 @@ function FileDownloadPage() {
                 {fileData?.originFormat === 'word' && <div className='text-[100px] text-center mt-20'><FaRegFileWord /></div>}
                 {/* <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div> */}
               </div>
-              <div className='flex justify-between'><p>파일명</p><p className='w-[70%] break-all text-right'>{deleteExtensionsInFileName(fileData?.originalFileName)}</p></div>
+              <div className='flex justify-between mt-5'><p>파일명</p><p className='w-[70%] break-all text-right'>{deleteExtensionsInFileName(fileData?.originalFileName)}</p></div>
               <div className='flex justify-between'><p>확장자</p><p>{fileData?.originFormat}</p></div>
               <div className='flex justify-between'><p>올린 날짜</p><p>{fileData?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
               <div className='flex justify-between'><p>파일 크기</p><p>{transferedSize(fileData?.size)}</p></div>
