@@ -5,6 +5,7 @@ import { BsCloudArrowDown } from 'react-icons/bs'
 import { HiMiniHome } from 'react-icons/hi2'
 import { AiFillCloud } from 'react-icons/ai'
 import { getFileIdByAuthCode } from '../../api/getFileIdByAuthCode';
+import axios from 'axios';
 
 const DownBtn = () => {
 
@@ -24,9 +25,12 @@ const LoginBtn = () => {
 
 const LogoutBtn = () => {
 
+    const Server_IP = process.env.REACT_APP_Server_IP;
+
     const { isLogin, setIsLogin } = useIsLogin();
 
-    const logout = () => {
+    const logout = async () => {
+        await axios.get(`${Server_IP}/auth/logout`).then((res) => {}).catch((err) => {});
         window.localStorage.removeItem('refreshToken');
         setIsLogin(false);
         window.location.reload();
