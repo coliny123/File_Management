@@ -64,7 +64,6 @@ function FileList({fileInfoList}) {
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
     
     const handleTogglebar = (fileInfo) => {
-        console.log(togglebarDataInfo);
         if (isTogglebarOpen === false) {
             setIsTogglebarOpen(true);
             setTogglebarDataInfo(fileInfo)
@@ -76,13 +75,6 @@ function FileList({fileInfoList}) {
             setTogglebarDataInfo(fileInfo)
         }
     }
-
-    // fileInfoList = [
-    //     {fileName: 'a', uploadTime: '123', shared: false, downloadCode: '123', fileId: 'abc', fileSize: 123},
-    //     {fileName: 'b12345615615615615611561565616', uploadTime: '123', shared: true, downloadCode: '123', fileId: 'abc', fileSize: 123},
-    //     {fileName: 'c', uploadTime: '123', shared: false, downloadCode: '123', fileId: 'abc', fileSize: 123},
-    // ]
-
     return (
     <div className='w-full'>
       <div className='flex justify-around w-full border-b-4 border-b-[#999999] text-[#999999]'>

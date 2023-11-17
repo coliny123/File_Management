@@ -96,6 +96,7 @@ function Convert() {
     }
 
     const handleNextBtn = async () => {
+        setUploadStatus(2)
         const id = await sendFilesWithAccessToken();
         if (id === undefined) {
             alert('파일 전송에 실패했습니다. 다시 시도해주세요.')
@@ -104,7 +105,6 @@ function Convert() {
         }
         setFileId(id);
         refetch();
-        setUploadStatus(2)
     }
 
     return (
@@ -115,7 +115,7 @@ function Convert() {
                 <IsLoginConvert transferredFileFormat={transferredFileFormat} setTransferredFileFormat = {setTransferredFileFormat}></IsLoginConvert>
             </div>
             <div className={`btns relative text-white w-[160px] h-[56px] mt-10 flex justify-center items-center ${transferredFileFormat === '' ? 'bg-blue-200' : 'bg-blue-500'}`}>
-                <button onClick={handleNextBtn} disabled={transferredFileFormat === '' ? true : false} className='h-full w-full'>Next</button>
+                <button onClick={() => {setUploadStatus(2); handleNextBtn();}} disabled={transferredFileFormat === '' ? true : false} className='h-full w-full'>Next</button>
             </div>
         </div>
   )

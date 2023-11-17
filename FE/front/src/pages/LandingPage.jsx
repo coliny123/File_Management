@@ -47,7 +47,6 @@ function LandingPage() {
         <div className="w-[80%] md:w-[480px] h-[400px] md:mt-[50px]">
           <div className='w-full h-full m-0'>
           { uploadStatus === 0 ? <FileDragDrop/> : uploadStatus === 1 ? <Convert/> : uploadStatus === 2 ? <Progressbar/> : <QrCode/>}
-          {/* { uploadStatus === 0 ? <FileDragDrop/> : uploadStatus === 1 ? <Progressbar/> : <QrCode/>} */}
           </div>
         </div>
         </div>

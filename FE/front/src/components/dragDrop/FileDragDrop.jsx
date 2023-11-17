@@ -135,6 +135,10 @@ function FileDragDrop() {
                 setUploadedFile([])
                 alert('지원 가능한 파일만 업로드해주세요')
             }
+            if (uploadedFile[0].object.size >= 500 * 1024 * 1024) {
+                setUploadedFile([])
+                alert('500MB 미만의 파일만 업로드 가능합니다.')
+            }
         }
     }, [uploadedFile])
 
@@ -162,8 +166,8 @@ function FileDragDrop() {
                     ref={dragRef}
                 >
                     <div className={`w-full h-full flex justify-center items-center`}>
-                        {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
-                        {/* {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
+                        {/* {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
+                        {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
                     </div>
                 </label>
             </div>
