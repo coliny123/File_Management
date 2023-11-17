@@ -6,6 +6,10 @@ import { BsCloudUpload, BsExclamationDiamond } from 'react-icons/bs'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { useIsLogin } from '../../context/IsLoginContext';
 import { useNavigate } from 'react-router-dom';
+import { RiFileHwpLine } from "react-icons/ri";
+import { FaRegFilePdf } from "react-icons/fa";
+import { BsFiletypePpt } from "react-icons/bs";
+import { FaRegFileWord } from "react-icons/fa";
 
 const BeforeDrop = (isDragging) => {
     return (
@@ -38,15 +42,19 @@ const LoginNotice = () => {
 const FileInventory = (files, deleteFilesById) => {
     const { id, object: { name, size }, type } = files[0];
     const transferedSize = size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
-
+    const transferredFileFormat = checkFileExtension(files);
     return (
         <div className="DragDrop-Files flex flex-col justify-center items-center">
-            <div className='preview-area w-[120px] h-[160px] rounded-[5px] bg-[#FFFFFF]'>
+            <div className='preview-area w-[120px] h-[160px] rounded-[5px]'>
+                {transferredFileFormat === 'hwp' && <div className='text-[100px]'><RiFileHwpLine /></div>}
+                {transferredFileFormat === 'pdf' && <div className='text-[100px]'><FaRegFilePdf /></div>}
+                {transferredFileFormat === 'ppt' && <div className='text-[100px]'><BsFiletypePpt /></div>}
+                {transferredFileFormat === 'word' && <div className='text-[100px]'><FaRegFileWord /></div>}
                 <div className='text-bold text-xl'>파일 업로드</div>
             </div>
             <div className='fileInfo-area'>
                 <div className='flex space-x-1 items-center justify-center text-lg font-bold'><div className='text-[#107C10] text-2xl'><AiFillCheckCircle/></div><div>{name}</div></div>
-                <span className="DragDrop-Files-Filter w-[25px] h-[25px] rounded-full bg-[#DBDADE] hover:cursor-pointer" onClick={() => deleteFilesById(id)}>X</span>
+                <div className="DragDrop-Files-Filter w-[16px] h-[16px] rounded-full bg-[#DBDADE] hover:cursor-pointer" onClick={() => deleteFilesById(id)}>X</div>
                 <div>{transferedSize}</div>
                 {/* <div className='mt-2 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div> */}
                 <div className='mt-2 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only</div></div>
