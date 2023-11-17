@@ -72,7 +72,7 @@ function FileManagePage(){
                 </div>
                 <div className='w-full text-left text-xl font-bold'>Dashboard</div>
                 <div className='flex justify-around md:w-[70%] border-b-4 border-b-[#999999] text-[#999999] mt-3'>
-                    <div className='w-[20%]'>파일명</div>
+                    <div className='w-[20%] ml-5'>파일명</div>
                     <div className='w-[20%]'>확장자</div>
                     <div className='w-[20%]'>파일크기</div>
                     <div className='w-[20%]'>업로드일</div>

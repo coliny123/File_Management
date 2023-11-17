@@ -68,13 +68,13 @@ function FileList({fileInfoList}) {
     }
     return (
     <div className='w-full'>
-      <div className='flex justify-around w-full border-b-4 border-b-[#999999] text-[#999999]'>
+      {/* <div className='flex justify-around w-full border-b-4 border-b-[#999999] text-[#999999]'>
         <div className='w-[20%] ml-5'>파일명</div>
         <div className='w-[20%]'>확장자</div>
         <div className='w-[20%]'>파일크기</div>
         <div className='w-[20%]'>업로드일</div>
         <div className='w-[20%]'>공유허용</div>
-      </div>
+      </div> */}
       <div className='w-full space-y-4 mt-5'>
         {fileInfoList && fileInfoList?.map((fileInfo, idx) =>
             FileInfoRow(fileInfo, idx, handleTogglebar)
