@@ -30,7 +30,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
             <div className='allowedToggleArea w-full flex ml-5 items-center' onClick={() => handleTogglebar(fileInfo)}>
-                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileName.split('.').splice(0, -1).join('')}</div>
+                <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.fileName?.split('.').splice(0, -1).join('')}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.originFormat}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.uploadTime.split('.')[0].split('T').join(' ')}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{transferedSize(fileInfo?.fileSize)}</div>
@@ -92,7 +92,7 @@ function FileList({fileInfoList}) {
             </div>
             <div className='w-full flex justify-center'>
                 <div className='w-[240px]'>
-                    <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{togglebarDataInfo?.fileName.split('.').splice(0, -1).join('')}</p></div>
+                    <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{togglebarDataInfo?.fileName?.split('.')?.splice(0, -1).join('')}</p></div>
                     <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
                     <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
