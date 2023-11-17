@@ -60,7 +60,7 @@ function FileManagePage(){
             <div className='flex flex-col justify-center md:ml-32 max-md:w-[90%]'>
                 <div className='manage-page-wrapper md:w-[720px]'>
                     <div className='text-content w-full text-left'>
-                        <div>{data?.userName}</div>
+                        <div className='ml-3 text-[#999999]'>{data?.userName}</div>
                         <div className='text-2xl font-bold ml-3 mb-4'>File Management</div>
                     </div>
                     <div className='relative'>

@@ -45,7 +45,7 @@ function FileDownloadPage() {
               <div className='flex justify-between'><p>다운 코드</p><p>{fileData?.authenticationCode}</p></div>
             </div>
       </div>
-      <div className={`text-white flex bg-[#6367EB] w-[200px] h-[48px] rounded-[4px] m-[32px] justify-center items-center ${!fileData.shared ? 'opacity-50' : 'opacity-100'}`}><button onClick={() => {window.location = fileData.savedPath}} disabled={!fileData.shared} >download</button></div>
+      <div className={`text-white flex bg-[#6367EB] w-[200px] h-[48px] rounded-[4px] m-[32px] justify-center items-center ${!fileData.shared ? 'opacity-50' : 'opacity-100'}`}><button onClick={() => {window.location = fileData.savedPath}} disabled={!fileData.shared} className='w-full h-full' >download</button></div>
       {/* 글씨를 버튼 가운데로 하고 싶어요.. */}
     </div>
     )
