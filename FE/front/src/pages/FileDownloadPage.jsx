@@ -32,9 +32,7 @@ function FileDownloadPage() {
     return (
     <div className='w-full h-screen bg-[#F7F6FB] flex flex-col items-center'>
       <div text-neutral-600 className='font-bold mt-[80px]'> {`파일 다운로드`} </div>
-      {/* <div text-neutral-600 className='font-bold mt-[80px]'> {`${fileId} 파일 다운로드`} </div> */}
       <div className='m-[32px] flex flex-col'>
-        {/* <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div> */}
             <div className='w-[240px]'>
               <div className='w-full flex justify-center'>
                 <div className='bg-[#ffffff] w-[120px] h-[160px] rounded-[6px] mt-[32px]'></div>

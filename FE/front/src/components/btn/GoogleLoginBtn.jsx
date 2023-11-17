@@ -21,7 +21,7 @@ function GoogleLoginBtn() {
 
     return (
         <div>
-            <button onClick={handleGoogleLogin} className='inline-block overflow-hidden relative p-0 border-none cursor-pointer w-[226px]'>
+            <button onClick={handleGoogleLogin} className='inline-block overflow-hidden relative p-0 border-none cursor-pointer w-[220px]'>
                 <img src="/assets/images/btn_google_login.png" alt="google log" className='w-full h-full object-cover object-center' />
             </button>
         </div>
