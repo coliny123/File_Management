@@ -10,7 +10,7 @@ function LoginPage() {
 
   return (
     <div className='-screen h-screen flex items-center justify-center'>
-      <div className='w-[300px] h-[600px] flex flex-col items-center mt-[90px]'>
+      <div className='w-[300px] h-[600px] flex flex-col items-center mt-[70px]'>
         <img src="/assets/images/cloud_img.png" alt="google log" className='w-[80px] h-[80px] object-cover object-center' />
         <div className='w-[170px] h-[48px] text-2xl mb-3 text-center border-b-2 font-bold border-black mt-[27px]'>소셜 로그인</div>
         <div className='btn-wrapper mt-[60px] space-y-1'>

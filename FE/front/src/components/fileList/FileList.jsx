@@ -6,13 +6,13 @@ import axios from 'axios';
 import { setSharedStatusApi } from '../../api/setSharedStatusApi';
 import { isEqual } from 'lodash';
 import { deleteExtensionsInFileName } from '../../services/deleteExtensionInFileName';
+import { useIsLogin } from '../../context/IsLoginContext';
 
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
 const FileInfoRow = (fileInfo, idx, handleTogglebar) => {
 
     const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
-    // const [sharedStatus, setSharedStatus] = useState(false);
 
     const handleChange = async (event) => {
         event.stopPropagation();
@@ -53,7 +53,7 @@ function FileList({fileInfoList}) {
   
     const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
-    
+
     const handleTogglebar = (fileInfo) => {
         if (isTogglebarOpen === false) {
             setIsTogglebarOpen(true);
