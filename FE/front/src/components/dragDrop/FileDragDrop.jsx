@@ -30,7 +30,7 @@ const LoginNotice = () => {
     return (
         <div className='flex flex-col justify-center items-center'>
             <div className='text-xl font-bold'>로그인 후 이용 가능</div>
-            <div onClick={() => navigate('/login')} className='hover:cursor-pointer bg-[#E6E6E6] text-[#6367EB] w-[120px] h-[40px] flex justify-center items-center text-lg font-bold mt-[16px] rounded-[4px]'>로그인</div>
+            <div onClick={() => navigate('/login')} className='hover:cursor-pointer bg-[#6367EB] text-white w-[120px] h-[48px] flex justify-center items-center text-lg mt-[16px] rounded-[18px]'>로그인</div>
         </div>
     )
 }

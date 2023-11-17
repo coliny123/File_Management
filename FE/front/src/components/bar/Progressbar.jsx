@@ -41,7 +41,8 @@ function Progressbar() {
             </CircularProgressbarWithChildren>
           </div>
           <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-around items-center'>
-                <button onClick={() => setUploadStatus(3)}>Upload끝</button>
+                {/* <button onClick={() => setUploadStatus(3)}>Upload끝</button> */}
+                <div>업로드 중</div>
           </div>
       </div>
     )
