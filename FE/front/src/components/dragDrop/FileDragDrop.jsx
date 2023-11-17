@@ -46,7 +46,7 @@ const FileInventory = (files, deleteFilesById) => {
             </div>
             <div className='fileInfo-area'>
                 <div className='flex space-x-1 items-center justify-center text-lg font-bold'><div className='text-[#107C10] text-2xl'><AiFillCheckCircle/></div><div>{name}</div></div>
-                <span className="DragDrop-Files-Filter w-[15px] h-[15px] rounded-full bg-[#DBDADE] hover:cursor-pointer" onClick={() => deleteFilesById(id)}>X</span>
+                <span className="DragDrop-Files-Filter w-[25px] h-[25px] rounded-full bg-[#DBDADE] hover:cursor-pointer" onClick={() => deleteFilesById(id)}>X</span>
                 <div>{transferedSize}</div>
                 {/* <div className='mt-2 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div> */}
                 <div className='mt-2 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only</div></div>
