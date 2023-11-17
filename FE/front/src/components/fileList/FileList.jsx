@@ -102,7 +102,7 @@ function FileList({fileInfoList}) {
             </div>
             <div className='w-full flex justify-center'>
                 <div className='w-[240px]'>
-                    <div className='flex justify-between'><p>파일명</p><p className='whitespace-nowrap overflow-hidden text-ellipsis w-[80%] text-right'>{togglebarDataInfo?.fileName}</p></div>
+                    <div className='flex justify-between'><p>파일명</p><p className='w-[80%] text-right break-all'>{togglebarDataInfo?.fileName}</p></div>
                     <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
                     <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
