@@ -20,8 +20,8 @@ public class FileDetailController {
 
     @PostMapping("/setShared")
     public ResponseEntity setAuthenticationCode(@RequestBody SharedStateDTO sharedStateDTO, HttpServletRequest request) throws IOException {
-        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
-        if (responseEntity != null) return responseEntity;
+//        ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
+//        if (responseEntity != null) return responseEntity;
 
         SharedStateDTO result = fileService.setSharedState(sharedStateDTO.getId(), sharedStateDTO.isShared());
 
