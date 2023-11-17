@@ -12,22 +12,41 @@ const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFi
 
 const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
 
+    // const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
+
+    // const handleChange = async (event) => {
+    //     event.stopPropagation();
+    //     try {
+    //         await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
+    //         await refetch();
+    //         setSharedStatus((prevSharedStatus) => !prevSharedStatus);
+    //     } catch (error) {
+    //         console.error(error); // 에러 출력
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     setSharedStatus(fileInfo?.shared);
+    // }, [fileInfo?.shared])
     const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
 
     const handleChange = async (event) => {
         event.stopPropagation();
         try {
-            await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
-            await refetch();
+            await setSharedStatusApi(fileInfo.fileId, !sharedStatus);
             setSharedStatus((prevSharedStatus) => !prevSharedStatus);
         } catch (error) {
-            console.error(error); // 에러 출력
+            console.error(error);
         }
     }
 
     useEffect(() => {
         setSharedStatus(fileInfo?.shared);
-    }, [fileInfo?.shared])
+    }, [fileInfo?.shared]);
+
+    useEffect(() => {
+        refetch(); // fileInfo.shared가 변경될 때마다 refetch 실행
+    }, [fileInfo?.shared, refetch]);
 
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
