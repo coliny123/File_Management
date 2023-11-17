@@ -46,15 +46,14 @@ const FileInventory = (files, deleteFilesById) => {
     return (
         <div className="DragDrop-Files flex flex-col justify-center items-center">
             <div className='preview-area w-[120px] h-[160px] rounded-[5px]'>
-                {transferredFileFormat === 'hwp' && <div className='text-[100px]'><RiFileHwpLine /></div>}
-                {transferredFileFormat === 'pdf' && <div className='text-[100px]'><FaRegFilePdf /></div>}
-                {transferredFileFormat === 'ppt' && <div className='text-[100px]'><BsFiletypePpt /></div>}
-                {transferredFileFormat === 'word' && <div className='text-[100px]'><FaRegFileWord /></div>}
-                <div className='text-bold text-xl'>파일 업로드</div>
+                {transferredFileFormat === 'hwp' && <div className='text-[100px] text-center'><RiFileHwpLine /></div>}
+                {transferredFileFormat === 'pdf' && <div className='text-[100px] text-center'><FaRegFilePdf /></div>}
+                {transferredFileFormat === 'ppt' && <div className='text-[100px] text-center'><BsFiletypePpt /></div>}
+                {transferredFileFormat === 'word' && <div className='text-[100px] text-center'><FaRegFileWord /></div>}
             </div>
             <div className='fileInfo-area'>
                 <div className='flex space-x-1 items-center justify-center text-lg font-bold'><div className='text-[#107C10] text-2xl'><AiFillCheckCircle/></div><div>{name}</div></div>
-                <div className="DragDrop-Files-Filter w-[16px] h-[16px] rounded-full bg-[#DBDADE] hover:cursor-pointer" onClick={() => deleteFilesById(id)}>X</div>
+                <div className="DragDrop-Files-Filter w-[20px] h-[20px] rounded-full bg-[#DBDADE] hover:cursor-pointer flex justify-center items-center" onClick={() => deleteFilesById(id)}>X</div>
                 <div>{transferedSize}</div>
                 {/* <div className='mt-2 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only.</div></div> */}
                 <div className='mt-2 text-lg text-bold flex justify-center items-center space-x-1'><BsExclamationDiamond/><div>hwp, word, pdf, ppt only</div></div>

@@ -76,7 +76,7 @@ function FileList({fileInfoList}) {
         <div className={`z-[1000] fixed top-[80px] -right-60 md:-right-80 flex-col items-center justify-center md:w-80 w-60 h-full bg-[#FBFBFD] transition-transform ease-in-out duration-300 transform ${isTogglebarOpen ? '-translate-x-full': ''}`}>
             <div className='absolute top-[10px] left-[10px] w-[20px] h-[20px] text-xl hover:cursor-pointer' onClick={() => setIsTogglebarOpen(false)}><IoClose/></div>
             <div className='w-full flex justify-center'>
-                <div className='bg-[#F7F7F7] w-[240px] h-[240px] flex justify-center items-center mt-[48px]'>
+                <div className='bg-[#F7F7F7] max-md:w-[200px] max-md:h-[200px] w-[240px] h-[240px] flex justify-center items-center mt-[48px]'>
                     {/* <QRCodeCanvas value={`http://192.168.45.139:3000/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas> */}
                     <QRCodeCanvas value={`https://file-management-ten.vercel.app/download/${togglebarDataInfo?.fileId}`}></QRCodeCanvas>
                 </div>
@@ -88,7 +88,7 @@ function FileList({fileInfoList}) {
                 <div className='max-md:w-[200px] w-[240px]'>
                     <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
                     <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
-                    <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
+                    <div className='flex justify-between'><p>올린 날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
                     <div className='flex justify-between'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.shared ? '허용' : '차단'}</p></div>
                     <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
