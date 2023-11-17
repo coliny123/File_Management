@@ -11,8 +11,11 @@ function DownloadCodePage() {
 
   const handleDownloadButton = async () => {
     const fileId = await getFileIdByAuthCode(downloadCode);
-    console.log(fileId)
-    navigate(`/download/${fileId}`)
+    if (fileId !== undefined) {
+      navigate(`/download/${fileId}`)
+    } else {
+      alert('인증코드를 확인해주세요.')
+    }
   }
 
   return (

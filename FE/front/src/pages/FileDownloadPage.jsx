@@ -24,6 +24,7 @@ function FileDownloadPage() {
     };
 
     fetchFileInfo();
+    console.log(fileData);
   }, [Server_IP, fileId]);
 
     return (
