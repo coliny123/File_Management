@@ -14,7 +14,7 @@ const NotLoginFileInfo = () => {
     return(
         <div className='bg-white mt-4 h-[40vh] max-md:h-[25vh] md:w-[70%] flex flex-col justify-center items-center rounded-[16px] md:mb-10'>
             <div className='font-bold text-lg'>로그인 후 확인 가능합니다.</div>
-            <div onClick={() => navigate('/login')} className='bg-[#F7F6FB] text-[#6367EB] w-[120px] h-[40px] flex justify-center items-center text-lg font-bold mt-[16px]'>로그인</div>
+            <div onClick={() => navigate('/login')} className='bg-[#F7F6FB] hover:cursor-pointer text-[#6367EB] w-[120px] h-[40px] flex justify-center items-center text-lg font-bold mt-[16px]'>로그인</div>
         </div>
     )
 }

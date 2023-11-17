@@ -5,6 +5,7 @@ import { checkFileExtension } from '../../services/checkFileExtension';
 import { BsCloudUpload, BsExclamationDiamond } from 'react-icons/bs'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { useIsLogin } from '../../context/IsLoginContext';
+import { useNavigate } from 'react-router-dom';
 
 const BeforeDrop = (isDragging) => {
     return (
@@ -23,9 +24,13 @@ const BeforeDrop = (isDragging) => {
 }
 
 const LoginNotice = () => {
+
+    const navigate = useNavigate();
+
     return (
-        <div>
-            <div>로그인 후 이용 가능합니다</div>
+        <div className='flex flex-col justify-center items-center'>
+            <div className='text-xl font-bold'>로그인 후 이용 가능</div>
+            <div onClick={() => navigate('/login')} className='hover:cursor-pointer bg-[#E6E6E6] text-[#6367EB] w-[120px] h-[40px] flex justify-center items-center text-lg font-bold mt-[16px] rounded-[4px]'>로그인</div>
         </div>
     )
 }
@@ -166,8 +171,8 @@ function FileDragDrop() {
                     ref={dragRef}
                 >
                     <div className={`w-full h-full flex justify-center items-center`}>
-                        {/* {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
-                        {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
+                        {!isLogin ? <LoginNotice/> : uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)}
+                        {/* {uploadedFile.length > 0 ? FileInventory(uploadedFile, deleteFilesById) : BeforeDrop(isDragging)} */}
                     </div>
                 </label>
             </div>
