@@ -54,11 +54,11 @@ function QrCode() {
           <QRCodeCanvas className='qr-code-canvas' value={`https://file-management-ten.vercel.app/download/${fileId}`} size={250}></QRCodeCanvas>
           </div>
           <div className='btns bg-blue-500 text-white w-[160px] h-[56px] mt-10 flex justify-around items-center'>
-              <div>
-                <button onClick={() => handleQRCodeOpen()}>QR Open</button>
+              <div className='border-r-4 border-white w-[60%] h-full'>
+                <button onClick={() => handleQRCodeOpen()} className='w-full h-full'>QR Open</button>
               </div>
-              <div>
-                <button onClick={() => {setUploadedFile([]); setUploadStatus(0);}}>Finish</button>
+              <div className='w-[40%] h-full'>
+                <button className='w-full h-full' onClick={() => {setUploadedFile([]); setUploadStatus(0);}}>Finish</button>
               </div>
           </div>
       </div>
