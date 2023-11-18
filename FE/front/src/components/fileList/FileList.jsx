@@ -66,7 +66,7 @@ function FileList({fileInfoList, refetch}) {
     }
 
     const handleDeleteBtn = () => {
-        const decision = confirm('파일을 삭제하시겠습니까?');
+        const decision = window.confirm('파일을 삭제하시겠습니까?');
         if (decision) {
             deleteFile();
         }
