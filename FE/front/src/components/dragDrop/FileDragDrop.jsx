@@ -87,7 +87,8 @@ function FileDragDrop() {
     };
 
     const deleteFilesById = (id) => {
-        setUploadedFile(uploadedFile.filter((file) => file.id !== id));
+        // setUploadedFile(uploadedFile.filter((file) => file.id !== id));
+        setUploadedFile([]);
     };
 
     const handleDragIn = (e) => {
