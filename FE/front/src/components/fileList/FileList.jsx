@@ -68,7 +68,6 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                 </div>
-
             </div>
         </div>
     )
