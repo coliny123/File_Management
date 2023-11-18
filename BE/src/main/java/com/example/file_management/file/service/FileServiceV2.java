@@ -159,16 +159,16 @@ public class FileServiceV2 implements FileService {
         String result;
 
         // 1. 파일 존재하는지 확인
-        FileInfo targetFile = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+        FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
 
         // 2. 삭제 요청 userId와 실제 file uploader id 일치하는지 비교
         Long requestUserId = jwtUtil.getIdFromToken(request);
-        User uploadUser = fileRepository.findUserById(id);
+        User uploadUser = file.getUser();
         if(!Objects.equals(uploadUser.getId(), requestUserId)){
             throw new AccessDeniedException("파일 삭제 권한이 없습니다.");
         }
 
-        // 3. S3에서 파일 삭제
+        // 3. S3, DB 에서 파일 삭제
         String SavedFileName = fileRepository.findSavedPathById(id);
         // savedPath 문자열 slice 과정 필요
 
@@ -177,6 +177,7 @@ public class FileServiceV2 implements FileService {
             boolean isObjectExist = amazonS3.doesObjectExist(bucket, SavedFileName);
             if (isObjectExist) {
                 amazonS3.deleteObject(bucket, SavedFileName);
+                fileRepository.deleteById(id);
                 result = "파일 삭제 성공";
             } else {
                 throw new AmazonS3Exception("파일이 존재하지 않습니다.");
