@@ -65,13 +65,21 @@ function FileList({fileInfoList, refetch}) {
         }
     }
 
-    const handleDeleteBtn = async () => {
+    const handleDeleteBtn = () => {
         const decision = confirm('파일을 삭제하시겠습니까?');
-        if (decision === true) {
-            await deleteFileApi(togglebarDataInfo?.fileId)
-            window.location.reload();
+        if (decision) {
+            deleteFile();
         }
-    }
+    };
+
+    const deleteFile = async () => {
+        try {
+            await deleteFileApi(togglebarDataInfo?.fileId);
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
     <div className='w-full'>
