@@ -84,8 +84,10 @@ function FileList({fileInfoList, refetch}) {
                     <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
                 </div>
             </div>
-            <div className='bg-[#6367EB] relative bottom-[20px] max-md:left-[20px] left-[40px] w-[60px]'>파일 삭제</div>
-            <div className='bg-[#6367EB] relative bottom-[20px] max-md:left-[20px] right-[40px] w-[60px]'>다운로드</div>
+            <div className='max-md:w-[200px] w-[240px] flex justify-between'>
+                <div className='bg-[#6367EB] w-[60px] text-white'>파일 삭제</div>
+                <div className='bg-[#6367EB] w-[60px] text-white'>다운로드</div>
+            </div>
         </div>
 
     </div>
