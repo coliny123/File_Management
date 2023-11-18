@@ -98,8 +98,8 @@ function FileList({fileInfoList, refetch}) {
             </div>
             <div className='w-full flex justify-center'>
                 <div className='max-md:w-[200px] w-[240px] mt-5'>
-                    <div className='flex justify-between font-bold text-[#999999]'><p>파일 상세 보기</p><p className='hover:cursor-pointer text-[#CCCCCC] flex' onClick={async () => handleDeleteBtn()}>제거&nbsp;&nbsp;<FaTrash/></p></div>
-                    <div className='flex justify-between font-bold text-[#474747]'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
+                    <div className='flex justify-between font-bold text-[#999999]'><p>파일 상세 보기</p><p className='hover:cursor-pointer flex justify-center items-center' onClick={async () => handleDeleteBtn()}><p className='text-[#CCCCCC]'>제거</p>&nbsp;&nbsp;<FaTrash/></p></div>
+                    <div className='flex justify-between font-bold text-[#474747] mt-3'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
                     <div className='flex justify-between font-bold text-[#474747]'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
                     <div className='flex justify-between font-bold text-[#474747]'><p>날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm flex justify-end items-center'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between font-bold text-[#474747]'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
