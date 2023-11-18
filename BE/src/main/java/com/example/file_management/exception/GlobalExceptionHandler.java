@@ -2,6 +2,7 @@ package com.example.file_management.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -14,4 +15,11 @@ public class GlobalExceptionHandler {
     }
 
     // 다른 종류의 예외들 처리
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException e) {
+        // InvalidTokenException 발생 시 HTTP 403 FORBIDDEN 상태 코드와 함께 에러 메시지 반환
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+
 }

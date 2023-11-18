@@ -13,10 +13,12 @@ import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -149,5 +151,40 @@ public class FileServiceV2 implements FileService {
     @Override
     public Long getFileId(String authenticationCode){
         return fileRepository.findIdByAuthenticationCode(authenticationCode);
+    }
+
+
+    @Override
+    public String deleteFile(Long id, HttpServletRequest request) throws FileNotFoundException, AccessDeniedException{
+        String result;
+
+        // 1. 파일 존재하는지 확인
+        FileInfo targetFile = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+
+        // 2. 삭제 요청 userId와 실제 file uploader id 일치하는지 비교
+        Long requestUserId = jwtUtil.getIdFromToken(request);
+        User uploadUser = fileRepository.findUserById(id);
+        if(!Objects.equals(uploadUser.getId(), requestUserId)){
+            throw new AccessDeniedException("파일 삭제 권한이 없습니다.");
+        }
+
+        // 3. S3에서 파일 삭제
+        String SavedFileName = fileRepository.findSavedPathById(id);
+        // savedPath 문자열 slice 과정 필요
+
+
+        try {
+            boolean isObjectExist = amazonS3.doesObjectExist(bucket, SavedFileName);
+            if (isObjectExist) {
+                amazonS3.deleteObject(bucket, SavedFileName);
+                result = "파일 삭제 성공";
+            } else {
+                throw new AmazonS3Exception("파일이 존재하지 않습니다.");
+            }
+        } catch (Exception e) {
+            throw new AmazonS3Exception("파일 삭제 실패");
+        }
+
+        return result;
     }
 }
