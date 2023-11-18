@@ -12,22 +12,6 @@ const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFi
 
 const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
 
-    // const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
-
-    // const handleChange = async (event) => {
-    //     event.stopPropagation();
-    //     try {
-    //         await setSharedStatusApi(fileInfo.fileId, !sharedStatus)
-    //         await refetch();
-    //         setSharedStatus((prevSharedStatus) => !prevSharedStatus);
-    //     } catch (error) {
-    //         console.error(error); // 에러 출력
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     setSharedStatus(fileInfo?.shared);
-    // }, [fileInfo?.shared])
     const [sharedStatus, setSharedStatus] = useState(fileInfo?.shared);
 
     const handleChange = async (event) => {
@@ -35,24 +19,10 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
         try {
             await setSharedStatusApi(fileInfo.fileId, !sharedStatus);
             window.location.reload();
-            // setSharedStatus((prevSharedStatus) => !prevSharedStatus);
         } catch (error) {
             console.error(error);
         }
     }
-
-    // useEffect(() => {
-    //     setSharedStatus(fileInfo?.shared);
-    // }, [fileInfo?.shared]);
-
-    // const refetchData = async () => {
-    //     await refetch();
-    // }
-
-    // useEffect(() => {
-    //     refetchData();
-    // }, [fileInfo?.shared, refetch]);
-
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
             <div className='allowedToggleArea w-full flex ml-5 items-center' onClick={() => handleTogglebar(fileInfo)}>
@@ -109,13 +79,15 @@ function FileList({fileInfoList, refetch}) {
                 <div className='max-md:w-[200px] w-[240px] text-left'>파일 상세보기</div>
             </div> */}
             <div className='w-full flex justify-center'>
-                <div className='max-md:w-[200px] w-[240px] mt-5'>
+                <div className='max-md:w-[200px] w-[240px] mt-5 relative'>
                     <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
                     <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
                     <div className='flex justify-between'><p>날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm flex justify-end items-center'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
                     <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
                     <div className='flex justify-between'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.shared ? '허용' : '차단'}</p></div>
                     <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
+                    <div className='bg-[#F7F7F7] relative bottom-[10px] left-0 w-[50px]'>파일 삭제</div>
+                    <div className='bg-[#F7F7F7] relative bottom-[10px] right-0 w-[50px]'>다운로드</div>
                 </div>
             </div>
         </div>

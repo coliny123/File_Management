@@ -9,26 +9,6 @@ function QrCode() {
 
     const { setUploadStatus, setUploadedFile } = useUpload();
     const { fileId, setFileId } = useFileInfo();
-    // const { fileId } = useFileInfo();
-
-  // const handleQRCodeOpen = () => {
-  //   const qrCodeCanvas = document.querySelector('.qr-code-canvas'); // .qr-code-canvas 클래스로 캔버스 요소 선택
-  //   if (qrCodeCanvas) {
-  //     const qrCodeDataURL = qrCodeCanvas.toDataURL(); // QR 코드 캔버스의 이미지 데이터 URL을 가져옴
-
-  //     const newTab = window.open('', '', 'width=300, height=300');
-  //     newTab.document.write(`
-  //     <html>
-  //       <head>
-  //         <title>QR Code</title>
-  //       </head>
-  //       <body style="margin: 0; text-align: center;">
-  //         <img src="${qrCodeDataURL}" alt="QR Code" width="300" height="300" />
-  //       </body>
-  //     </html>
-  //   `);
-  //   }
-  // };
 
   const handleQRCodeOpen = () => {
     const qrCodeCanvas = document.querySelector('.qr-code-canvas'); // .qr-code-canvas 클래스로 캔버스 요소 선택
