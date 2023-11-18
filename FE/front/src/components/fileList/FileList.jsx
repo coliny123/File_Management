@@ -64,6 +64,15 @@ function FileList({fileInfoList, refetch}) {
             setTogglebarDataInfo(fileInfo)
         }
     }
+
+    const handleDeleteBtn = async () => {
+        const decision = confirm('파일을 삭제하시겠습니까?');
+        if (decision === true) {
+            await deleteFileApi(togglebarDataInfo?.fileId)
+            window.location.reload();
+        }
+    }
+
     return (
     <div className='w-full'>
       <div className='w-full space-y-4 mt-5'>
@@ -90,7 +99,7 @@ function FileList({fileInfoList, refetch}) {
             </div>
             <div className='w-full flex justify-center'>
                 <div className='max-md:w-[200px] w-[240px] flex justify-between mt-10'>
-                    <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={() => deleteFileApi(togglebarDataInfo?.fileId)}>파일 삭제</div>
+                    <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={async () => handleDeleteBtn()}>파일 삭제</div>
                     <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={() => navigate(`/download/${togglebarDataInfo?.fileId}`)}>다운로드</div>
                 </div>
             </div>
