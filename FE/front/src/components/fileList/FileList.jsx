@@ -9,6 +9,7 @@ import { deleteExtensionsInFileName } from '../../services/deleteExtensionInFile
 import { useIsLogin } from '../../context/IsLoginContext';
 import { useNavigate } from 'react-router-dom';
 import { deleteFileApi } from '../../api/deleteFileApi';
+import { FaTrash } from "react-icons/fa";
 
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
@@ -97,18 +98,19 @@ function FileList({fileInfoList, refetch}) {
             </div>
             <div className='w-full flex justify-center'>
                 <div className='max-md:w-[200px] w-[240px] mt-5'>
-                    <div className='flex justify-between'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
-                    <div className='flex justify-between'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
-                    <div className='flex justify-between'><p>날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm flex justify-end items-center'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
-                    <div className='flex justify-between'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
-                    <div className='flex justify-between'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.shared ? '허용' : '차단'}</p></div>
-                    <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
+                    <div className='flex justify-between font-bold text-[#999999]'><p>파일 상세 보기</p><p className='hover:cursor-pointer text-[#CCCCCC]' onClick={async () => handleDeleteBtn()}>제거&nbsp;&nbsp;<FaTrash/></p></div>
+                    <div className='flex justify-between font-bold text-[#474747]'><p>파일명</p><p className='w-[70%] text-right break-all'>{deleteExtensionsInFileName(togglebarDataInfo?.fileName)}</p></div>
+                    <div className='flex justify-between font-bold text-[#474747]'><p>확장자</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.originFormat}</p></div>
+                    <div className='flex justify-between font-bold text-[#474747]'><p>날짜</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right max-md:text-sm flex justify-end items-center'>{togglebarDataInfo?.uploadTime?.split('.')[0]?.split('T')?.join(' ')}</p></div>
+                    <div className='flex justify-between font-bold text-[#474747]'><p>파일 크기</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{transferedSize(togglebarDataInfo?.fileSize)}</p></div>
+                    <div className='flex justify-between font-bold text-[#474747]'><p>공유 권한</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.shared ? '허용' : '차단'}</p></div>
+                    <div className='flex justify-between font-bold text-[#474747]'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
                 </div>
             </div>
             <div className='w-full flex justify-center'>
-                <div className='max-md:w-[200px] w-[240px] flex justify-between mt-10'>
-                    <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={async () => handleDeleteBtn()}>파일 삭제</div>
-                    <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={() => navigate(`/download/${togglebarDataInfo?.fileId}`)}>다운로드</div>
+                <div className='max-md:w-[200px] w-[240px] flex justify-center mt-5'>
+                    {/* <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={async () => handleDeleteBtn()}>파일 삭제</div> */}
+                    <div className='bg-[#6367EB] w-[120px] h-[40px] text-white hover:cursor-pointer' onClick={() => navigate(`/download/${togglebarDataInfo?.fileId}`)}>download</div>
                 </div>
             </div>
         </div>
