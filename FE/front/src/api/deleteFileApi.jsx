@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const deleteFileApi = async (id) => {
+export const deleteFileApi = async (id) => {
   const Server_IP = process.env.REACT_APP_Server_IP;
   try {
     await axios.delete(`${Server_IP}/${id}`)
@@ -11,5 +11,3 @@ const deleteFileApi = async (id) => {
     }
   }
 }
-
-export default deleteFileApi;

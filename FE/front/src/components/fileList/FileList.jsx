@@ -7,6 +7,8 @@ import { setSharedStatusApi } from '../../api/setSharedStatusApi';
 import { isEqual } from 'lodash';
 import { deleteExtensionsInFileName } from '../../services/deleteExtensionInFileName';
 import { useIsLogin } from '../../context/IsLoginContext';
+import { useNavigate } from 'react-router-dom';
+import { deleteFileApi } from '../../api/deleteFileApi';
 
 const transferedSize = (size) => size / 1048576 > 0.1 ? `${(size / 1048576).toFixed(2)}Mb` : `${(size / 1024).toFixed(2)}Kb`;
 
@@ -48,6 +50,8 @@ function FileList({fileInfoList, refetch}) {
     const [isTogglebarOpen, setIsTogglebarOpen] = useState(false);
     const [togglebarDataInfo, setTogglebarDataInfo] = useState({});
 
+    const navigate = useNavigate();
+
     const handleTogglebar = (fileInfo) => {
         if (isTogglebarOpen === false) {
             setIsTogglebarOpen(true);
@@ -84,9 +88,11 @@ function FileList({fileInfoList, refetch}) {
                     <div className='flex justify-between'><p>다운 코드</p><p className='whitespace-nowrap overflow-hidden text-ellipsis text-right'>{togglebarDataInfo?.downloadCode}</p></div>
                 </div>
             </div>
-            <div className='max-md:w-[200px] w-[240px] flex justify-between'>
-                <div className='bg-[#6367EB] w-[60px] text-white'>파일 삭제</div>
-                <div className='bg-[#6367EB] w-[60px] text-white'>다운로드</div>
+            <div className='w-full flex justify-center'>
+                <div className='max-md:w-[200px] w-[240px] flex justify-between mt-10'>
+                    <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={() => deleteFileApi(togglebarDataInfo?.fileId)}>파일 삭제</div>
+                    <div className='bg-[#6367EB] w-[60px] text-white hover:cursor-pointer' onClick={() => navigate(`/download/${togglebarDataInfo?.fileId}`)}>다운로드</div>
+                </div>
             </div>
         </div>
 
