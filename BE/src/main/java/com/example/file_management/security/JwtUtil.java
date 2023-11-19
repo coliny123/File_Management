@@ -25,7 +25,7 @@ public class JwtUtil {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
-    private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(1800);  // 5 seconds
+    private static final long EXPIRATION_TIME = TimeUnit.SECONDS.toMillis(3600);  // 1 hour
     private static final long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(14); //14 days
 
     @Value("${JWT_SECRET_KEY}")
