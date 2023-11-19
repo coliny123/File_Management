@@ -61,6 +61,7 @@ function FileManagePage(){
                 <div className='manage-page-wrapper md:w-[720px]'>
                     <div className='text-content w-full text-left'>
                         <div className='ml-3 text-[#999999]'>{data?.userName}</div>
+                        <div className='ml-3 text-[#999999]'>{data?.userEmail}</div>
                         <div className='text-2xl font-bold ml-3 mb-4'>File Management</div>
                     </div>
                     <div className='relative'>

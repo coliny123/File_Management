@@ -16,8 +16,8 @@ function GoogleLoginBtn() {
 
     const handleGoogleLogin = () => {
         window.location.href =
-            // `https://accounts.google.com/o/oauth2/v2/auth?client_id=${Google_Client_ID}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile`;
-            `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${Google_Client_ID}&redirect_uri=https%3A%2F%2Ffile-management-ten.vercel.app%2Fauth%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow`;
+            `https://accounts.google.com/o/oauth2/v2/auth?client_id=${Google_Client_ID}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile`;
+            // `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${Google_Client_ID}&redirect_uri=https%3A%2F%2Ffile-management-ten.vercel.app%2Fauth%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow`;
         };
 
     return (

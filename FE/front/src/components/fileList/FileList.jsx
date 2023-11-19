@@ -70,13 +70,14 @@ function FileList({fileInfoList, refetch}) {
         const decision = window.confirm('파일을 삭제하시겠습니까?');
         if (decision) {
             deleteFile();
+            window.location.reload();
         }
     };
 
     const deleteFile = async () => {
         try {
             await deleteFileApi(togglebarDataInfo?.fileId);
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
             console.error(error);
         }

@@ -10,6 +10,7 @@ export const getAccessTokenApi = () => {
     })
         .then((res) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`
+            axios.defaults.headers.delete['Authorization'] = `Bearer ${res.data.accessToken}`
         });
 
     return accessToken
