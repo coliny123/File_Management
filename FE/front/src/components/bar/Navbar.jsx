@@ -33,6 +33,7 @@ const LogoutBtn = () => {
         await axios.get(`${Server_IP}/auth/logout`).then((res) => {}).catch((err) => {});
         window.localStorage.removeItem('refreshToken');
         setIsLogin(false);
+        window.open('https://www.google.com/accounts/Logout', '_blank');
         window.location.reload();
     }
 
