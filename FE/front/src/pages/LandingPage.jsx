@@ -33,7 +33,6 @@ function LandingPage() {
     fetchData();
   }, []);
 
-
   const {uploadStatus} = useUpload();
   
   return (
