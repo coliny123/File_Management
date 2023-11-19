@@ -28,7 +28,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
     }
     return(
         <div key={idx} className={`flex justify-center items-center hover:cursor-pointer ${idx !== 0 ? 'border-t border-b' : ''} w-full h-[60px] rounded-[10px] bg-white`} >
-            <div className='allowedToggleArea w-full flex ml-5 items-center' onClick={() => handleTogglebar(fileInfo)}>
+            <div className='allowedToggleArea w-full flex ml-5 items-center h-full' onClick={() => handleTogglebar(fileInfo)}>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{deleteExtensionsInFileName(fileInfo?.fileName)}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{fileInfo?.originFormat}</div>
                 <div className='whitespace-nowrap overflow-hidden text-ellipsis w-[20%]'>{transferedSize(fileInfo?.fileSize)}</div>
