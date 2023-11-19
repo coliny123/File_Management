@@ -25,18 +25,6 @@ public class UserController {
         this.userInfoService = userInfoService;
         this.jwtValidator = jwtValidator;
     }
-//    @GetMapping("/me")
-//    public ResponseEntity<?> User (@RequestHeader(value="Authorization") String token) {
-//        token = token.replace("Bearer ", ""); // 토큰에서 "Bearer " 문자열 제거
-//
-//        boolean isValid = jwtUtil.validateRefreshToken(token);
-//
-//        if (!isValid) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않는 access token 입니다.");
-//        }
-//
-//        return ResponseEntity.ok("유효한 access token 입니다.");
-//    }
 
     @GetMapping("/files")
     public ResponseEntity<?> getUserFiles(HttpServletRequest request) {
