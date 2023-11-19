@@ -5,6 +5,7 @@ export function checkFileExtension(fileList) {
     console.log(fileList[0].type)
     const fileExtensionObject = {
         'application/haansofthwp': 'hwp',
+        'application/haansoftpdf': 'hwp',
         'application/pdf': 'pdf',
         'application/haansoftshow': 'pdf',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'word',
