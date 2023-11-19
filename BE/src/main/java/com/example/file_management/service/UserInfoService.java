@@ -6,12 +6,13 @@ import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +24,7 @@ public class UserInfoService {
 
     public Map<String, Object> getUserInfoAndFiles(HttpServletRequest request) {
         String userName = getUserName(request);
-        User user = userRepository.findByName(userName);
+        User user = userRepository.findByName(userName) ;
         List<FileInfo> files = fileRepository.findAllByUser(user);
 
         Map<String, Object> response = new HashMap<>();
