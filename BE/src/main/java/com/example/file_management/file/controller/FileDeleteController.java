@@ -5,12 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -20,8 +15,9 @@ public class FileDeleteController {
     private final FileService fileService;
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteFile(@PathVariable Long id, HttpServletRequest request){
+    public ResponseEntity<String> deleteFile(@PathVariable("id") String requestId, HttpServletRequest request){
         String response;
+        Long id = Long.valueOf(requestId);
         try {
             response = fileService.deleteFile(id, request);
         } catch (Exception e) {
@@ -30,4 +26,17 @@ public class FileDeleteController {
 
         return ResponseEntity.status(200).body(response);
     }
+
+//    @PostMapping("/delete")
+//    public ResponseEntity<String> deleteFile(@RequestBody requestDTO requestDTO, HttpServletRequest request){
+//        String response;
+//        Long id = Long.valueOf(requestDTO.getId());
+//        try {
+//            response = fileService.deleteFile(id, request);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//        }
+//
+//        return ResponseEntity.status(200).body(response);
+//    }
 }

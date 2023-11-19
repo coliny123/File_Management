@@ -80,7 +80,7 @@ public class FileServiceV1 implements FileService{
     }
 
     @Override
-    public String deleteFile(Long id, HttpServletRequest request) throws FileNotFoundException, AccessDeniedException {
+    public String deleteFile(Long id, HttpServletRequest request) throws FileNotFoundException, AccessDeniedException{
         String result;
 
         // 1. 파일 존재하는지 확인
@@ -94,14 +94,12 @@ public class FileServiceV1 implements FileService{
         }
 
         // 3. S3, DB 에서 파일 삭제
-        String SavedFileName = fileRepository.findSavedPathById(id);
-        // savedPath 문자열 slice 과정 필요
-
+        String S3SavedFileName = fileRepository.findS3SavedFileNameById(id);
 
         try {
-            boolean isObjectExist = amazonS3.doesObjectExist(bucket, SavedFileName);
+            boolean isObjectExist = amazonS3.doesObjectExist(bucket, S3SavedFileName);
             if (isObjectExist) {
-                amazonS3.deleteObject(bucket, SavedFileName);
+                amazonS3.deleteObject(bucket, S3SavedFileName);
                 fileRepository.deleteById(id);
                 result = "파일 삭제 성공";
             } else {

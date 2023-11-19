@@ -13,10 +13,12 @@ import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.UUID;
 
 
 @Service
@@ -40,6 +41,8 @@ public class FileServiceV2 implements FileService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(FileServiceV2.class);
+
     @Override
     public UploadResult fileUpload(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         String uniqueFilename = generateUniqueFilename(multipartFile.getOriginalFilename());
@@ -51,7 +54,7 @@ public class FileServiceV2 implements FileService {
         String authenticationCode = generateRandomDownloadCode();
         long size = multipartFile.getSize();
 
-        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user, authenticationCode, size, originFormat, true);
+        FileInfo fileInfo = createFileInfo(multipartFile.getOriginalFilename(), fileUrl, user, authenticationCode, size, originFormat, true, uniqueFilename);
         FileInfo savedFileInfo = fileRepository.save(fileInfo);
 
         UploadResult result = new UploadResult();
@@ -73,7 +76,7 @@ public class FileServiceV2 implements FileService {
     }
 
     // fileInfo 생성
-    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user, String authenticationCode, long size, String originFormat, boolean shared) {
+    private FileInfo createFileInfo(String originalFilename, String fileUrl, User user, String authenticationCode, long size, String originFormat, boolean shared, String uniqueFilename) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.originalFileName = originalFilename;
         fileInfo.savedPath = fileUrl;
@@ -82,6 +85,7 @@ public class FileServiceV2 implements FileService {
         fileInfo.size = size;
         fileInfo.originFormat = originFormat;
         fileInfo.shared = shared;
+        fileInfo.s3SavedFileName = uniqueFilename;
 
         return fileInfo;
     }
@@ -162,27 +166,37 @@ public class FileServiceV2 implements FileService {
         FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
 
         // 2. 삭제 요청 userId와 실제 file uploader id 일치하는지 비교
-        Long requestUserId = jwtUtil.getIdFromToken(request);
+        String requestUserEmail = getUserEmail(request);
+        User requestUser = userRepository.findByEmail(requestUserEmail);
         User uploadUser = file.getUser();
-        if(!Objects.equals(uploadUser.getId(), requestUserId)){
+
+
+
+        logger.info("requestUserId = " + requestUser.getId());
+        logger.info("uploadUser id = " + uploadUser.getId());
+
+        if(!Objects.equals(uploadUser.getId(), requestUser.getId())){
             throw new AccessDeniedException("파일 삭제 권한이 없습니다.");
         }
 
         // 3. S3, DB 에서 파일 삭제
-        String SavedFileName = fileRepository.findSavedPathById(id);
-        // savedPath 문자열 slice 과정 필요
-
+        String S3SavedFileName = fileRepository.findS3SavedFileNameById(id);
+        logger.info("S3SavedFileName = " + S3SavedFileName);
 
         try {
-            boolean isObjectExist = amazonS3.doesObjectExist(bucket, SavedFileName);
+            boolean isObjectExist = amazonS3.doesObjectExist(bucket, S3SavedFileName);
+            logger.info("isObjectExist = " + isObjectExist);
             if (isObjectExist) {
-                amazonS3.deleteObject(bucket, SavedFileName);
+                amazonS3.deleteObject(bucket, S3SavedFileName);
+                logger.info("파일 삭제 성공");
                 fileRepository.deleteById(id);
                 result = "파일 삭제 성공";
             } else {
+                logger.info("파일 존재 x");
                 throw new AmazonS3Exception("파일이 존재하지 않습니다.");
             }
         } catch (Exception e) {
+            logger.info("파일 삭제 실패");
             throw new AmazonS3Exception("파일 삭제 실패");
         }
 
