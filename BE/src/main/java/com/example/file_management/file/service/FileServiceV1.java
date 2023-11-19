@@ -1,18 +1,22 @@
 package com.example.file_management.file.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.example.file_management.file.domain.entity.FileInfo;
 import com.example.file_management.file.dto.DownloadDTO;
 import com.example.file_management.file.dto.SharedStateDTO;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.repository.FileRepository;
+import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,5 +77,38 @@ public class FileServiceV1 implements FileService{
     @Override
     public Long getFileId(String authenticationCode){
         return fileRepository.findIdByAuthenticationCode(authenticationCode);
+    }
+
+    @Override
+    public String deleteFile(Long id, HttpServletRequest request) throws FileNotFoundException, AccessDeniedException{
+        String result;
+
+        // 1. 파일 존재하는지 확인
+        FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+
+        // 2. 삭제 요청 userId와 실제 file uploader id 일치하는지 비교
+        Long requestUserId = jwtUtil.getIdFromToken(request);
+        User uploadUser = file.getUser();
+        if(!Objects.equals(uploadUser.getId(), requestUserId)){
+            throw new AccessDeniedException("파일 삭제 권한이 없습니다.");
+        }
+
+        // 3. S3, DB 에서 파일 삭제
+        String S3SavedFileName = fileRepository.findS3SavedFileNameById(id);
+
+        try {
+            boolean isObjectExist = amazonS3.doesObjectExist(bucket, S3SavedFileName);
+            if (isObjectExist) {
+                amazonS3.deleteObject(bucket, S3SavedFileName);
+                fileRepository.deleteById(id);
+                result = "파일 삭제 성공";
+            } else {
+                throw new AmazonS3Exception("파일이 존재하지 않습니다.");
+            }
+        } catch (Exception e) {
+            throw new AmazonS3Exception("파일 삭제 실패");
+        }
+
+        return result;
     }
 }

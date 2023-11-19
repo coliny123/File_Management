@@ -21,10 +21,11 @@ public class FileInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;    // uuid로 만든 저장되는 파일 이름
 
+    @Column(name = "originalFileName")
     public String originalFileName; // 사용자가 upload한 파일 이름
 
-//    public String uploader;     // 업로더 아이디
-//    public String contentType;  // 파일 형식? text/plain 같은거
+    @Column(name = "s3savedfilename")
+    public String s3SavedFileName;
 
     @Column(length = 1000)
     public String savedPath;  // 로컬 저장 주소(다운로드 링크로 변경예정)
@@ -33,7 +34,7 @@ public class FileInfo {
     @JoinColumn(name="userId", nullable=false)
     public User user;
 
-    @Column()
+    @Column(name="shared", columnDefinition = "default = 1")
     public boolean shared;
 
     @Column(name="authenticationCode")

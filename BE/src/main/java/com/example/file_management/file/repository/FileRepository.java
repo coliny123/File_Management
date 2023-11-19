@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface FileRepository extends JpaRepository<FileInfo, Long> {
 
-    List<FileInfo> findAllByUser(User user);
+    List<FileInfo> findAllByUserId(Long userId);
     FileInfo save(FileInfo file);
 
     @Query("SELECT f.savedPath FROM FileInfo f WHERE f.id = :id")
@@ -23,4 +23,9 @@ public interface FileRepository extends JpaRepository<FileInfo, Long> {
 
     @Query("SELECT f.id FROM FileInfo f WHERE f.authenticationCode = :authenticationCode")
     Long findIdByAuthenticationCode(@Param("authenticationCode") String authenticationCode);
+
+    @Query("SELECT f.s3SavedFileName FROM FileInfo f WHERE f.id = :id")
+    String findS3SavedFileNameById(Long id);
+
+
 }
