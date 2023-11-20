@@ -1,5 +1,6 @@
 package com.example.file_management.oauth.kakao.controller;
 
+import com.example.file_management.cloudwatch.MetricService;
 import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.kakao.model.dto.response.KakaoUserResponse;
 import com.example.file_management.oauth.kakao.service.KakaoOAuth2Service;
@@ -23,6 +24,7 @@ public class KakaoOAuthController {
 
     private final KakaoOAuth2Service kakaoOAuth2Service;
     private final KakaoUserService kakaoUserService;
+    private final MetricService metricService;
 
     @PostMapping("/auth/kakao")
     public ResponseEntity<?> authenticateKakao(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {
@@ -70,6 +72,8 @@ public class KakaoOAuthController {
         responseBody.put("name", nickname);
         responseBody.put("token", jwtToken);
         responseBody.put("refreshToken", refreshToken);
+
+        metricService.recordLogin("kakao");
 
         return ResponseEntity.ok(responseBody);
     }

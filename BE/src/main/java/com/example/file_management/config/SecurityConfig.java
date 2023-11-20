@@ -32,7 +32,8 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/users/files"),
                                          new AntPathRequestMatcher("/upload"),
                                          new AntPathRequestMatcher("/setShared"),
-                                         new AntPathRequestMatcher("/{id}")).authenticated()
+                                         new AntPathRequestMatcher("/{id}"),
+                                new AntPathRequestMatcher("/swagger-ui")).authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtValidationFilter(), AnonymousAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 공격 방어 기능 비활성화

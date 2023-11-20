@@ -1,5 +1,6 @@
 package com.example.file_management.oauth.google.controller;
 
+import com.example.file_management.cloudwatch.MetricService;
 import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.google.model.dto.response.UserResponse;
 import com.example.file_management.oauth.google.model.entity.GoogleUser;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final GoogleOAuth2Service googleOAuth2Service;
     private final UserService userService;
+    private final MetricService metricService;
 
     @PostMapping("/auth/google")
     public ResponseEntity<?> authenticate(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {
@@ -37,6 +39,8 @@ public class AuthController {
         userService.saveRefreshToken(googleUser.getEmail(), refreshToken);
 
         UserResponse userResponse = new UserResponse(jwtToken, googleUser.getEmail(), googleUser.getName(), refreshToken);
+
+        metricService.recordLogin("google");
 
         return ResponseEntity.ok(userResponse);  // HTTP 200 OK와 함께 JSON 응답 전송
     }

@@ -1,5 +1,6 @@
 package com.example.file_management.oauth.naver.controller;
 
+import com.example.file_management.cloudwatch.MetricService;
 import com.example.file_management.oauth.AuthCodeDto;
 import com.example.file_management.oauth.naver.model.dto.response.NaverUserResponse;
 import com.example.file_management.oauth.naver.service.NaverOAuth2Service;
@@ -23,6 +24,7 @@ public class NaverOAuthController {
 
     private final NaverOAuth2Service naverOAuth2Service;
     private final NaverUserService naverUserService;
+    private final MetricService metricService;
 
     @PostMapping("/auth/naver")
     public ResponseEntity<?> authenticateNave(@RequestBody AuthCodeDto authRequest, HttpServletResponse response) {
@@ -67,6 +69,8 @@ public class NaverOAuthController {
         responseBody.put("name", name);
         responseBody.put("token", jwtToken);
         responseBody.put("refreshToken", refreshToken);
+
+        metricService.recordLogin("naver");
 
         return ResponseEntity.ok(responseBody);
 
