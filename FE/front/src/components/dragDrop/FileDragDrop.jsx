@@ -146,9 +146,9 @@ function FileDragDrop() {
                 setUploadedFile([])
                 alert('지원 가능한 파일만 업로드해주세요')
             }
-            if (uploadedFile[0].object.size >= 500 * 1024 * 1024) {
+            if (uploadedFile[0].object.size >= 200 * 1024 * 1024) {
                 setUploadedFile([])
-                alert('500MB 미만의 파일만 업로드 가능합니다.')
+                alert('200MB 이하의 파일만 업로드 가능합니다.')
             }
         }
     }, [uploadedFile])
