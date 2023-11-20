@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 
     private final JwtValidator jwtValidator;
     private final List<String> pathsToAuth = Arrays.asList("/upload","/users/files","/setShared","/{id}");
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     public JwtValidationFilter(JwtValidator jwtValidator) {
         this.jwtValidator = jwtValidator;
@@ -28,7 +30,9 @@ public class JwtValidationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
         // 리스트에 포함된 엔드포인트에 대한 요청만 토큰을 검증
-        if (pathsToAuth.contains(requestURI)) {
+        boolean match = pathsToAuth.stream()
+                .anyMatch(pattern -> pathMatcher.match(pattern, requestURI));
+        if (match) {
             ResponseEntity responseEntity = jwtValidator.validateRequestToken(request);
             if (responseEntity != null) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "권한이 없는 토큰입니다.");

@@ -2,7 +2,8 @@ package com.example.file_management.file.service;
 
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.file_management.file.domain.entity.FileInfo;
 import com.example.file_management.file.dto.DownloadDTO;
 import com.example.file_management.file.dto.SharedStateDTO;
@@ -12,11 +13,7 @@ import com.example.file_management.oauth.model.entity.User;
 import com.example.file_management.oauth.repository.UserRepository;
 import com.example.file_management.security.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.*;
-
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 
 
 @Service
@@ -164,6 +165,11 @@ public class FileServiceV2 implements FileService {
 
         // 1. 파일 존재하는지 확인
         FileInfo file = getFile(id).orElseThrow(() -> new FileNotFoundException("파일을 찾을 수 없습니다."));
+
+        // 1-1. 파일 이름이 null인지 확인
+        if (file.getS3SavedFileName() == null) {
+            throw new FileNotFoundException("S3에 저장된 파일 이름을 찾을 수 없습니다.");
+        }
 
         // 2. 삭제 요청 userId와 실제 file uploader id 일치하는지 비교
         String requestUserEmail = getUserEmail(request);
