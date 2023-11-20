@@ -4,6 +4,7 @@ package com.example.file_management.file.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.example.file_management.cloudwatch.LogService;
 import com.example.file_management.file.domain.entity.FileInfo;
 import com.example.file_management.file.dto.DownloadDTO;
 import com.example.file_management.file.dto.SharedStateDTO;
@@ -41,6 +42,7 @@ public class FileServiceV2 implements FileService {
     private final AmazonS3 amazonS3;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final LogService logService;
 
     private static final Logger logger = LoggerFactory.getLogger(FileServiceV2.class);
 
@@ -61,6 +63,11 @@ public class FileServiceV2 implements FileService {
         UploadResult result = new UploadResult();
         result.setId(savedFileInfo.getId());
         result.setUserName(user.getName());
+
+        double sizeInKB = size / 1024.0;
+
+        // 로그를 찍습니다.
+        logService.logFileUpload(sizeInKB);
 
         return result;
     }

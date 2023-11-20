@@ -1,7 +1,6 @@
 package com.example.file_management.file.controller;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.example.file_management.cloudwatch.MetricService;
 import com.example.file_management.file.dto.UploadResult;
 import com.example.file_management.file.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ public class FileUploadController {
 
     private final FileService fileService;
     private final AmazonS3Client amazonS3Client;
-    private final MetricService metricService;
 
     @PostMapping("/upload")
     public ResponseEntity upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
@@ -31,8 +29,6 @@ public class FileUploadController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        metricService.recordUploadFileSize(file.getSize());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
