@@ -21,7 +21,7 @@ const FileInfoRow = (fileInfo, idx, handleTogglebar, refetch) => {
         event.stopPropagation();
         try {
             await setSharedStatusApi(fileInfo.fileId, !sharedStatus);
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
             console.error(error);
         }
