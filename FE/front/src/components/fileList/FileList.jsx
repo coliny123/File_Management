@@ -70,7 +70,7 @@ function FileList({fileInfoList, refetch}) {
         const decision = window.confirm('파일을 삭제하시겠습니까?');
         if (decision) {
             deleteFile();
-            // window.location.reload();
+            window.location.reload();
         }
     };
 
