@@ -16,7 +16,8 @@ import java.util.Date;
 @Service
 public class LogService {
     private final CloudWatchLogsClient cloudWatchLogsClient;
-    private final String logGroupName = "/my/log/group";
+    private final String logLoginGroupName = "/my/log/loginGroup";
+    private final String logSizeGroupName = "/my/log/sizeGroup";
     private final String logStreamName = "myLogStream";
 
     public LogService(CloudWatchLogsClient cloudWatchLogsClient) {
@@ -26,13 +27,15 @@ public class LogService {
 
     private void setupLogging() {
         try {
-            cloudWatchLogsClient.createLogGroup(CreateLogGroupRequest.builder().logGroupName(logGroupName).build());
+            cloudWatchLogsClient.createLogGroup(CreateLogGroupRequest.builder().logGroupName(logLoginGroupName).build());
+            cloudWatchLogsClient.createLogGroup(CreateLogGroupRequest.builder().logGroupName(logSizeGroupName).build());
         } catch (Exception e) {
             System.out.println("Log group already exists: " + e.getMessage());
         }
 
         try {
-            cloudWatchLogsClient.createLogStream(CreateLogStreamRequest.builder().logGroupName(logGroupName).logStreamName(logStreamName).build());
+            cloudWatchLogsClient.createLogStream(CreateLogStreamRequest.builder().logGroupName(logLoginGroupName).logStreamName(logStreamName).build());
+            cloudWatchLogsClient.createLogStream(CreateLogStreamRequest.builder().logGroupName(logSizeGroupName).logStreamName(logStreamName).build());
         } catch (Exception e) {
             System.out.println("Log stream already exists: " + e.getMessage());
         }
@@ -42,12 +45,12 @@ public class LogService {
         String message = String.format("%s login occurred at %s", loginType, new Date().toString());
 
         DescribeLogStreamsResponse describeLogStreamsResponse = cloudWatchLogsClient.describeLogStreams(
-                DescribeLogStreamsRequest.builder().logGroupName(logGroupName).logStreamNamePrefix(logStreamName).build());
+                DescribeLogStreamsRequest.builder().logGroupName(logLoginGroupName).logStreamNamePrefix(logStreamName).build());
 
         String sequenceToken = describeLogStreamsResponse.logStreams().get(0).uploadSequenceToken();
 
         PutLogEventsRequest putLogEventsRequest = PutLogEventsRequest.builder()
-                .logGroupName(logGroupName)
+                .logGroupName(logLoginGroupName)
                 .logStreamName(logStreamName)
                 .logEvents(Collections.singletonList(
                         InputLogEvent.builder()
@@ -64,12 +67,12 @@ public class LogService {
         String message = String.format("File uploaded size: %.2f KB", sizeInKB);
 
         DescribeLogStreamsResponse describeLogStreamsResponse = cloudWatchLogsClient.describeLogStreams(
-                DescribeLogStreamsRequest.builder().logGroupName(logGroupName).logStreamNamePrefix(logStreamName).build());
+                DescribeLogStreamsRequest.builder().logGroupName(logSizeGroupName).logStreamNamePrefix(logStreamName).build());
 
         String sequenceToken = describeLogStreamsResponse.logStreams().get(0).uploadSequenceToken();
 
         PutLogEventsRequest putLogEventsRequest = PutLogEventsRequest.builder()
-                .logGroupName(logGroupName)
+                .logGroupName(logSizeGroupName)
                 .logStreamName(logStreamName)
                 .logEvents(Collections.singletonList(
                         InputLogEvent.builder()
