@@ -58,19 +58,19 @@
 
 ![로그인](https://github.com/poow810/File_Management/assets/111109429/9dfb97d3-3896-4e36-80b9-14337f4cc7f7)
 
-1. **파일 업로드**
+2. **파일 업로드**
 
 ![파일 업로드](https://github.com/poow810/File_Management/assets/111109429/d562e35d-c06d-4114-9fb7-47f3f8f29903)
 
-1. **QR 코드 스캔(QR코드 스캔 후 접속되는 웹페이지)**
+3. **QR 코드 스캔(QR코드 스캔 후 접속되는 웹페이지)**
 
 ![QR스캔](https://github.com/poow810/File_Management/assets/111109429/b3118a9f-0113-4f6c-b2fe-cedaa511773a)
 
-1. **파일 관리 페이지**
+4. **파일 관리 페이지**
 
 ![파일 관리 페이지](https://github.com/poow810/File_Management/assets/111109429/5f0e22ea-5643-47e4-8262-f8f39b188bdf)
 
-1. **인증 코드 입력**
+5. **인증 코드 입력**
 
 ![인증 코드 입력](https://github.com/poow810/File_Management/assets/111109429/7b1192ee-1f9b-4a6d-800f-9dc734541b77)
 
