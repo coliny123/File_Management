@@ -56,26 +56,26 @@
 
 1. **로그인**
 
-![로그인.gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/abf254f6-50fe-4a95-aaab-bf44470fc177/a4ff3bab-15a8-41da-9598-26a6ea5bd8f1/%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif)
+![로그인](https://github.com/poow810/File_Management/assets/111109429/9dfb97d3-3896-4e36-80b9-14337f4cc7f7)
 
 1. **파일 업로드**
 
-![파일 업로드 (1).gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/abf254f6-50fe-4a95-aaab-bf44470fc177/26f1a74e-bf2a-4e52-a64b-e67e051e2c16/%ED%8C%8C%EC%9D%BC_%EC%97%85%EB%A1%9C%EB%93%9C_(1).gif)
+![파일 업로드](https://github.com/poow810/File_Management/assets/111109429/d562e35d-c06d-4114-9fb7-47f3f8f29903)
 
 1. **QR 코드 스캔(QR코드 스캔 후 접속되는 웹페이지)**
 
-![QR스캔 (1).gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/abf254f6-50fe-4a95-aaab-bf44470fc177/7106e130-a0b7-455a-8c87-9cf0b4c9ccb4/QR%EC%8A%A4%EC%BA%94_(1).gif)
+![QR스캔](https://github.com/poow810/File_Management/assets/111109429/b3118a9f-0113-4f6c-b2fe-cedaa511773a)
 
 1. **파일 관리 페이지**
 
-![파일 관리 페이지 (1).gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/abf254f6-50fe-4a95-aaab-bf44470fc177/430b1e8d-2c7a-4377-a6a6-72d4bc3b83f1/%ED%8C%8C%EC%9D%BC_%EA%B4%80%EB%A6%AC_%ED%8E%98%EC%9D%B4%EC%A7%80_(1).gif)
+![파일 관리 페이지](https://github.com/poow810/File_Management/assets/111109429/5f0e22ea-5643-47e4-8262-f8f39b188bdf)
 
 1. **인증 코드 입력**
 
-![인증 코드 입력.gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/abf254f6-50fe-4a95-aaab-bf44470fc177/bfdbeb82-7c0b-482e-8fe9-bce646326eb9/%EC%9D%B8%EC%A6%9D_%EC%BD%94%EB%93%9C_%EC%9E%85%EB%A0%A5.gif)
+![인증 코드 입력](https://github.com/poow810/File_Management/assets/111109429/7b1192ee-1f9b-4a6d-800f-9dc734541b77)
 
 ---
 
 ## 💻 화면 구성
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/abf254f6-50fe-4a95-aaab-bf44470fc177/512f232d-7d86-445d-a1b8-48cb1542a860/Untitled.png)
+![Untitled](https://github.com/poow810/File_Management/assets/111109429/233097c6-ce46-4afd-8a54-80eaeba508a2)
