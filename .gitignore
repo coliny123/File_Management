@@ -9,3 +9,6 @@ BE/src/main/resources/application_secret.properties
 
 BE/gradle/.env
 .DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
